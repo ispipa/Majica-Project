@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 
 class SalasTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -15,9 +16,16 @@ class SalasTableSeeder extends Seeder
      */
     public function run()
     {
-        $sala = new Salas;
-        $sala->id = 101;
-        $sala->nombre_sala = '101';
-
+       $dataSalas = json_decode(file_get_contents(__DIR__ . '\data\salas.json'), true);
+       for ($i = 0; $i < count($dataSalas); $i++) {
+           Salas::create([
+                'id' => $dataSalas[$i]['id'],
+                'nombre_sala' => $dataSalas[$i]['nombre_sala'],
+                'descripcion_sala' => $dataSalas[$i]['descripcion_sala'],
+                'precio_sala' => $dataSalas[$i]['precio_sala'],
+                'activo' => $dataSalas[$i]['activo'],
+                'piso' => $dataSalas[$i]['piso'],
+              ]);
+       }
     }
 }
