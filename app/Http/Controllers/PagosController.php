@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pagos;
 use Illuminate\Http\Request;
 
 class PagosController extends Controller

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pisos;
 use Illuminate\Http\Request;
 
 class PisosController extends Controller
