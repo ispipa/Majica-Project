@@ -1,5 +1,6 @@
 import { TiDelete } from "react-icons/ti";
 import { GrClose } from "react-icons/gr";
+import { Link } from "react-router-dom"
 
 export default function FormularioPago({datos, eliminar, setId, ocultarTablaPagar }){
 
@@ -69,10 +70,7 @@ export default function FormularioPago({datos, eliminar, setId, ocultarTablaPaga
                 </table>
             </div>
             <div className="divTotal">
-                <button
-                    className='botonPagarr'>
-                    Pagar
-                </button>
+                <button className='botonPagarr'><Link to="/checkout">Pagar</Link></button>
                 <p className='total'>
                     Total : {total}€
                 </p>

@@ -14,10 +14,18 @@
         "vite": "^3.2.3"
     },
     "dependencies": {
+        "@paypal/react-paypal-js": "^7.8.1",
+        "@stripe/react-stripe-js": "^1.14.2",
+        "@stripe/stripe-js": "^1.44.1",
         "@vitejs/plugin-react": "^2.2.0",
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "nodemon": "^2.0.20",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-icons": "^4.6.0",
-        "react-router-dom": "^6.4.3"
+        "react-router-dom": "^6.4.3",
+        "request": "^2.88.2",
+        "stripe": "^10.17.0"
     }
 }
