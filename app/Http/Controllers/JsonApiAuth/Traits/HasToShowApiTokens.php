@@ -15,6 +15,7 @@ trait HasToShowApiTokens
             'message' => __('json-api-auth.success'),
             'user' => [
                 'name' => $user->name,
+                'last_name' => $user->last_name,
                 'email' => $user->email,
                 'artist' => $user->artist,
                 'type_of_art' => $user->type_of_art,
