@@ -1,0 +1,30 @@
+@import url(header.css);
+@import url(boton.css);
+@import url(Main.css);
+@import url(mapas.css);
+@import url(modal.css);
+@import url(tabla.css);
+
+:root{
+    --hover:rgb(206, 203, 203);
+
+}
+.texto {
+    fill: #3d3d3d;
+}
+
+.salaUno:hover  {
+    fill:var(--hover);
+    cursor: pointer;
+}
+
+.salaDos:hover {
+    fill:var(--hover);
+    cursor: pointer;
+}
+
+.salaTres:hover {
+    fill:var(--hover);
+    cursor: pointer;
+}
+

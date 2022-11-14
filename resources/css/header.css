@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    height: 60px;
+}
+
+.header ul {
+    display: flex;
+    align-items: center;
+
+}
+
+.header li {
+    margin: 0 15px;
+    color: white;
+}
+
+.header li a {
+    color: white;
+}
