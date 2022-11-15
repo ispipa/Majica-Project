@@ -6,6 +6,7 @@ import PaypalCheckOut from "./Checkout/PaypalCheckOut";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Main } from './Main/Main';
+import { ForgotPass } from './Main/ForgotPass';
 import {
     BrowserRouter,
     Routes,
@@ -38,6 +39,9 @@ const App = () => {
                 <Route 
                     path="/checkoutPaypal"
                     element={<PaypalCheckOut />} />
+                <Route 
+                    path="/forgotPass"
+                    element={<ForgotPass />}/>
             </Routes>
         </BrowserRouter>
     );

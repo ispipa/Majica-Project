@@ -7,7 +7,7 @@ import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
 
 
-export const Main = () => {
+export const ForgotPass = () => {
 
     const [sign, setSign] = useState(false);
     const Sign_in_btn = () => {
@@ -49,7 +49,7 @@ export const Main = () => {
                             onSubmit={Sign_in}
                         >
                             <img src={LogoMJ} className="image" alt="Majica" />
-                            <h2 className="title">Iniciar sesion</h2>
+                            <h2 className="title">¿Olvidaste tu contraseña?</h2>
                             <div className="content-input">
                                 <div className="input-field">
                                     {/* <i className="fas fa-user"></i> */}
@@ -60,26 +60,26 @@ export const Main = () => {
 
                                     />
                                 </div>
-                                <div className="input-field">
-                                    {/* <i className="fas fa-lock"></i> */}
+                                {/* <div className="input-field">
+                                    <i className="fas fa-lock"></i> 
                                     <input
                                         name="clave"
                                         type="password"
                                         placeholder="Contraseña"
                                     />
-                                </div>
+                                </div>*/}
                                 <div className="btn-register">
-                                    <input
+                                    {/* <input
                                         type=""
                                         value="Crear Cuenta"
                                         className="btn solid"
                                         onClick={Sign_in_btn}
                                         preventDefault=""
-                                    />
+                                    /> */}
 
                                     <input
                                         type="submit"
-                                        value="Iniciar sesion"
+                                        value="Enviar Correo"
                                         className="btn solid"
                                     />
 
@@ -94,7 +94,7 @@ export const Main = () => {
                             encType=""
                         ></form>
 
-                        {/* <form
+                        <form
                             action=""
                             className="sign-up-form formulario__login"
                             method=""
@@ -243,7 +243,7 @@ export const Main = () => {
                                 className="LogoPreliminar"
                                 alt="logoMajica"
                             />
-                            <div className="text-panel">
+                            {/* <div className="text-panel">
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur
                                     adipisicing elit. Neque, accusamus animi
@@ -275,13 +275,14 @@ export const Main = () => {
                         {/* <img src={Logo} className="image" alt="" /> */}
                     {/* </div> */}
                     <div className="panel right-panel">
-                        <div className="content">
+                        {/* <div className="content">
                             <img src={LogoVm} className="image-second" alt="Majica" />
-                        </div>
+                        </div> */}
                         {/* <img src={Logo} className="image" alt="" /> */}
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

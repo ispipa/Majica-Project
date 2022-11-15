@@ -5,6 +5,7 @@ import Logo from '../assets/Logo.png'
 import LogoMJ from '../assets/LogoMJ.png'
 import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 export const Main = () => {
@@ -83,6 +84,9 @@ export const Main = () => {
                                         className="btn solid"
                                     />
 
+                                </div>
+                                <div className="forgotPass">
+                                    <p><Link to="/forgotPass">¿Olvidaste tu contraseña?</Link></p> 
                                 </div>
                             </div>
                         </form>
