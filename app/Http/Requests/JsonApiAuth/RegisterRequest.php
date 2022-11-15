@@ -27,6 +27,11 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'telephone' => 'required|numeric',
+            'address' => 'required|string',
+            'artist' => 'required|string',
+            'type_of_art' => 'required|string',
+            'description' => 'required|string'
         ];
     }
 }

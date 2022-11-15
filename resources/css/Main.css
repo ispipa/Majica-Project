@@ -21,6 +21,7 @@ input {
     overflow: hidden;
     object-fit: cover;
     object-position: center;
+    background-color: #f0f0f0;
 }
 
 
@@ -96,7 +97,8 @@ form.sign-in-form {
         "area1 area2"
         "area3 area4"
         "area5 area6"
-        "area7 area7";
+        "area7 area8"
+        "area9 area9";
 }
 .content-input {
     width: 420px;
@@ -593,6 +595,9 @@ textarea{
     }
 }
 
+.foto input[type=file]{
+    transform: translate3d(-11px, 24px, 0px);
+}
 
 input[type=file]::-webkit-file-upload-button {
     border: none;
@@ -600,15 +605,10 @@ input[type=file]::-webkit-file-upload-button {
     border-radius: 30px !important;
     padding: 15px 15px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 900;
     cursor: pointer;
     margin-right: 30px;
     color: #fff;
+
 }
-input[type=file] {
-    padding: 10px 10px;
-    background-color: #f0f0f0;
-    border-radius: 55px;
-    cursor: pointer !important;
-    width: 100%;
-}
+
