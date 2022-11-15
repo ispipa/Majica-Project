@@ -31,9 +31,9 @@ return [
 
     'revoke_all_tokens' => false,
 
-    'delete_current_token' => true,
+    'delete_current_token' => false,
 
-    'delete_all_tokens' => false,
+    'delete_all_tokens' => true,
 
     /*
     |--------------------------------------------------------------------------
