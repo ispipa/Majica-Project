@@ -10,21 +10,12 @@ import axios from "axios";
 export const ForgotPass = () => {
 
     const [sign, setSign] = useState(false);
-    const Sign_in_btn = () => {
-        setSign(true)
-    }
-    const Sing_up_btn = () => {
-        setSign(false)
-    }
-
-    const Sign_in= (e) => {
+    const forgotPass= (e) => {
         e.preventDefault();
         let correoUser = e.target.correo.value;
-        let passUser = e.target.clave.value;
-        axios.post(`http://127.0.0.1:8000/api/login`,
+        axios.post(`http://127.0.0.1:8000/api/forgot-password`,
             {
-                email: correoUser,
-                password: passUser
+                email: correoUser
             }
         ).then(res => {
             console.log(res);
@@ -32,10 +23,7 @@ export const ForgotPass = () => {
         })
     }
 
-    const Sign_up = (e) => {
-        e.preventDefault();
-        console.log("Sign up")
-    }
+   
 
     return (
         <div>
@@ -46,7 +34,7 @@ export const ForgotPass = () => {
                             action=""
                             className="sign-in-form formulario__login"
                             method=""
-                            onSubmit={Sign_in}
+                            onSubmit={forgotPass}
                         >
                             <img src={LogoMJ} className="image" alt="Majica" />
                             <h2 className="title">¿Olvidaste tu contraseña?</h2>
@@ -57,6 +45,7 @@ export const ForgotPass = () => {
                                         name="correo"
                                         type="text"
                                         placeholder="Email"
+                                        required
 
                                     />
                                 </div>
@@ -81,20 +70,21 @@ export const ForgotPass = () => {
                                         type="submit"
                                         value="Enviar Correo"
                                         className="btn solid"
+                                        
                                     />
 
                                 </div>
                             </div>
                         </form>
 
-                        <form
+                       {/*  <form
                             action=""
                             className="sign-up-form formulario__login"
                             method=""
                             encType=""
-                        ></form>
+                        ></form> */}
 
-                        <form
+                        {/* <form
                             action=""
                             className="sign-up-form formulario__login"
                             method=""
@@ -224,7 +214,7 @@ export const ForgotPass = () => {
                                 </div>
                             </div>
                             <div className="social-media"></div>
-                        </form>
+                        </form> */}
                     </div>
                     <img
                         src="img/fondo.svg"
