@@ -8,6 +8,7 @@ export default function Header(){
                 <li><Link to="/map">Mapas</Link></li>
                 <li><Link to="/checkoutStripe">CheckOutStripe</Link></li>
                 <li><Link to="/checkoutPaypal">CheckOutPaypal</Link></li>
+                <li><Link to="/checkoutNow">CheckOutNow</Link></li>
             </ul>
         </div>
     )

@@ -11,6 +11,7 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+import { CheckoutNow } from "./Checkout/CheckoutNew";
 
 const App = () => {
 
@@ -38,6 +39,9 @@ const App = () => {
                 <Route 
                     path="/checkoutPaypal"
                     element={<PaypalCheckOut />} />
+                <Route
+                    path="/CheckoutNow"
+                    element={<CheckoutNow />} />
             </Routes>
         </BrowserRouter>
     );
