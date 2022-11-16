@@ -2,12 +2,13 @@
 const express = require('express');
 const Stripe = require('stripe');
 const cors = require('cors');
+const env = require('dotenv').config({path: "../../../../.env"})
 
 //INSTANCIA DE EXPRESS()
 const app = express();
 
 //CLAVE PRIVADA QUE SE USA EN EL FRONTEND, HAY QUE PASARLA COMO VARIABLE DE ENTORNO
-const stripe = new Stripe("sk_test_51M1o9GIDq5OU7SfM505gkgVXsaWsHQ1R3d18QhmcVAd7gJEuK9uHqbhSOUaTlQmaSbBo0YtJKF1G0AajmA91EhlZ00hx5Hopg5");
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 //IMPORTANTE, MODIFICAR RUTA DE ORIGEN EN CORS
 app.use(cors({ origin: '*' }));
@@ -42,6 +43,7 @@ app.post('/api/checkoutStripe', async (req, res) => {
 //ASIGNACION DE PUERTO, AUN FALTA ASIGNARLE LA VARIABLE DEL PUERTO QUE MANEJARA CUANDO SE ENCUENTRE EN PRODUCCION
 app.listen(PORT, () => {
     console.log(`Server running on http://127.0.0.1:${PORT}`)
+    console.log(process.env.STRIPE_SECRET_KEY)
 })
 
 // 4242 4242 4242 4242
