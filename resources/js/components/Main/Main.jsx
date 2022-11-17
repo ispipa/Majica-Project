@@ -12,7 +12,7 @@ export const Main = () => {
 
     //imagen
     const [title, setTitle] = useState('')
- 
+
     const huevos = (event) => {
         var file = event.target.files[0];
         var reader = new FileReader();
@@ -27,7 +27,6 @@ export const Main = () => {
     let navigate = useNavigate();
 
     const [sign, setSign] = useState(false);
-    const [imgData, setImg] = useState('');
 
     const Sign_in_btn = () => {
         setSign(true)
@@ -61,30 +60,24 @@ export const Main = () => {
 
     const Sign_up = (e) => {
         e.preventDefault();
-        let name = e.target.nombre.value;
-        let apellidos = e.target.apellidos.value;
-        let email = e.target.email.value;
-        let password = e.target.password.value;
-        let telefono = e.target.telefono.value;
-        let dirección = e.target.dirección.value;
-        let tipo_de_artista = e.target.tipo_de_artista.value;
-        let tipo_de_arte = e.target.tipo_de_arte.value;
-        let descripción = e.target.descripción.value;
-        //let img = e.target.img.files[0];
-        let img = "pepe";
-        console.log(img)
-        axios.post("http://127.0.0.1:8000/api/register", {
-            name: name,
-            last_name:apellidos,
-            email:email,
-            password:password,
-            telephone:telefono,
-            address:dirección,
-            artist:tipo_de_artista,
-            type_of_art:tipo_de_arte,
-            description:descripción,
-            image:img
-        }).then(res => {
+        const data = new FormData();
+        data.append('name', e.target.nombre.value);
+        data.append('last_name', e.target.apellidos.value);
+        data.append('email', e.target.email.value);
+        data.append('password', e.target.password.value);
+        data.append('telephone', e.target.telefono.value);
+        data.append('address', e.target.dirección.value);
+        data.append('artist', e.target.tipo_de_artista.value);
+        data.append('type_of_art', e.target.tipo_de_arte.value);
+        data.append('description', e.target.descripción.value);
+        data.append('image', e.target.img.files[0]);
+        console.log(data)
+        axios.post("http://127.0.0.1:8000/api/register", data).then(res => {
+            if (res.data.message === 'success') {
+                localStorage.setItem('token', JSON.stringify(res.data.token));
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                setSign(false);
+            }
             console.log(res)
         })
     }
@@ -156,13 +149,6 @@ export const Main = () => {
                             <h2 className="title">Registrarse</h2>
 
                             <div className="foto">
-
-                        {title ? <img
-                                    className="preliminar"
-                                    src={title}
-                                    id="file"
-                                    alt=""
-                                /> */}
                                 <input
                                     type="file"
                                     encType="multipart/form-data"
@@ -179,7 +165,7 @@ export const Main = () => {
                                     alt=""
                                 /> */}
                                 <p className='pinput' >FOTO</p>
-                               
+
                             </div>
 
                             <div className="content-input">
