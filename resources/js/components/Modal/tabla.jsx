@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar }) {
 
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
-    const precios = [1];
+    const precios = [];
     //RECORRO EL ARRAY DE PRECIOS
     datos.forEach(element => {
         precios.push(parseInt(element.precio_pagos))
@@ -102,7 +102,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                 </table>
             </div>
             <div className="divTotal">
-                <p className="timer">Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
+                <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
                 <button className='botonPagarr'><Link to="/checkout">Pagar</Link></button>
                 <p className='total'>
                     Total : {total}€
