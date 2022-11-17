@@ -5,6 +5,7 @@ namespace App\Http\Controllers\JsonApiAuth;
 use App\Http\Controllers\JsonApiAuth\Traits\HasToShowApiTokens;
 use App\Http\Requests\JsonApiAuth\RegisterRequest;
 use App\Notifications\JsonApiAuth\VerifyEmailNotification;
+use http\Env\Request;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -29,10 +30,10 @@ class RegisterController
                 'artist' => $request->get('artist'),
                 'type_of_art' => $request->get('type_of_art'),
                 'description' => $request->get('description'),
-                'image' => $request->get('image')
+                'image' => $this->uploadImage($request->get('image'))
             ]);
 
-            if($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+            if ($user instanceof MustVerifyEmail && !$user->hasVerifiedEmail()) {
                 $user->notify(new VerifyEmailNotification);
             }
 
@@ -46,5 +47,20 @@ class RegisterController
             ], 400);
 
         }
+    }
+
+    public function uploadImage($request)
+    {
+            if($request->has('image')) {
+
+                return "pepepe";
+            }
+            else{
+                $file = $request->file('image');
+                $destinationPath = 'images';
+                $filename = time() .'.' .  $file->getClientOriginalName();
+                $uploadSucess =  $request->file('image')->move($destinationPath, $filename);
+                return $destinationPath . $filename;
+            }
     }
 }

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('artist');
             $table->string('type_of_art');
             $table->string('description_sala',50)->nullable();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
