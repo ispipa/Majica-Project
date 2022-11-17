@@ -69,7 +69,7 @@ export const Main = () => {
         data.append('address', e.target.dirección.value);
         data.append('artist', e.target.tipo_de_artista.value);
         data.append('type_of_art', e.target.tipo_de_arte.value);
-        data.append('description', e.target.descripción.value);
+        data.append('description_sala', e.target.descripción.value);
         data.append('image', e.target.img.files[0]);
         console.log(data)
         axios.post("http://127.0.0.1:8000/api/register", data).then(res => {

@@ -21,17 +21,17 @@ class RegisterController
 
             /** @var User $user */
             $user = User::query()->create([
-                'name' => $request->get('name'),
-                'last_name' => $request->get('last_name'),
-                'email' => $request->get('email'),
-                'password' => Hash::make($request->get('password')),
-                'telephone' => $request->get('telephone'),
-                'address' => $request->get('address'),
-                'artist' => $request->get('artist'),
-                'type_of_art' => $request->get('type_of_art'),
-                'description' => $request->get('description'),
-                'image' => $this->uploadImage($request->file('image')),
-            ]);
+                 'name' => $request->get('name'),
+                 'last_name' => $request->get('last_name'),
+                 'email' => $request->get('email'),
+                 'password' => Hash::make($request->get('password')),
+                 'telephone' => $request->get('telephone'),
+                 'address' => $request->get('address'),
+                 'artist' => $request->get('artist'),
+                 'type_of_art' => $request->get('type_of_art'),
+                 'description_sala' => $request->get('description'),
+                 'image' => $this->uploadImage($request->file('image')),
+             ]);
 
             if ($user instanceof MustVerifyEmail && !$user->hasVerifiedEmail()) {
                 $user->notify(new VerifyEmailNotification);
