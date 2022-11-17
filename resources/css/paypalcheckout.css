@@ -1,8 +1,9 @@
-.container-paypal{
+.container-paypal {
     position: absolute;
     top: 50%;
+    margin-top: 37px;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30em;
-    height: 0;
+    width: 103%;
+    height: 100%;
 }
