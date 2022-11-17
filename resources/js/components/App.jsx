@@ -36,7 +36,7 @@ const App = () => {
                             <StripeCheckOut />
                         </Elements>
                     } />
-                <Route 
+                <Route
                     path="/checkoutPaypal"
                     element={<PaypalCheckOut />} />
                 <Route

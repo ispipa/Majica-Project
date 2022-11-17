@@ -12,6 +12,8 @@ export const Main = () => {
     let navigate = useNavigate();
 
     const [sign, setSign] = useState(false);
+    const [imgData, setImg] = useState('');
+
     const Sign_in_btn = () => {
         setSign(true)
     }
@@ -36,6 +38,11 @@ export const Main = () => {
             }
         })
     }
+    const handleImage = (e) =>
+    {
+        setImg(e.target.files[0]);
+    }
+
 
     const Sign_up = (e) => {
         e.preventDefault();
@@ -48,6 +55,8 @@ export const Main = () => {
         let tipo_de_artista = e.target.tipo_de_artista.value;
         let tipo_de_arte = e.target.tipo_de_arte.value;
         let descripción = e.target.descripción.value;
+        let img = e.target.img.files[0];
+        console.log(img)
         axios.post("http://127.0.0.1:8000/api/register", {
             name: name,
             last_name:apellidos,
@@ -57,7 +66,8 @@ export const Main = () => {
             address:dirección,
             artist:tipo_de_artista,
             type_of_art:tipo_de_arte,
-            description:descripción
+            description:descripción,
+            image:img
         }).then(res => {
             console.log(res)
         })
@@ -124,7 +134,7 @@ export const Main = () => {
                             action=""
                             className="sign-up-form formulario__login"
                             method=""
-                            encType=""
+                            enctype="multipart/form-data"
                             onSubmit={Sign_up}
                         >
                             <h2 className="title">Registrarse</h2>
@@ -137,10 +147,9 @@ export const Main = () => {
                                     alt=""
                                 /> */}
                                 <input
-                                    id="file-arch"
                                     type="file"
                                     encType="multipart/form-data"
-                                    name="src-file1"
+                                    name="img"
                                     aria-label="Archivo"
                                     className='input-file-doc'
                                 />

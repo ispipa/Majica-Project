@@ -31,7 +31,8 @@ class RegisterRequest extends FormRequest
             'address' => 'required|string',
             'artist' => 'required|string',
             'type_of_art' => 'required|string',
-            'description' => 'required|string'
+            'description' => 'required|string',
+
         ];
     }
 }

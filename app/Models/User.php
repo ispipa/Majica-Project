@@ -27,7 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'address',
         'artist',
         'type_of_art',
-        'description_sala'
+        'description_sala',
+        'image'
     ];
 
     /**
