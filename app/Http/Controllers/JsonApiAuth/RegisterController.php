@@ -30,7 +30,7 @@ class RegisterController
                 'artist' => $request->get('artist'),
                 'type_of_art' => $request->get('type_of_art'),
                 'description' => $request->get('description'),
-                'image' => $request->get('image'),
+                'image' => $this->uploadImage($request->file('image')),
             ]);
 
             if ($user instanceof MustVerifyEmail && !$user->hasVerifiedEmail()) {
@@ -49,18 +49,13 @@ class RegisterController
         }
     }
 
-    public function uploadImage($request)
+    public function uploadImage($file)
     {
-            if($request->has('image')) {
 
-                return "pepepe";
-            }
-            else{
-                $file = $request->file('image');
-                $destinationPath = 'images';
+                $destinationPath = 'images/';
                 $filename = time() .'.' .  $file->getClientOriginalName();
-                $uploadSucess =  $request->file('image')->move($destinationPath, $filename);
+                $uploadSucess =  $file->move($destinationPath, $filename);
                 return $destinationPath . $filename;
-            }
+
     }
 }

@@ -21,7 +21,7 @@ trait HasToShowApiTokens
                 'artist' => $user->artist,
                 'type_of_art' => $user->type_of_art,
                 'description' => $user->description,
-                'image' => $user->image,
+                'image' => asset($user->image),
                 'telephone' => $user->telephone,
                 'address' => $user->address
             ],
