@@ -296,6 +296,9 @@
 .botonAgregar{
     border: none;
     width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 15px;
     left: 20px;
     height: 40px;
@@ -316,6 +319,14 @@
     background-color: #b11e47;
 }
 
+.check{
+    display: none;
+} .checkVisible{
+    color: #23cf00;
+    font-size: 25px;
+    margin-left: 15px;
+    display: inline-block;
+}
 
 
 

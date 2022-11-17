@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiFillCheckCircle } from "react-icons/ai";
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -12,13 +13,14 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
     const usuario = 1;
 
     //ESTADOS---
-    const [p, setP] = useState("");
+    const [checkAgregado, setCheckAgregado] = useState(false);
     const [check, setcheck] = useState("");
     const [precio, setPrecio] = useState("");
     const [errorr, setError] = useState(false);
     const [registros, setRegistros] = useState([]);
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [contadorCompra, setContadorCompra] = useState(0);
+
 
 
     useEffect(() =>
@@ -75,6 +77,18 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
             setPrecio("");
             setcheck("");
             dataBase();
+
+            setTimeout(function() {
+                setCheckAgregado(true);
+             }, 1000);
+             
+            setTimeout(function() {
+                checkFalse();
+             }, 4000);
+
+             const checkFalse = ()=>{
+                setCheckAgregado(false);
+            };
         }
         //Si el registro ya existe en la base de datos, edito el precio
         else
@@ -83,6 +97,9 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
             dataBase();
         }
     }
+
+   
+
 
     //EDITAR
     const editar = async (sala) =>
@@ -228,6 +245,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
                             className={disponibilidad === "Ocupado" ? "botonAgregarNone" : "botonAgregar" }
                             onClick={agregar}>
                             AÑADIR A LA COMPRA
+                            <span className={checkAgregado === true ?'checkVisible': 'check'}><AiFillCheckCircle/></span>
                         </button>
                     </div>
                 </div>
