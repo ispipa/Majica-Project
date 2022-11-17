@@ -56,7 +56,7 @@ export const Main = () => {
         let tipo_de_arte = e.target.tipo_de_arte.value;
         let descripción = e.target.descripción.value;
         //let img = e.target.img.files[0];
-        console.log(img)
+        // console.log(img)
         axios.post("http://127.0.0.1:8000/api/register", {
             name: name,
             last_name:apellidos,
