@@ -30,7 +30,7 @@ class RegisterController
                 'artist' => $request->get('artist'),
                 'type_of_art' => $request->get('type_of_art'),
                 'description' => $request->get('description'),
-                'image' => "prueba"
+                'image' => $request->get('image'),
             ]);
 
             if ($user instanceof MustVerifyEmail && !$user->hasVerifiedEmail()) {
