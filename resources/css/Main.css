@@ -21,12 +21,15 @@ input {
     overflow: hidden;
     object-fit: cover;
     object-position: center;
-    background-color: #f0f0f0;
+    background: #d52b5c ;
 }
 
 
 .preliminar{
     width: 100%;
+    position: absolute;
+
+    height: 100%;
 }
 .LogoPreliminar {
     width: 78%;
@@ -167,7 +170,7 @@ textarea{
 
 .input-field-textarea{
     padding: 0 0.4rem;
-    height: 150px ;
+    height: 108px ;
     overflow: hidden;
 }
 
@@ -597,6 +600,9 @@ textarea{
 
 .foto input[type=file]{
     transform: translate3d(-11px, 24px, 0px);
+    opacity: 0;
+    z-index: 55;
+    position: absolute;
 }
 
 input[type=file]::-webkit-file-upload-button {
@@ -609,6 +615,18 @@ input[type=file]::-webkit-file-upload-button {
     cursor: pointer;
     margin-right: 30px;
     color: #fff;
-
 }
 
+.pinput{
+    overflow: auto;
+    margin: 28px 11px;
+    color: white;
+    z-index: 1;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    position: absolute;
+}
+.preliminar-v {
+    display: none;
+}

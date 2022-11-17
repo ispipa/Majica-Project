@@ -231,7 +231,7 @@ button {
     background-color: #fff;
     border-radius: 3px;
     box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
+    overflow-x: hidden;
     transform: translate3d(100%, -50%, 0);
     transition: transform 0.4s ease-in-out;
   }
@@ -361,3 +361,35 @@ button {
       padding: 50px 45px;
     }
   }
+
+  .InputContainer .InputElement {
+    position: absolute !important;
+    top: 0 !important;
+    border: 1px solid black !important;
+}
+
+
+.user_options-forms::-webkit-scrollbar {
+  scroll-behavior: smooth;
+
+  background: #e14641;
+  transition: .4s;
+}
+.user_options-forms:-webkit-scrollbar-corner {
+  background-color: black;
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+.user_options-forms::-webkit-scrollbar-thumb {
+
+  border-radius: 4px;
+  background-color: #d52b5c;
+
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+.user_options-forms::-webkit-scrollbar-thumb:hover {
+
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+

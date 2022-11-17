@@ -2,13 +2,28 @@ import React, { useState } from 'react';
 import Usuario from '../assets/usu2.jpg';
 import Logo from '../assets/Logo.png'
 // import LogoMJ from '../assets/LogoMj.png'
-import  { useNavigate   } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LogoMJ from '../assets/LogoMJ.png'
 import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
 
 
 export const Main = () => {
+
+    //imagen
+    const [title, setTitle] = useState('')
+ 
+    const huevos = (event) => {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          // The file's text will be printed here
+          console.log(event.target.result)
+        };
+        reader.readAsText(file);
+        setTitle(reader.readAsText(file))
+    }
+
     let navigate = useNavigate();
 
     const [sign, setSign] = useState(false);
@@ -21,7 +36,7 @@ export const Main = () => {
         setSign(false)
     }
 
-    const Sign_in= (e) => {
+    const Sign_in = (e) => {
         e.preventDefault();
         let correoUser = e.target.correo.value;
         let passUser = e.target.clave.value;
@@ -31,10 +46,10 @@ export const Main = () => {
                 password: passUser
             }
         ).then(res => {
-            if(res.data.message === 'success'){
-                localStorage.setItem('token',JSON.stringify(res.data.token));
-                localStorage.setItem('user',JSON.stringify(res.data.user));
-                return  navigate('/map');
+            if (res.data.message === 'success') {
+                localStorage.setItem('token', JSON.stringify(res.data.token));
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                return navigate('/map');
             }
         })
     }
@@ -141,9 +156,10 @@ export const Main = () => {
                             <h2 className="title">Registrarse</h2>
 
                             <div className="foto">
-                                { /* <img
+
+                        {title ? <img
                                     className="preliminar"
-                                    src={Usuario}
+                                    src={title}
                                     id="file"
                                     alt=""
                                 /> */}
@@ -153,7 +169,17 @@ export const Main = () => {
                                     name="img"
                                     aria-label="Archivo"
                                     className='input-file-doc'
-                                />
+                                />}
+
+
+                                { /* <img
+                                    className="preliminar"
+                                    src={Usuario}
+                                    id="file"
+                                    alt=""
+                                /> */}
+                                <p className='pinput' >FOTO</p>
+                               
                             </div>
 
                             <div className="content-input">
