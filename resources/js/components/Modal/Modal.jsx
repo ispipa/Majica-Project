@@ -224,10 +224,10 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
                             </div>
                         </div>
                         <button
-                            style={{ background: true ? "#ff2c5a" : "#440033" }}
-                            className='botonAgregar'
+                            // style={{ display: disponibilidad === "ocupado" ? "none" : "block" }}
+                            className={disponibilidad === "Ocupado" ? "botonAgregarNone" : "botonAgregar" }
                             onClick={agregar}>
-                            { true ? "AÑADIR A LA COMPRA" : "Actualizar"}
+                            AÑADIR A LA COMPRA
                         </button>
                     </div>
                 </div>

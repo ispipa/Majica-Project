@@ -309,6 +309,13 @@
     bottom: 10px;
 }
 
+.botonAgregarNone{
+    display: none;
+}
+.botonAgregar:hover{
+    background-color: #b11e47;
+}
+
 
 
 
