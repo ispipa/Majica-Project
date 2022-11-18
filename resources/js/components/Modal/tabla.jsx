@@ -1,11 +1,12 @@
+import { useState, useEffect } from "react";
 import { TiDelete } from "react-icons/ti";
 import { GrClose } from "react-icons/gr";
 import { Link } from "react-router-dom"
 
-export default function FormularioPago({datos, eliminar, setId, ocultarTablaPagar }){
+export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar }) {
 
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
-    const  precios = [];
+    const precios = [];
     //RECORRO EL ARRAY DE PRECIOS
     datos.forEach(element => {
         precios.push(parseInt(element.precio_pagos))
@@ -13,33 +14,57 @@ export default function FormularioPago({datos, eliminar, setId, ocultarTablaPaga
     //SUMO TODOS LOS PRECIOS DE ARRAY
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-    // const updateId = async (sala) =>{
-    //     // setModal()
-    //     const response = await axios.get("http://localhost:8000/api/sala/"+sala);
-    //     const responseData = response.data;
-    //     setPrecios({"precio1":  responseData.precio_sala, "precio2": responseData.precio_sala})
-    //     console.log(precios)
-    // }
 
-    return(
+    const [seconds, setSeconds] = useState(0)
+    const [minutes, setMinutes] = useState(15)
+
+    useEffect(() => {
+        if (precios.length >= 1) {
+            const interval = setInterval(() => {
+                setSeconds(seconds => seconds - 1);
+                if (seconds === 0) {
+                    setMinutes(minutes => minutes - 1);
+                    setSeconds(59);
+                }
+            }, 1000);
+            if (minutes === 9 && seconds === 59) { alert("Tiene 10 minutos para realizar la reserva") };
+            if (minutes === 4 && seconds === 59) { alert("Tiene 5 minutos para realizar la reserva") };
+            if (minutes === 0) {
+                alert("Se le ha acabado el plazo para realizar la reserva, por favor intente de nuevo en el tiempo establecido")
+                clearInterval(interval);
+                setSeconds(0);
+                setMinutes(15);
+            };
+
+            return () => clearInterval(interval)
+        } else {
+            setSeconds(0);
+            setMinutes(15);
+        }
+    },)
+    // console.log(seconds);
+
+    return (
         <div className='containerPadrePagar'>
             <div
                 onClick={ocultarTablaPagar}
                 className="ocultarTablaPagar">
-                <GrClose/>
+                <GrClose />
             </div>
             <div className='containerPagar'>
                 <table className='tablaPagar' >
-                    <tr className="tr">
-                        <th>SALA</th>
-                        <th>PISO</th>
-                        <th>PRECIO</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                    <tbody>
+                        <tr className="tr">
+                            <th>SALA</th>
+                            <th>PISO</th>
+                            <th>PRECIO</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tbody>
                     {datos.map(ar => {
-                        return(
+                        return (
                             <tr className="tr2">
                                 <td
                                     className="nSala"
@@ -61,7 +86,7 @@ export default function FormularioPago({datos, eliminar, setId, ocultarTablaPaga
                                 </td>
                                 <td
                                     className="borrar"
-                                    onClick={()=>eliminar(ar.sala_pagos)}>
+                                    onClick={() => eliminar(ar.sala_pagos)}>
                                     <TiDelete />
                                 </td>
                             </tr>
@@ -70,6 +95,7 @@ export default function FormularioPago({datos, eliminar, setId, ocultarTablaPaga
                 </table>
             </div>
             <div className="divTotal">
+                <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
                 <button className='botonPagarr'><Link to="/checkout">Pagar</Link></button>
                 <p className='total'>
                     Total : {total}€

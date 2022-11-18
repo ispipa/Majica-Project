@@ -291,11 +291,17 @@
 
 
 
-
+.botonAgregar::before{
+    content: "AGREGAR A LA COMPRA";
+  
+}
 
 .botonAgregar{
     border: none;
     width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 15px;
     left: 20px;
     height: 40px;
@@ -308,6 +314,88 @@
     position: absolute;
     bottom: 10px;
 }
+
+.botonAgregarNone{
+    display: none;
+}
+.botonAgregar:hover{
+    background-color: #b11e47;
+}
+
+.check{
+    display: none;
+} .checkVisible{
+    color: #23cf00;
+    font-size: 25px;
+    margin-left: 15px;
+    display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+:root {
+    /* variables */
+    --first-color: #d52b5b;
+    --first-color-alt: #bb244f;
+    --text-color: hsl(305, 100%, 90%);
+  }
+  .button__loader {
+    border: none;
+    outline: none;
+    position: relative;
+    padding: 1.25rem 2.5rem;
+    background-color: var(--first-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    overflow: hidden;
+    cursor: wait;
+  }
+  .button__loader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 100%;
+    background: repeating-linear-gradient(60deg, 
+                transparent, 
+                transparent 0.75rem, 
+                var(--first-color-alt) 0.75rem, 
+                var(--first-color-alt) 1.5rem);
+    animation: load 1s infinite linear;
+  }
+  .button__text {
+    position: relative;
+  }
+  /* Loading button animation */
+  @keyframes load {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-1.75rem);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

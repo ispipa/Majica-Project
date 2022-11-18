@@ -1,4 +1,4 @@
-.tablaCompra{
+.tablaCompra {
     position: fixed;
     top: 0;
     right: -100%;
@@ -6,14 +6,14 @@
     transition: .3s;
     height: 40vh;
     padding: 0px 0px 20px 0px;
-    background: linear-gradient(#ffffff , #ffffff ) ;
+    background: linear-gradient(#ffffff, #ffffff);
     backdrop-filter: blur(10px);
     z-index: 200;
 }
 
-.ocultarTablaPagar{
+.ocultarTablaPagar {
     position: fixed;
-    top:2px;
+    top: 2px;
     left: 2px;
     z-index: 250;
     font-size: 18px;
@@ -21,16 +21,19 @@
     border-radius: 100%;
     transition: .3s;
 
-} .ocultarTablaPagar:hover{
-      background-color: #ffdce6;
-  }
+}
 
-.MostrartablaCompra{
+.ocultarTablaPagar:hover {
+    background-color: #ffdce6;
+}
+
+.MostrartablaCompra {
     right: 0;
     width: 30%;
     transition: .3s;
 }
-th{
+
+th {
     /* border-bottom: 1px solid rgb(212, 212, 212); */
     /* background-color: #000000; */
     transition: 1s;
@@ -39,7 +42,7 @@ th{
     color: rgb(0, 0, 0);
 }
 
-td{
+td {
     padding-top: 7px;
     font-size: 20px;
     font-weight: 500;
@@ -52,43 +55,44 @@ td{
 /* CONTAINER PAGAR */
 
 
-.containerPadrePagar{
+.containerPadrePagar {
     position: relative;
     width: 100%;
     height: 100%;
     padding-bottom: 30px;
 }
-.containerPagar{
+
+.containerPagar {
     transition: 1s;
     position: relative;
     width: 100%;
     height: 100%;
-    background:  #00000000;
+    background: #00000000;
     overflow-y: scroll;
 }
 
-.tablaPagar{
+.tablaPagar {
     transition: 1s;
     width: 100%;
     text-align: center;
 }
 
 
-.nSala{
+.nSala {
     color: rgb(66, 66, 66);
     font-weight: 600;
 }
 
-.nPiso{
+.nPiso {
     color: rgb(66, 66, 66);
 }
 
-.precio{
+.precio {
     color: rgb(66, 66, 66);
 
 }
 
-.botonPagarr{
+.botonPagarr {
     border: none;
     width: 100px;
     height: 30px;
@@ -105,33 +109,33 @@ td{
 
 }
 
-.editar{
+.editar {
     color: rgb(0, 197, 89);
     transition: .2s;
 }
 
-.editar:hover{
+.editar:hover {
     background-color: rgb(0, 197, 89);
     transition: .2s;
     color: white;
 }
 
-tr{
+tr {
     border-radius: 5px;
     overflow: hidden;
 
 }
 
-.tr2:hover{
+.tr2:hover {
     background-color: rgb(219, 219, 223);
 }
 
-.borrar:hover tr{
+.borrar:hover tr {
     background-color: rgb(255, 191, 207);
 }
 
 
-.tablaPagar{
+.tablaPagar {
     border-collapse: collapse;
 }
 
@@ -141,24 +145,27 @@ tr{
     font-size: 25px;
     transition: .2s;
     height: 100%;
-} .borrar:hover{
-      background-color: rgb(255, 38, 92);
-      color: white;
-      transition: .2s;
-  }
+}
+
+.borrar:hover {
+    background-color: rgb(255, 38, 92);
+    color: white;
+    transition: .2s;
+}
 
 
-.divTotal{
+.divTotal {
     /* background: linear-gradient(rgba(255, 255, 255, 0.733),rgb(255, 255, 255));
     backdrop-filter: blur(5px); */
     position: absolute;
     bottom: -15px;
     width: 100%;
-    padding:20px;
+    padding: 20px;
     /* border-bottom: 2px solid white; */
 
 }
-.total{
+
+.total {
     position: absolute;
     bottom: 5px;
     right: 130px;
@@ -167,6 +174,13 @@ tr{
     font-size: 18px;
 }
 
+.timer {
+    position: absolute;
+    bottom: 5px;
+    font-weight: 600;
+    color: #1d1d1d;
+    font-size: 16px;
+}
 
 
 
@@ -183,8 +197,9 @@ tr{
 
 
 
-@media (max-width:1060px){
-    .tablaCompra{
+
+@media (max-width:1060px) {
+    .tablaCompra {
         width: 100%;
         height: 100vh;
         z-index: 3500;

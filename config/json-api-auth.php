@@ -31,9 +31,9 @@ return [
 
     'revoke_all_tokens' => false,
 
-    'delete_current_token' => true,
+    'delete_current_token' => false,
 
-    'delete_all_tokens' => false,
+    'delete_all_tokens' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ return [
     |
     */
 
-    'new_password_form_url' =>  env('FRONTEND_APP_URL', 'http://majica') .'/new-password',
+    'new_password_form_url' =>  env('FRONTEND_APP_URL', 'http://127.0.0.1:8000') .'/new-password',
 
     /*
     |--------------------------------------------------------------------------
@@ -84,8 +84,8 @@ return [
     |
     */
 
-    'email_account_was_already_verified_url' =>  env('FRONTEND_APP_URL', 'http://majica') . '/already-verified',
+    'email_account_was_already_verified_url' =>  env('FRONTEND_APP_URL', 'http://127.0.0.1:8000') . '/already-verified',
 
-    'email_account_just_verified_url' => env('FRONTEND_APP_URL', 'http://majica') . '/verified',
+    'email_account_just_verified_url' => env('FRONTEND_APP_URL', 'http://127.0.0.1:8000') . '/verified',
 
 ];

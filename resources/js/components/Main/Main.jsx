@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Usuario from '../assets/usu2.jpg';
 import Logo from '../assets/Logo.png'
 // import LogoMJ from '../assets/LogoMj.png'
+import { useNavigate } from "react-router-dom";
 import LogoMJ from '../assets/LogoMJ.png'
 import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
@@ -10,7 +11,24 @@ import { Link } from "react-router-dom";
 
 export const Main = () => {
 
+    //imagen
+    const [title, setTitle] = useState('')
+
+    const huevos = (event) => {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          // The file's text will be printed here
+          console.log(event.target.result)
+        };
+        reader.readAsText(file);
+        setTitle(reader.readAsText(file))
+    }
+
+    let navigate = useNavigate();
+
     const [sign, setSign] = useState(false);
+
     const Sign_in_btn = () => {
         setSign(true)
     }
@@ -18,7 +36,7 @@ export const Main = () => {
         setSign(false)
     }
 
-    const Sign_in= (e) => {
+    const Sign_in = (e) => {
         e.preventDefault();
         let correoUser = e.target.correo.value;
         let passUser = e.target.clave.value;
@@ -28,14 +46,41 @@ export const Main = () => {
                 password: passUser
             }
         ).then(res => {
-            console.log(res);
-            console.log(res.data);
+            if (res.data.message === 'success') {
+                localStorage.setItem('token', JSON.stringify(res.data.token));
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                return navigate('/map');
+            }
         })
     }
+    const handleImage = (e) =>
+    {
+        setImg(e.target.files[0]);
+    }
+
 
     const Sign_up = (e) => {
         e.preventDefault();
-        console.log("Sign up")
+        const data = new FormData();
+        data.append('name', e.target.nombre.value);
+        data.append('last_name', e.target.apellidos.value);
+        data.append('email', e.target.email.value);
+        data.append('password', e.target.password.value);
+        data.append('telephone', e.target.telefono.value);
+        data.append('address', e.target.dirección.value);
+        data.append('artist', e.target.tipo_de_artista.value);
+        data.append('type_of_art', e.target.tipo_de_arte.value);
+        data.append('description_sala', e.target.descripción.value);
+        data.append('image', e.target.img.files[0]);
+        console.log(data)
+        axios.post("http://127.0.0.1:8000/api/register", data).then(res => {
+            if (res.data.message === 'success') {
+                localStorage.setItem('token', JSON.stringify(res.data.token));
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                setSign(false);
+            }
+            console.log(res)
+        })
     }
 
     return (
@@ -102,32 +147,33 @@ export const Main = () => {
                             action=""
                             className="sign-up-form formulario__login"
                             method=""
-                            encType=""
+                            enctype="multipart/form-data"
                             onSubmit={Sign_up}
                         >
                             <h2 className="title">Registrarse</h2>
 
                             <div className="foto">
-                                <img
+                                <input
+                                    type="file"
+                                    encType="multipart/form-data"
+                                    name="img"
+                                    aria-label="Archivo"
+                                    className='input-file-doc'
+                                />
+
+
+                                { /* <img
                                     className="preliminar"
                                     src={Usuario}
                                     id="file"
                                     alt=""
-                                />
+                                /> */}
+                                <p className='pinput' >FOTO</p>
+
                             </div>
 
-
-
-
                             <div className="content-input">
-                                <input
-                                    id="file-arch"
-                                    type="file"
-                                    encType="multipart/form-data"
-                                    name="src-file1"
-                                    aria-label="Archivo"
-                                    className='input-file-doc'
-                                />
+
                                 <div className="container-inputs">
                                     <div
                                         className="input-field"
@@ -155,9 +201,36 @@ export const Main = () => {
                                             required
                                         />
                                     </div>
+
                                     <div
                                         className="input-field"
                                         style={{ gridArea: "area3" }}
+                                    >
+                                        <i className="fas fa-user"></i>
+                                        <input
+                                            name="email"
+                                            type="text"
+                                            placeholder="Email"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div
+                                        className="input-field"
+                                        style={{ gridArea: "area4" }}
+                                    >
+                                        <i className="fas fa-user"></i>
+                                        <input
+                                            name="password"
+                                            type="text"
+                                            placeholder="Contraseña"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div
+                                        className="input-field"
+                                        style={{ gridArea: "area5" }}
                                     >
                                         <i className="fas fa-user"></i>
                                         <input
@@ -169,7 +242,7 @@ export const Main = () => {
                                     </div>
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area4" }}
+                                        style={{ gridArea: "area6" }}
                                     >
                                         <i className="fas fa-lock"></i>
                                         <input
@@ -180,7 +253,7 @@ export const Main = () => {
                                     </div>
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area5" }}
+                                        style={{ gridArea: "area7" }}
                                     >
                                         <i className="fas fa-user"></i>
                                         <select name="tipo_de_artista" id="type_of_artist">
@@ -192,19 +265,20 @@ export const Main = () => {
 
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area6" }}
+                                        style={{ gridArea: "area8" }}
                                     >
                                         <i className="fas fa-envelope"></i>
-                                        <select name="tipo_de_arte" id="type_of_art">
-                                            <option value="Arte" disabled selected>Arte</option>
-                                            <option value="abstracto">Abstracto</option>
-                                            <option value="realismo">Realismo</option>
-                                        </select>
+                                        <input
+                                            name="tipo_de_arte"
+                                            type="text"
+                                            placeholder="Tipo de arte"
+                                            required
+                                        />
                                     </div>
 
                                     <div
                                         className="input-field-tx input-field-textarea"
-                                        style={{ gridArea: "area7" }}
+                                        style={{ gridArea: "area9" }}
                                     >
                                         <i className="fas fa-user"></i>
                                         <textarea id="descripción" name="descripción" rows="4" cols="50" placeholder="Descripción" required></textarea>
