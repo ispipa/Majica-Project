@@ -222,7 +222,7 @@ export const Main = () => {
                                         <i className="fas fa-user"></i>
                                         <input
                                             name="password"
-                                            type="text"
+                                            type="password"
                                             placeholder="Contraseña"
                                             required
                                         />
