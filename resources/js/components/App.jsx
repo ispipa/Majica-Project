@@ -45,13 +45,13 @@ const App = () => {
                 <Route
                     path="/CheckoutNow"
                     element={<CheckoutNow />} />
-                <Route 
+                <Route
                     path="/forgotPass"
                     element={<ForgotPass />}/>
-                <Route 
-                    path="/new-password"
+                <Route
+                    path="/new-password/:token/:email"
                     element={<ResetPass />}/>
-                <Route 
+                <Route
                     path="/verified"
                     element={<Verified />}/>
             </Routes>

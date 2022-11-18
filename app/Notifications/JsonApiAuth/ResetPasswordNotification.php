@@ -32,6 +32,6 @@ class ResetPasswordNotification extends ResetPassword
                 'message' => 'There is no domain set in config/json-api-sanctum.php as new_password_form_url, please add a frontend endpoint to send email with the link.'
             ]);
         }
-        return $endpoint . "?token={$this->token}&email={$notifiable->getEmailForPasswordReset()}";
+        return $endpoint . "/{$this->token}/{$notifiable->getEmailForPasswordReset()}";
     }
 }

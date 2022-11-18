@@ -5,25 +5,31 @@ import Logo from '../assets/Logo.png'
 import LogoMJ from '../assets/LogoMJ.png'
 import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
+import {useParams} from "react-router";
 
 
 export const ResetPass = () => {
 
     const [sign, setSign] = useState(false);
+    let { token } = useParams();
+    let { email } = useParams();
+
     const forgotPass= (e) => {
         e.preventDefault();
-        let correoUser = e.target.correo.value;
-        axios.post(`http://127.0.0.1:8000/api/reset-password`,
-            {
-                email: correoUser
-            }
-        ).then(res => {
+        const data = new FormData();
+        data.append('email', email);
+        data.append('password', e.target.newPass.value);
+        data.append('password_confirmation', e.target.confPass.value);
+        data.append('token', token);
+        console.log(token, email);
+        axios.post(`http://127.0.0.1:8000/api/reset-password`, data)
+        .then(res => {
             console.log(res);
             console.log(res.data);
         })
     }
 
-   
+
 
     return (
         <div>
@@ -50,7 +56,7 @@ export const ResetPass = () => {
                                     />
                                 </div>
                                 <div className="input-field">
-                                    <i className="fas fa-lock"></i> 
+                                    <i className="fas fa-lock"></i>
                                     <input
                                         name="confPass"
                                         type="password"
@@ -70,7 +76,7 @@ export const ResetPass = () => {
                                         type="submit"
                                         value="Enviar"
                                         className="btn solid"
-                                        
+
                                     />
 
                                 </div>
@@ -93,7 +99,7 @@ export const ResetPass = () => {
                                 src={LogoVm}
                                 className="LogoPreliminar"
                                 alt="logoMajica"
-                            />                          
+                            />
                         </div>
                     <div className="panel right-panel">
                     </div>
