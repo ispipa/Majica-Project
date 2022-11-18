@@ -6,6 +6,25 @@
     box-sizing: border-box;
 }
 
+.modalRegister{
+    position: fixed;
+    top: 20px;
+    font-size: 16px;
+    right: -400px;
+    background-color: #ffffff;
+    color: rgb(77, 77, 77);
+    font-weight: 600;
+    padding: 20px;
+    z-index: 1100;
+    border-radius: 15px;
+    max-width: 320px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: .3s;
+} .modalRegisterVisible{
+    right: 20px;
+    transition: .3s;
+}
+
 body,
 input {
     font-family: "Poppins", sans-serif;

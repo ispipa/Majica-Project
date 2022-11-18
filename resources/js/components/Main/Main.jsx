@@ -8,7 +8,12 @@ import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
 
 
+
 export const Main = () => {
+
+    const [mensaje, setMensaje] = useState("");
+    const [mostratModalMensaje , setMostrarModalMensaje] = useState(false);
+
 
     //imagen
     const [title, setTitle] = useState('')
@@ -72,32 +77,29 @@ export const Main = () => {
         data.append('description_sala', e.target.descripción.value);
         data.append('image', e.target.img.files[0]);
         console.log(data);
-        // alert("registrado");
-
-        
+ 
         axios.post("http://127.0.0.1:8000/api/register", data)
         .then(res => {
-           
             if (res.data.message === 'success') {
                 localStorage.setItem('token', JSON.stringify(res.data.token));
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 setSign(false);
+                setMensaje("Registrado Correctamente");
+                setMostrarModalMensaje(true)
+                setTimeout(function(){ setMostrarModalMensaje(false) }, 4000);
+                // setInterval(ocultarModalMensaje(), 5000)
             } 
-            console.log(res)
         }, (error) => {
-            console.log(error);
+            setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");  
+            setMostrarModalMensaje(true)
+            setTimeout(function(){ setMostrarModalMensaje(false) }, 7000);
+          
         });
-
-
-
-        // .then((res) => {
-        //     console.log(res);
-        //   }, 
-      
     }
 
     return (
         <div>
+
             <div className={sign ? "container sign-up-mode" : "container"}>
                 <div className="forms-container">
                     <div className="signin-signup">
@@ -368,6 +370,11 @@ export const Main = () => {
                         </div>
                         {/* <img src={Logo} className="image" alt="" /> */}
                     </div>
+                </div>
+            </div>
+            <div className={mostratModalMensaje  === true ? 'modalRegister modalRegisterVisible' : 'modalRegister' }>
+                <div className='containerModalRegister'>
+                    <p>{mensaje}</p>
                 </div>
             </div>
         </div>
