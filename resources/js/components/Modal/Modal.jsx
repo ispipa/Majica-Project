@@ -1,32 +1,48 @@
 import React from 'react';
+import { AiFillCheckCircle } from "react-icons/ai";
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import FormularioPago from './tabla';
 import Volver from '../assets/cerca.png';
 import { BsFillBagCheckFill } from "react-icons/bs";
+import { set } from 'lodash';
+import { json } from 'react-router';
 
 const Modal = ({ id, piso, disponibilidad, verModal, volver,
-                   setVerModal, setVolver, setId, descripcion, precio1, precio2, s }) => {
+                   setVerModal, setVolver, setId, descripcion, precio1, precio2, }) => {
 
-    const usuario = 1;
-
-    //ESTADOS---
-    const [p, setP] = useState("");
+                       
+                       //ESTADOS---
+    const [checkAgregado, setCheckAgregado] = useState(false);
     const [check, setcheck] = useState("");
     const [precio, setPrecio] = useState("");
     const [errorr, setError] = useState(false);
     const [registros, setRegistros] = useState([]);
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [contadorCompra, setContadorCompra] = useState(0);
+    const [usuario, setUsuario] = useState(0);
 
-
+ 
+    
     useEffect(() =>
     {
-        dataBase();
-
+        uSuario()
+        
     }, [id])
 
+    const uSuario = ()=>{
+
+        if(localStorage.getItem("user")){
+            const user = JSON.parse(localStorage.getItem("user"));
+            setUsuario(user.id)
+        } else{
+           setUsuario("")
+        }
+        
+        dataBase();
+    }
+    
     //CONSULTA A LA BASE DE DATOS
     const dataBase = async () => {
         setPrecio("");
@@ -49,10 +65,12 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
 
 
 
-
+    
     //AGREGAR
     const agregar = async ()=>{
-        console.log(s)
+        
+        document.querySelector(".botonAgregar").classList.add("button__loader");
+       
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const sala = response.data;
         //Si no ha seleccionado un precio, mando un alerta.
@@ -75,14 +93,23 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
             setPrecio("");
             setcheck("");
             dataBase();
+            checkVerifiqued();
+            
+            
         }
         //Si el registro ya existe en la base de datos, edito el precio
         else
         {
             editar(sala);
             dataBase();
+            checkVerifiqued();
+           
+            
         }
     }
+
+   
+
 
     //EDITAR
     const editar = async (sala) =>
@@ -104,7 +131,21 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
 
 
 
+    //Mostrar un check en el boton de agregar al ser agregado a lista de compra.
+    const checkVerifiqued=()=>{
+        setTimeout(function() {
+            setCheckAgregado(true);
+            document.querySelector(".botonAgregar").classList.remove("button__loader");
+         }, 500);
+         
+        setTimeout(function() {
+            checkFalse();
+         }, 4000);
 
+         const checkFalse = ()=>{
+            setCheckAgregado(false);
+        };
+    }
 
     //BOTON DE VOLVER
     const volverBtn1 = () =>
@@ -224,11 +265,25 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
                             </div>
                         </div>
                         <button
-                            style={{ background: true ? "#ff2c5a" : "#440033" }}
-                            className='botonAgregar'
+                            // style={{ display: disponibilidad === "ocupado" ? "none" : "block" }}
+                            className={disponibilidad === "Ocupado" ? "botonAgregarNone" : "botonAgregar" }
+                                     
                             onClick={agregar}>
-                            { true ? "AÑADIR A LA COMPRA" : "Actualizar"}
+                            {/* AÑADIR A LA COMPRA */}
+                            <span className={checkAgregado === true ?'checkVisible': 'check'}><AiFillCheckCircle/></span>
                         </button>
+
+
+
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
             </div>

@@ -14,13 +14,6 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
     //SUMO TODOS LOS PRECIOS DE ARRAY
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-    // const updateId = async (sala) =>{
-    //     // setModal()
-    //     const response = await axios.get("http://localhost:8000/api/sala/"+sala);
-    //     const responseData = response.data;
-    //     setPrecios({"precio1":  responseData.precio_sala, "precio2": responseData.precio_sala})
-    //     console.log(precios)
-    // }
 
     const [seconds, setSeconds] = useState(0)
     const [minutes, setMinutes] = useState(15)

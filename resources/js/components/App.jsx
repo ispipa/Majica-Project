@@ -6,13 +6,15 @@ import PaypalCheckOut from "./Checkout/PaypalCheckOut";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Main } from './Main/Main';
+import { ForgotPass } from './Main/ForgotPass';
+import { ResetPass } from './Main/ResetPass';
 import {
     BrowserRouter,
     Routes,
     Route,
 } from "react-router-dom";
 import { CheckoutNow } from "./Checkout/CheckoutNew";
-import Success from "./Succes/Success"
+import { Verified } from "./Main/Verified";
 
 const App = () => {
 
@@ -37,15 +39,21 @@ const App = () => {
                             <StripeCheckOut />
                         </Elements>
                     } />
-                <Route 
+                <Route
                     path="/checkoutPaypal"
                     element={<PaypalCheckOut />} />
                 <Route
                     path="/CheckoutNow"
                     element={<CheckoutNow />} />
                 <Route 
-                    path="/succes"
-                    element={<Success/>} />
+                    path="/forgotPass"
+                    element={<ForgotPass />}/>
+                <Route 
+                    path="/new-password"
+                    element={<ResetPass />}/>
+                <Route 
+                    path="/verified"
+                    element={<Verified />}/>
             </Routes>
         </BrowserRouter>
     );

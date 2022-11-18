@@ -51,7 +51,7 @@ export default function Map() {
         const responseData = response.data;
         setDatosSala(responseData)
         pintarSalasOcupadas()
-        setS(responseData);
+        
     }
 
 
