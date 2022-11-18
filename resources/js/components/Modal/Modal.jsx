@@ -32,8 +32,14 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
     }, [id])
 
     const uSuario = ()=>{
-        const user = JSON.parse(localStorage.getItem("user"));
-        setUsuario(user.id)
+
+        if(localStorage.getItem("user")){
+            const user = JSON.parse(localStorage.getItem("user"));
+            setUsuario(user.id)
+        } else{
+           setUsuario("")
+        }
+        
         dataBase();
     }
     

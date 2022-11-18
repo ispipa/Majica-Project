@@ -71,15 +71,29 @@ export const Main = () => {
         data.append('type_of_art', e.target.tipo_de_arte.value);
         data.append('description_sala', e.target.descripción.value);
         data.append('image', e.target.img.files[0]);
-        console.log(data)
-        axios.post("http://127.0.0.1:8000/api/register", data).then(res => {
+        console.log(data);
+        // alert("registrado");
+
+        
+        axios.post("http://127.0.0.1:8000/api/register", data)
+        .then(res => {
+           
             if (res.data.message === 'success') {
                 localStorage.setItem('token', JSON.stringify(res.data.token));
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 setSign(false);
-            }
+            } 
             console.log(res)
-        })
+        }, (error) => {
+            console.log(error);
+        });
+
+
+
+        // .then((res) => {
+        //     console.log(res);
+        //   }, 
+      
     }
 
     return (
