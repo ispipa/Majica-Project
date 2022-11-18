@@ -12,6 +12,7 @@ import {
     Route,
 } from "react-router-dom";
 import { CheckoutNow } from "./Checkout/CheckoutNew";
+import Success from "./Succes/Success"
 
 const App = () => {
 
@@ -42,6 +43,9 @@ const App = () => {
                 <Route
                     path="/CheckoutNow"
                     element={<CheckoutNow />} />
+                <Route 
+                    path="/succes"
+                    element={<Success/>} />
             </Routes>
         </BrowserRouter>
     );
