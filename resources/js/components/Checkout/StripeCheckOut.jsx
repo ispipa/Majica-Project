@@ -6,6 +6,7 @@ import {
 import Axios from 'axios'
 import '../../../css/checkout.css'
 
+
 const CheckOutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
