@@ -14,6 +14,7 @@ import {
     Route,
 } from "react-router-dom";
 import { CheckoutNow } from "./Checkout/CheckoutNew";
+import { Verified } from "./Main/Verified";
 
 const App = () => {
 
@@ -50,6 +51,9 @@ const App = () => {
                 <Route 
                     path="/new-password"
                     element={<ResetPass />}/>
+                <Route 
+                    path="/verified"
+                    element={<Verified />}/>
             </Routes>
         </BrowserRouter>
     );
