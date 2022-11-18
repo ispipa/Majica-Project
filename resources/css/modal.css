@@ -357,7 +357,7 @@
     color: var(--text-color);
     font-size: 1rem;
     overflow: hidden;
-    cursor: wait;
+    /* cursor: wait; */
   }
   .button__loader::before {
     content: '';
