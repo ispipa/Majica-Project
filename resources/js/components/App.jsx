@@ -7,6 +7,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Main } from './Main/Main';
 import { ForgotPass } from './Main/ForgotPass';
+import { ResetPass } from './Main/ResetPass';
 import {
     BrowserRouter,
     Routes,
@@ -42,6 +43,9 @@ const App = () => {
                 <Route 
                     path="/forgotPass"
                     element={<ForgotPass />}/>
+                <Route 
+                    path="/new-password"
+                    element={<ResetPass />}/>
             </Routes>
         </BrowserRouter>
     );

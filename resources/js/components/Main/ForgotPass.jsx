@@ -36,11 +36,10 @@ export const ForgotPass = () => {
                             method=""
                             onSubmit={forgotPass}
                         >
-                            <img src={LogoMJ} className="image" alt="Majica" />
+                            {/* <img src={LogoMJ} className="image" alt="Majica" /> */}
                             <h2 className="title">¿Olvidaste tu contraseña?</h2>
                             <div className="content-input">
                                 <div className="input-field">
-                                    {/* <i className="fas fa-user"></i> */}
                                     <input
                                         name="correo"
                                         type="text"
@@ -49,14 +48,6 @@ export const ForgotPass = () => {
 
                                     />
                                 </div>
-                                {/* <div className="input-field">
-                                    <i className="fas fa-lock"></i> 
-                                    <input
-                                        name="clave"
-                                        type="password"
-                                        placeholder="Contraseña"
-                                    />
-                                </div>*/}
                                 <div className="btn-register">
                                     {/* <input
                                         type=""
