@@ -155,7 +155,7 @@ export const Main = () => {
                                     name="img"
                                     aria-label="Archivo"
                                     className='input-file-doc'
-                                />}
+                                />
 
 
                                 { /* <img

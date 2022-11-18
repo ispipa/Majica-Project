@@ -63,7 +63,6 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
     //AGREGAR
     const agregar = async ()=>{
         console.log(s)
-        document.querySelector(".botonAgregar").classList.add("button__loader");
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const sala = response.data;
         //Si no ha seleccionado un precio, mando un alerta.
@@ -74,6 +73,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
         // Si el registro aun no existe en la base de datos, lo agrego.
         else if (sala.findIndex(element => element.sala_pagos == id) < 0)
         {
+            document.querySelector(".botonAgregar").classList.add("button__loader");
             axios.post('http://localhost:8000/api/pago', {
                 'usuario': usuario,
                 'pagado': 'false',
@@ -82,6 +82,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
                 'sala':id
             });
             // Reinicio los checkboxes
+            document.querySelector(".botonAgregar").classList.remove("button__loader");
             setError(false);
             setPrecio("");
             setcheck("");
@@ -90,7 +91,6 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
             //Mostrar un check en el boton de agregar al ser agregado a lista de compra.
             setTimeout(function() {
                 setCheckAgregado(true);
-                document.querySelector(".botonAgregar").classList.remove("button__loader");
              }, 1000);
              
             setTimeout(function() {
