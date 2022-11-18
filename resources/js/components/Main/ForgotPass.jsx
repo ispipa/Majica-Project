@@ -2,105 +2,31 @@ import React, { useState } from 'react';
 import Usuario from '../assets/usu2.jpg';
 import Logo from '../assets/Logo.png'
 // import LogoMJ from '../assets/LogoMj.png'
-import { useNavigate } from "react-router-dom";
 import LogoMJ from '../assets/LogoMJ.png'
 import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 
-
-export const Main = () => {
-
-    const [mensaje, setMensaje] = useState("");
-    const [mostratModalMensaje , setMostrarModalMensaje] = useState(false);
-
-
-    //imagen
-    const [title, setTitle] = useState('')
-
-    const huevos = (event) => {
-        var file = event.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function(event) {
-          // The file's text will be printed here
-          console.log(event.target.result)
-        };
-        reader.readAsText(file);
-        setTitle(reader.readAsText(file))
-    }
-
-    let navigate = useNavigate();
+export const ForgotPass = () => {
 
     const [sign, setSign] = useState(false);
-
-    const Sign_in_btn = () => {
-        setSign(true)
-    }
-    const Sing_up_btn = () => {
-        setSign(false)
-    }
-
-    const Sign_in = (e) => {
+    const forgotPass= (e) => {
         e.preventDefault();
         let correoUser = e.target.correo.value;
-        let passUser = e.target.clave.value;
-        axios.post(`http://127.0.0.1:8000/api/login`,
+        axios.post(`http://127.0.0.1:8000/api/forgot-password`,
             {
-                email: correoUser,
-                password: passUser
+                email: correoUser
             }
         ).then(res => {
-            if (res.data.message === 'success') {
-                localStorage.setItem('token', JSON.stringify(res.data.token));
-                localStorage.setItem('user', JSON.stringify(res.data.user));
-                return navigate('/map');
-            }
+            console.log(res);
+            console.log(res.data);
         })
     }
-    const handleImage = (e) =>
-    {
-        setImg(e.target.files[0]);
-    }
 
-
-    const Sign_up = (e) => {
-        e.preventDefault();
-        const data = new FormData();
-        data.append('name', e.target.nombre.value);
-        data.append('last_name', e.target.apellidos.value);
-        data.append('email', e.target.email.value);
-        data.append('password', e.target.password.value);
-        data.append('telephone', e.target.telefono.value);
-        data.append('address', e.target.dirección.value);
-        data.append('artist', e.target.tipo_de_artista.value);
-        data.append('type_of_art', e.target.tipo_de_arte.value);
-        data.append('description_sala', e.target.descripción.value);
-        data.append('image', e.target.img.files[0]);
-        console.log(data);
- 
-        axios.post("http://127.0.0.1:8000/api/register", data)
-        .then(res => {
-            if (res.data.message === 'success') {
-                localStorage.setItem('token', JSON.stringify(res.data.token));
-                localStorage.setItem('user', JSON.stringify(res.data.user));
-                setSign(false);
-                setMensaje("Registrado Correctamente");
-                setMostrarModalMensaje(true)
-                setTimeout(function(){ setMostrarModalMensaje(false) }, 4000);
-                // setInterval(ocultarModalMensaje(), 5000)
-            } 
-        }, (error) => {
-            setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");  
-            setMostrarModalMensaje(true)
-            setTimeout(function(){ setMostrarModalMensaje(false) }, 7000);
-          
-        });
-    }
+   
 
     return (
         <div>
-
             <div className={sign ? "container sign-up-mode" : "container"}>
                 <div className="forms-container">
                     <div className="signin-signup">
@@ -108,88 +34,77 @@ export const Main = () => {
                             action=""
                             className="sign-in-form formulario__login"
                             method=""
-                            onSubmit={Sign_in}
+                            onSubmit={forgotPass}
                         >
-                            <img src={LogoMJ} className="image" alt="Majica" />
-                            <h2 className="title">Iniciar sesion</h2>
+                            {/* <img src={LogoMJ} className="image" alt="Majica" /> */}
+                            <h2 className="title">¿Olvidaste tu contraseña?</h2>
                             <div className="content-input">
                                 <div className="input-field">
-                                    {/* <i className="fas fa-user"></i> */}
                                     <input
                                         name="correo"
                                         type="text"
                                         placeholder="Email"
+                                        required
 
                                     />
                                 </div>
-                                <div className="input-field">
-                                    {/* <i className="fas fa-lock"></i> */}
-                                    <input
-                                        name="clave"
-                                        type="password"
-                                        placeholder="Contraseña"
-                                    />
-                                </div>
                                 <div className="btn-register">
-                                    <input
+                                    {/* <input
                                         type=""
                                         value="Crear Cuenta"
                                         className="btn solid"
                                         onClick={Sign_in_btn}
                                         preventDefault=""
-                                    />
+                                    /> */}
 
                                     <input
                                         type="submit"
-                                        value="Iniciar sesion"
+                                        value="Enviar Correo"
                                         className="btn solid"
+                                        
                                     />
 
-                                </div>
-                                <div className="forgotPass">
-                                    <p><Link to="/forgotPass">¿Olvidaste tu contraseña?</Link></p> 
                                 </div>
                             </div>
                         </form>
 
-                        <form
+                       {/*  <form
                             action=""
                             className="sign-up-form formulario__login"
                             method=""
                             encType=""
-                        ></form>
+                        ></form> */}
 
-                        <form
+                        {/* <form
                             action=""
                             className="sign-up-form formulario__login"
                             method=""
-                            enctype="multipart/form-data"
+                            encType=""
                             onSubmit={Sign_up}
                         >
                             <h2 className="title">Registrarse</h2>
 
                             <div className="foto">
-                                <input
-                                    type="file"
-                                    encType="multipart/form-data"
-                                    name="img"
-                                    aria-label="Archivo"
-                                    className='input-file-doc'
-                                />
-
-
-                                { /* <img
+                                <img
                                     className="preliminar"
                                     src={Usuario}
                                     id="file"
                                     alt=""
-                                /> */}
-                                <p className='pinput' >FOTO</p>
-
+                                />
                             </div>
 
-                            <div className="content-input">
 
+
+
+                            <div className="content-input">
+                                <input
+                                    id="file-arch"
+                                    type="file"
+                                    encType="multipart/form-data"
+                                    name="src-file1"
+                                    aria-label="Archivo"
+                                    className='input-file-doc'
+                                />
                                 <div className="container-inputs">
                                     <div
                                         className="input-field"
@@ -217,36 +132,9 @@ export const Main = () => {
                                             required
                                         />
                                     </div>
-
                                     <div
                                         className="input-field"
                                         style={{ gridArea: "area3" }}
-                                    >
-                                        <i className="fas fa-user"></i>
-                                        <input
-                                            name="email"
-                                            type="text"
-                                            placeholder="Email"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div
-                                        className="input-field"
-                                        style={{ gridArea: "area4" }}
-                                    >
-                                        <i className="fas fa-user"></i>
-                                        <input
-                                            name="password"
-                                            type="password"
-                                            placeholder="Contraseña"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div
-                                        className="input-field"
-                                        style={{ gridArea: "area5" }}
                                     >
                                         <i className="fas fa-user"></i>
                                         <input
@@ -258,7 +146,7 @@ export const Main = () => {
                                     </div>
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area6" }}
+                                        style={{ gridArea: "area4" }}
                                     >
                                         <i className="fas fa-lock"></i>
                                         <input
@@ -269,7 +157,7 @@ export const Main = () => {
                                     </div>
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area7" }}
+                                        style={{ gridArea: "area5" }}
                                     >
                                         <i className="fas fa-user"></i>
                                         <select name="tipo_de_artista" id="type_of_artist">
@@ -281,20 +169,19 @@ export const Main = () => {
 
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area8" }}
+                                        style={{ gridArea: "area6" }}
                                     >
                                         <i className="fas fa-envelope"></i>
-                                        <input
-                                            name="tipo_de_arte"
-                                            type="text"
-                                            placeholder="Tipo de arte"
-                                            required
-                                        />
+                                        <select name="tipo_de_arte" id="type_of_art">
+                                            <option value="Arte" disabled selected>Arte</option>
+                                            <option value="abstracto">Abstracto</option>
+                                            <option value="realismo">Realismo</option>
+                                        </select>
                                     </div>
 
                                     <div
                                         className="input-field-tx input-field-textarea"
-                                        style={{ gridArea: "area9" }}
+                                        style={{ gridArea: "area7" }}
                                     >
                                         <i className="fas fa-user"></i>
                                         <textarea id="descripción" name="descripción" rows="4" cols="50" placeholder="Descripción" required></textarea>
@@ -318,7 +205,7 @@ export const Main = () => {
                                 </div>
                             </div>
                             <div className="social-media"></div>
-                        </form>
+                        </form> */}
                     </div>
                     <img
                         src="img/fondo.svg"
@@ -337,7 +224,7 @@ export const Main = () => {
                                 className="LogoPreliminar"
                                 alt="logoMajica"
                             />
-                            <div className="text-panel">
+                            {/* <div className="text-panel">
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur
                                     adipisicing elit. Neque, accusamus animi
@@ -356,7 +243,7 @@ export const Main = () => {
                                         Saber mas
                                     </button>
                                 </a>
-                            </div>
+                            </div> */}
 
                             {/* <h3>¿Aún no tienes una cuenta?</h3>
                 <p>
@@ -367,20 +254,16 @@ export const Main = () => {
                 </button> */}
                         </div>
                         {/* <img src={Logo} className="image" alt="" /> */}
-                    </div>
+                    {/* </div> */}
                     <div className="panel right-panel">
-                        <div className="content">
+                        {/* <div className="content">
                             <img src={LogoVm} className="image-second" alt="Majica" />
-                        </div>
+                        </div> */}
                         {/* <img src={Logo} className="image" alt="" /> */}
                     </div>
                 </div>
             </div>
-            <div className={mostratModalMensaje  === true ? 'modalRegister modalRegisterVisible' : 'modalRegister' }>
-                <div className='containerModalRegister'>
-                    <p>{mensaje}</p>
-                </div>
-            </div>
+        </div>
         </div>
     );
 }
