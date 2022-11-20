@@ -9,6 +9,7 @@ import PisoTres_Azul_SVG from './pisoTres_Azul_SVG';
 import MapaPequeno_piso1_SVG from './mapaPequeno_piso1_SVG';
 import MapaPequeno_piso2_SVG from './mapaPequeno_piso2_SVG';
 import MapaPequeno_piso3_SVG from './mapaPequeno_piso3_SVG';
+import { json } from 'react-router';
 
 export default function Map() {
 
@@ -26,14 +27,29 @@ export default function Map() {
     const [verMapaGrande3, setVerMapaGrande3] = useState(false);
     const [disponibilidad, setIDisponibilidad] = useState("");
     const [descripcion, setIDescripcion] = useState(false);
+    const [usuario, setUsuario] = useState(0);
 
 
     //HAGO UNA CONSULTA PARA PINTAR LAS SALAS OCUPADAS
     useEffect( () =>
     {
-        pintarSalasOcupadas()
-
+        usuarioLogueado();
     },[]);
+
+    
+    const usuarioLogueado = ()=>{
+          
+        if(localStorage.getItem("user")){
+            const user = JSON.parse(localStorage.getItem("user"));
+            pintarSalasCompradas(user.id);
+            setUsuario(user.id)
+            
+        } else{
+            setUsuario("")
+            pintarSalasCompradas("");
+        }
+        pintarSalasOcupadas("add");
+    }
 
 
     //SE OBTINEN EL ID DE LA SALA
@@ -53,39 +69,71 @@ export default function Map() {
         pintarSalasOcupadas()
         
     }
-
-
+    
+    
     //SE PINTAN LAS SALAS OCUPADAS
-    const pintarSalasOcupadas  = async ()=>{
-        const response = await axios.get("http://localhost:8000/api/sala");
+    const pintarSalasOcupadas  = async (add_remove, id)=>{
+        const response = await axios.get("http://localhost:8000/api/pago/all");
         const salas = response.data;
 
-        const pintar =  (min, max,)=>{
-            for(let i = min; max > i; i++){
-                if(salas.find(indice => indice.id === i).activo === "Ocupado"){
-                    document.querySelector(".sala"+i).classList.add("ocupado");
-                }
-                else{
-                    document.querySelector(".sala"+i).classList.remove("ocupado");
-                }
+        salas.forEach(element => {
+            if(add_remove == "add"){
+                document.querySelector(".sala"+element.sala_pagos).classList.add("ocupado"); 
+            } else if (add_remove == "remove"){
+                document.querySelector(".sala"+id).classList.remove("ocupado"); 
             }
-        }
+        });
 
-        pintar(101,129);
-        pintar(201,229);
-        pintar(301,329);
+        // const responsePago = await axios.get("http://localhost:8000/api/pago");
+        // const pago = responsePago.data;
+        // console.log(pago)
+
+
+        // const pintar =  (min, max,)=>{
+        //     for(let i = min; max > i; i++){
+
+        //         if(salas.find(indice => indice.id === i).activo === "Ocupado"){
+        //             document.querySelector(".sala"+i).classList.add("ocupado");  
+        //         }
+        //         else{
+        //             document.querySelector(".sala"+i).classList.remove("ocupado");
+        //         }
+        //     }
+        // }
+        
+        // pintar(101,129);
+        // pintar(201,229);
+        // pintar(301,329);
     }
+    
+
+
+    //PINTAR DE VERDE LAS SALAS COMPRADAS
+    const pintarSalasCompradas = async (userId)=>{
+        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+userId);
+        const pagado = pagados.data;
+        pagado.forEach(element => {
+            document.querySelector(".sala"+element.nombre_sala).classList.add("salaComprada");
+        });
+    }
+    
 
 
     //SE OBTIENEN LOS DATOS DE LA SALA
-    const setDatosSala = (sala)=>{
+    const setDatosSala = async (sala)=>{
+        //si la sala le pertenece al usuario logueado q ese usuario pueda editar la descripcion
+        // if(sala.activo === "Ocupado"){
+        //   const salaComprada = await axios.get("http://localhost:8000/api/pago/usuario?id="+usuario)
+        //   const a = salaComprada.data;
+        //   console.log(a)
+          
+        // }
 
         setIDisponibilidad(sala.activo);
         setIdsala(sala.nombre_sala);
         setPiso(sala.piso)
         setIDescripcion(sala.descripcion_sala);
         setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala})
-        console.log(precios);
     }
 
 
@@ -160,6 +208,8 @@ export default function Map() {
                 disponibilidad={disponibilidad}
                 descripcion={descripcion}
                 piso={piso}
+                usuario={usuario}
+                pintarSalasOcupadas={pintarSalasOcupadas}
             />
             <div className='container2'>
                 <div className='containerMapaGrande'>

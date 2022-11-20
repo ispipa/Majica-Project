@@ -18,4 +18,9 @@ class Salas extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function pagos()
+    {
+    return $this->hasMany(Pagos::class);
+    }
 }

@@ -14,10 +14,23 @@ class SalasController extends Controller
      */
     public function index()
     {
+        
         $salas = Salas::all();
         return $salas;
     }
 
+
+    public function bought(Request $request)
+    {
+        $sala = Salas::join('pagos','salas.id', '=', 'pagos.sala_pagos')
+                    ->where("usuario", $request->id )
+                    ->where("pagado", "true" )
+                    ->select('salas.*','pagos.*')
+                    ->get();
+
+        return $sala;
+
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -44,7 +57,10 @@ class SalasController extends Controller
     public function show($id)
     {
         $sala = Salas::find($id);
+      
         return $sala;
+        
+       
     }
 
     /**
@@ -54,15 +70,21 @@ class SalasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $sala = Salas::findOrfail($request->id);
         $sala->nombre_sala = $request->nombre_sala;
         $sala->descripcion_sala = $request->descripcion_sala;
         $sala->precio_sala = $request->precio_sala;
         $sala->activo = $request->activo;
-        $sala->piso = $request->piso;
-        return $sala;
+        $sala->save();
+    }
+
+    public function updateEstado(Request $request)
+    {
+        $sala = Salas::findOrfail($request->id);
+        $sala->activo = $request->activo;
+        $sala->save();
     }
 
     /**
