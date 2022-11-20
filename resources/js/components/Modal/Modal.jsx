@@ -6,10 +6,9 @@ import { useEffect } from 'react';
 import FormularioPago from './tabla';
 import Volver from '../assets/cerca.png';
 import { BsFillBagCheckFill } from "react-icons/bs";
-import { set } from 'lodash';
-import { json } from 'react-router';
 
-const Modal = ({ id, piso, disponibilidad, verModal, volver,
+
+const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
                    setVerModal, setVolver, setId, descripcion, precio1, precio2, }) => {
 
                        
@@ -21,27 +20,17 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
     const [registros, setRegistros] = useState([]);
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [contadorCompra, setContadorCompra] = useState(0);
-    const [usuario, setUsuario] = useState(0);
+    // const [usuario, setUsuario] = useState(0);
 
  
     
     useEffect(() =>
     {
-        uSuario()
+    
+        dataBase();
         
     }, [id])
 
-    const uSuario = ()=>{
-
-        if(localStorage.getItem("user")){
-            const user = JSON.parse(localStorage.getItem("user"));
-            setUsuario(user.id)
-        } else{
-           setUsuario("")
-        }
-        
-        dataBase();
-    }
     
     //CONSULTA A LA BASE DE DATOS
     const dataBase = async () => {
@@ -51,6 +40,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
         const usuarioData = response.data.reverse();
         setContadorCompra(usuarioData.length)
         setRegistros(usuarioData)
+        console.log(usuarioData)
 
     }
 
@@ -88,6 +78,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
                 'piso':piso,
                 'sala':id
             });
+            estadoSala("Ocupado", "add", id)
             // Reinicio los checkboxes
             setError(false);
             setPrecio("");
@@ -103,8 +94,6 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
             editar(sala);
             dataBase();
             checkVerifiqued();
-           
-            
         }
     }
 
@@ -127,8 +116,17 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver,
     {
         await axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
         dataBase();
+        estadoSala("Disponible", "remove", idSalaDelete)
     }
 
+
+    const estadoSala = async (disponibilidad,add_Remove,id)=>{
+        await axios.put("http://localhost:8000/api/sala/estado/"+id , {
+          "activo": disponibilidad
+        });
+        pintarSalasOcupadas(add_Remove,id);
+        
+    }
 
 
     //Mostrar un check en el boton de agregar al ser agregado a lista de compra.

@@ -24,9 +24,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::controller(SalasController::class)->group(function(){
     route::get("/sala",  "index");
+    route::get("/sala/usuario",  "bought");
     route::post("/sala", "store");
     route::get("/sala/{id}", "show");
     route::put("/sala/{id}", "update");
+    route::put("/sala/estado/{id}", "updateEstado");
     route::delete("/sala/{id}", "destroy");
 });
 Route::controller(PisosController::Class)->group(function(){
@@ -37,7 +39,8 @@ Route::controller(PisosController::Class)->group(function(){
     route::delete("/piso/{id}", "destroy");
 });
 Route::controller(PagosController::Class)->group(function(){
-    route::get("/pago", "index");
+    route::get("/pago", "listaCompra");
+    route::get("/pago/all", "all");
     route::post("/pago", "store");
     route::get("/pago/{id}", "show");
     route::put("/pago/{id}", "update");

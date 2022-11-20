@@ -8,14 +8,23 @@ use Illuminate\Http\Request;
 class PagosController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function listaCompra(Request $request)
     {
-        $aPagar = Pagos::where('usuario', $request->usuario)->get();
-        return $aPagar;
+        $listaCompra = Pagos::where('usuario', "=", $request->usuario)
+                              ->where("pagado", "=", "false")
+                              ->get();
+        return $listaCompra;
+    }
+
+
+    public function all()
+    {
+        $pagosAll = Pagos::all();
+        return $pagosAll;
     }
 
     /**
@@ -43,7 +52,8 @@ class PagosController extends Controller
      */
     public function show($id)
     {
-        $pago = Pagos::find($id);
+        // $pago = Pagos::find($id);
+        $pago = Pagos::all()->where("sala_pagos", $id);
         return $pago;
     }
 
