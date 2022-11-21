@@ -8,6 +8,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Main } from './Main/Main';
 import { ForgotPass } from './Main/ForgotPass';
 import { ResetPass } from './Main/ResetPass';
+import { AlreadyVer} from "@/components/Main/AlreadyVer";
 import {
     BrowserRouter,
     Routes,
@@ -54,6 +55,9 @@ const App = () => {
                 <Route
                     path="/verified"
                     element={<Verified />}/>
+                <Route
+                    path="/already-verified"
+                    element={<AlreadyVer />}/>
             </Routes>
         </BrowserRouter>
     );
