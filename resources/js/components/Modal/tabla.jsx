@@ -43,7 +43,25 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
         }
     },)
     // console.log(seconds);
-
+    const comprobarUsuario = () => {
+        ( localStorage.getItem('user') && localStorage.getItem('token') ) === null ?
+        alert("Debe iniciar sesión para realizar la reserva") :
+        axios.get('http://127.0.0.1:8000/api/verified-middleware-example',{ headers:
+                {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
+        }).then(res => {console.log(res)})
+            .catch(err => {
+                axios.post('http://127.0.0.1:8000/api/email/verification-notification',{},{ headers:
+                        {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
+                }).then(res => {console.log(res)})
+                    .catch(err => {console.log(err)})
+            })
+        /*if (localStorage.getItem('user') === null) {
+            alert("Debe iniciar sesión para realizar la reserva")
+        } else {
+            console.log(JSON.parse(localStorage.getItem('user')).email);
+            //<Link to="/checkout"></Link>
+        }*/
+    }
     return (
         <div className='containerPadrePagar'>
             <div
@@ -96,7 +114,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             </div>
             <div className="divTotal">
                 <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
-                <button className='botonPagarr'><Link to="/checkout">Pagar</Link></button>
+                <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
                 <p className='total'>
                     Total : {total}€
                 </p>
