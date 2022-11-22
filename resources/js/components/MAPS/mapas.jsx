@@ -38,14 +38,14 @@ export default function Map() {
         usuarioLogueado();
     },[]);
 
-    
+
     const usuarioLogueado = ()=>{
-          
+
         if(localStorage.getItem("user")){
             const user = JSON.parse(localStorage.getItem("user"));
             pintarSalasCompradas(user.id);
             setUsuario(user.id)
-            
+
         } else{
             setUsuario("")
             pintarSalasCompradas("");
@@ -83,10 +83,10 @@ export default function Map() {
             setDatosSala(responseData)
         }
         pintarSalasOcupadas()
-        
+
     }
-    
-    
+
+
     //SE PINTAN LAS SALAS OCUPADAS
     const pintarSalasOcupadas  = async ()=>{
 
@@ -109,7 +109,7 @@ export default function Map() {
         pintar(201,229);
         pintar(301,329);
     }
-    
+
 
 
     //PINTAR DE VERDE LAS SALAS COMPRADAS
@@ -120,7 +120,7 @@ export default function Map() {
             document.querySelector(".sala"+element.nombre_sala).classList.add("salaComprada");
         });
     }
-    
+
 
 
     //SE OBTIENEN LOS DATOS DE LA SALA

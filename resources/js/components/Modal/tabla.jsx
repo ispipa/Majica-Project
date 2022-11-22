@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { TiDelete } from "react-icons/ti";
 import { GrClose } from "react-icons/gr";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar }) {
 
@@ -14,6 +15,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
     //SUMO TODOS LOS PRECIOS DE ARRAY
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
+    //REDIRECCIONAR A PAGAR
 
     const [seconds, setSeconds] = useState(0)
     const [minutes, setMinutes] = useState(15)
@@ -42,10 +44,32 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setMinutes(15);
         }
     },)
-    // console.log(seconds);
+
+    const comprobarUsuario = () => {
+        ( localStorage.getItem('user') && localStorage.getItem('token') ) === null ?
+        alert("Debe iniciar sesión para realizar la reserva") :
+        axios.get('http://127.0.0.1:8000/api/verified-middleware-example',{ headers:
+                {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
+        }).then(res => navigate('/CheckoutNow'))
+            .catch(err => {
+                enviarEmail();
+            })
+    }
+
+    const enviarEmail = () => {
+        toast.error('Tienes que verificar tu correo primero');
+        axios.post('http://127.0.0.1:8000/api/email/verification-notification',{},{ headers:
+                {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
+
+        }).then(res => console.log(res))
+            .catch(err => {
+                toast.error('Hubo un problema. Intenta más tarde.');
+            })
+    }
 
     return (
         <div className='containerPadrePagar'>
+            <Toaster />
             <div
                 onClick={ocultarTablaPagar}
                 className="ocultarTablaPagar">
@@ -96,7 +120,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             </div>
             <div className="divTotal">
                 <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
-                <button className='botonPagarr'><Link to="/checkout">Pagar</Link></button>
+                <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
                 <p className='total'>
                     Total : {total}€
                 </p>

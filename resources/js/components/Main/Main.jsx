@@ -55,6 +55,7 @@ export const Main = () => {
                 localStorage.setItem('token', JSON.stringify(res.data.token));
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 return navigate('/map');
+
             }
         })
     }
@@ -78,7 +79,7 @@ export const Main = () => {
         data.append('description_sala', e.target.descripción.value);
         data.append('image', e.target.img.files[0]);
         console.log(data);
- 
+
         axios.post("http://127.0.0.1:8000/api/register", data)
         .then(res => {
             if (res.data.message === 'success') {
@@ -89,18 +90,20 @@ export const Main = () => {
                 setMostrarModalMensaje(true)
                 setTimeout(function(){ setMostrarModalMensaje(false) }, 4000);
                 // setInterval(ocultarModalMensaje(), 5000)
-            } 
+            }
+
         }, (error) => {
-            setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");  
+            setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
             setMostrarModalMensaje(true)
             setTimeout(function(){ setMostrarModalMensaje(false) }, 7000);
-          
+            console.log(error);
+
         });
     }
 
     return (
         <div>
-
+       
             <div className={sign ? "container sign-up-mode" : "container"}>
                 <div className="forms-container">
                     <div className="signin-signup">
@@ -147,7 +150,7 @@ export const Main = () => {
 
                                 </div>
                                 <div className="forgotPass">
-                                    <p><Link to="/forgotPass">¿Olvidaste tu contraseña?</Link></p> 
+                                    <p><Link to="/forgotPass">¿Olvidaste tu contraseña?</Link></p>
                                 </div>
                             </div>
                         </form>
@@ -274,8 +277,8 @@ export const Main = () => {
                                         <i className="fas fa-user"></i>
                                         <select name="tipo_de_artista" id="type_of_artist">
                                             <option value="Artista" disabled selected>Artista</option>
-                                            <option value="dibujante">dibujante</option>
-                                            <option value="fotografo">fotografo</option>
+                                            <option value="Dibujante">Dibujante</option>
+                                            <option value="Fotografo">Fotografo</option>
                                         </select>
                                     </div>
 
