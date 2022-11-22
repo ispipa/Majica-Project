@@ -31,10 +31,9 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    height: auto;   
+    height: auto;
     background-repeat: no-repeat;
     background-size: cover;
-    background: linear-gradient(142deg, #1b5ca7 10%, #d52b5c 39%,  #10001d 90%);
     /* background-image: url(../assets/p.png); */
     background-position: 10%;
 }
@@ -50,7 +49,7 @@ button {
     outline: 0;
     cursor: pointer;
   }
-  
+
   input {
     background-color: transparent;
     padding: 0;
@@ -81,7 +80,7 @@ button {
     letter-spacing: 0.1rem;
     color: #ccc;
   }
-  
+
   /**
    * * Bounce to the left side
    * */
@@ -174,7 +173,7 @@ button {
     box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px, rgb(0 0 0 / 22%) 0px 10px 10px;
     border-radius: 3px;
 }
-  
+
   /**
    * * Registered and Unregistered user box and text
    * */
@@ -187,20 +186,20 @@ button {
     font-weight: 300;
     flex-direction: column;
   }
-  
+
   .user_registered-title,
   .user_unregistered-title {
     margin-bottom: 15px;
     font-size: 1.66rem;
     line-height: 1em;
   }
-  
+
   .user_unregistered-text,
   .user_registered-text {
     font-size: 0.83rem;
     line-height: 1.4em;
   }
-  
+
   .user_registered-login,
   .user_unregistered-signup {
     margin-top: 30px;
@@ -218,7 +217,7 @@ button {
     color: rgba(34, 34, 34, 0.85);
     background-color: #ccc;
   }
-  
+
   /**
    * * Login and signup forms
    * */
@@ -316,7 +315,7 @@ button {
     opacity: 1;
     visibility: visible;
   }
-  
+
   /**
    * * Triggers
    * */
@@ -337,7 +336,7 @@ button {
     -webkit-animation: bounceRight 1s forwards;
             animation: bounceRight 1s forwards;
   }
-  
+
   /**
    * * Responsive 990px
    * */
@@ -355,7 +354,7 @@ button {
   .user_options-forms .user_forms-login {
       top: 40px;
     }
-  
+
     .user_options-registered,
   .user_options-unregistered {
       padding: 50px 45px;

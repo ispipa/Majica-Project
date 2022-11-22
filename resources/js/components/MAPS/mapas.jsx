@@ -36,14 +36,14 @@ export default function Map() {
         usuarioLogueado();
     },[]);
 
-    
+
     const usuarioLogueado = ()=>{
-          
+
         if(localStorage.getItem("user")){
             const user = JSON.parse(localStorage.getItem("user"));
             pintarSalasCompradas(user.id);
             setUsuario(user.id)
-            
+
         } else{
             setUsuario("")
             pintarSalasCompradas("");
@@ -67,10 +67,10 @@ export default function Map() {
         const responseData = response.data;
         setDatosSala(responseData)
         pintarSalasOcupadas()
-        
+
     }
-    
-    
+
+
     //SE PINTAN LAS SALAS OCUPADAS
     const pintarSalasOcupadas  = async (add_remove, id)=>{
         const response = await axios.get("http://localhost:8000/api/pago/all");
@@ -78,9 +78,9 @@ export default function Map() {
 
         salas.forEach(element => {
             if(add_remove == "add"){
-                document.querySelector(".sala"+element.sala_pagos).classList.add("ocupado"); 
+                document.querySelector(".sala"+element.sala_pagos).classList.add("ocupado");
             } else if (add_remove == "remove"){
-                document.querySelector(".sala"+id).classList.remove("ocupado"); 
+                document.querySelector(".sala"+id).classList.remove("ocupado");
             }
         });
 
@@ -93,19 +93,19 @@ export default function Map() {
         //     for(let i = min; max > i; i++){
 
         //         if(salas.find(indice => indice.id === i).activo === "Ocupado"){
-        //             document.querySelector(".sala"+i).classList.add("ocupado");  
+        //             document.querySelector(".sala"+i).classList.add("ocupado");
         //         }
         //         else{
         //             document.querySelector(".sala"+i).classList.remove("ocupado");
         //         }
         //     }
         // }
-        
+
         // pintar(101,129);
         // pintar(201,229);
         // pintar(301,329);
     }
-    
+
 
 
     //PINTAR DE VERDE LAS SALAS COMPRADAS
@@ -116,7 +116,7 @@ export default function Map() {
             document.querySelector(".sala"+element.nombre_sala).classList.add("salaComprada");
         });
     }
-    
+
 
 
     //SE OBTIENEN LOS DATOS DE LA SALA
@@ -126,7 +126,7 @@ export default function Map() {
         //   const salaComprada = await axios.get("http://localhost:8000/api/pago/usuario?id="+usuario)
         //   const a = salaComprada.data;
         //   console.log(a)
-          
+
         // }
 
         setIDisponibilidad(sala.activo);

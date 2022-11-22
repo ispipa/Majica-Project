@@ -1,5 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-
+html{
+    background: linear-gradient(142deg, #1b5ca7 10%, #d52b5c 39%, #10001d 90%);
+    height: 100%;
+}
 * {
     margin: 0;
     padding: 0;
@@ -252,7 +255,7 @@ textarea{
 
 .btn:hover {
     background-color: #361100;
-}   
+}
 .panels-container {
     position: absolute;
     height: 100%;
