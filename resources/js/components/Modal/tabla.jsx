@@ -16,11 +16,9 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     //REDIRECCIONAR A PAGAR
-    let navigate = useNavigate();
 
     const [seconds, setSeconds] = useState(0)
     const [minutes, setMinutes] = useState(15)
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (precios.length >= 1) {
