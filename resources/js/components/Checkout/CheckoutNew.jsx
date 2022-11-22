@@ -1,21 +1,16 @@
 import React, { useState } from 'react'
-import PaypalCheckout from './PaypalCheckOut'
-import CheckOutForm from './StripeCheckOut'
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
+import PaypalMensual from './PaypalMensual'
+import PaypalTrimestral from './PaypalTrimestral';
 import Paypal from '../assets/CheckOutNow/paypal.png';
 import Card from '../assets/CheckOutNow/tarjeta.png';
 import { BsArrowRight } from 'react-icons/bs';
 import { BsArrowLeft } from 'react-icons/bs';
-
+import '../../../css/checkout.css'
 
 export const CheckoutNow = () => {
 
   const [mostrar, setMostrar] = useState(false)
   const [ocultar, setOcultar] = useState(false)
-  const stripePromise = loadStripe(
-    "pk_test_51M1o9GIDq5OU7SfMWWFPWGqjif0SjsOahkGVz0M3VK3kOJURE8ritnqkPC5bHOFNv9kHaqQ08b4D0kTkOO3bSPZR00dH8AbddO"
-  );
 
   const SignupButton = () => {
     setMostrar(true)
@@ -42,18 +37,12 @@ export const CheckoutNow = () => {
 
         <div class="user_options-forms" className={mostrar ? "user_options-forms bounceLeft" : "user_options-forms bounceRight"} id="user_options-forms">
           <div class="user_forms-login">
-            <PaypalCheckout />
+            <PaypalMensual /><PaypalTrimestral />
           </div>
           <div class="user_forms-signup">
-            <Elements stripe={stripePromise}>
-              <CheckOutForm />
-            </Elements>
           </div>
         </div>
       </div>
-
-
-
     </section>
   )
 }

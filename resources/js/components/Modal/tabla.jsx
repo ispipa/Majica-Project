@@ -42,7 +42,6 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setMinutes(15);
         }
     },)
-    // console.log(seconds);
 
     return (
         <div className='containerPadrePagar'>
@@ -96,7 +95,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             </div>
             <div className="divTotal">
                 <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
-                <button className='botonPagarr'><Link to="/checkout">Pagar</Link></button>
+                <button className='botonPagarr'><Link to="/checkoutNow">Pagar</Link></button>
                 <p className='total'>
                     Total : {total}€
                 </p>

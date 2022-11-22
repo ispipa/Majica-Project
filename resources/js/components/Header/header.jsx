@@ -6,8 +6,7 @@ export default function Header(){
             <ul>
                 <li><Link to="/">Login</Link></li>
                 <li><Link to="/map">Mapas</Link></li>
-                <li><Link to="/checkoutStripe">CheckOutStripe</Link></li>
-                <li><Link to="/checkoutPaypal">CheckOutPaypal</Link></li>
+                <li><Link to="/checkout">CheckOut</Link></li>
                 <li><Link to="/checkoutNow">CheckOutNow</Link></li>
             </ul>
         </div>
