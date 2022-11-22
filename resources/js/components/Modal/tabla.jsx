@@ -50,17 +50,16 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                 {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
         }).then(res => {console.log(res)})
             .catch(err => {
-                axios.post('http://127.0.0.1:8000/api/email/verification-notification',{},{ headers:
-                        {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
-                }).then(res => {console.log(res)})
-                    .catch(err => {console.log(err)})
+                console.log(err)
+                enviarEmail();
             })
-        /*if (localStorage.getItem('user') === null) {
-            alert("Debe iniciar sesión para realizar la reserva")
-        } else {
-            console.log(JSON.parse(localStorage.getItem('user')).email);
-            //<Link to="/checkout"></Link>
-        }*/
+    }
+
+    const enviarEmail = () => {
+        axios.post('http://127.0.0.1:8000/api/email/verification-notification',{},{ headers:
+                {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
+        }).then(res => {console.log(res)})
+            .catch(err => {console.log(err)})
     }
     return (
         <div className='containerPadrePagar'>
