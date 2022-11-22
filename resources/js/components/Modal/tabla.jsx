@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { TiDelete } from "react-icons/ti";
 import { GrClose } from "react-icons/gr";
-import { Link } from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar }) {
 
@@ -14,6 +14,8 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
     //SUMO TODOS LOS PRECIOS DE ARRAY
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
+    //REDIRECCIONAR A PAGAR
+    let navigate = useNavigate();
 
     const [seconds, setSeconds] = useState(0)
     const [minutes, setMinutes] = useState(15)
@@ -48,7 +50,10 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
         alert("Debe iniciar sesión para realizar la reserva") :
         axios.get('http://127.0.0.1:8000/api/verified-middleware-example',{ headers:
                 {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
-        }).then(res => {console.log(res)})
+        }).then(res => {
+            console.log(res)
+            navigate('/CheckoutNow')
+        })
             .catch(err => {
                 console.log(err)
                 enviarEmail();
