@@ -277,8 +277,8 @@ export const Main = () => {
                                         <i className="fas fa-user"></i>
                                         <select name="tipo_de_artista" id="type_of_artist">
                                             <option value="Artista" disabled selected>Artista</option>
-                                            <option value="dibujante">dibujante</option>
-                                            <option value="fotografo">fotografo</option>
+                                            <option value="Dibujante">Dibujante</option>
+                                            <option value="Fotografo">Fotografo</option>
                                         </select>
                                     </div>
 

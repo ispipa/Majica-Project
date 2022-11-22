@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { TiDelete } from "react-icons/ti";
 import { GrClose } from "react-icons/gr";
-import {Link, useNavigate} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar }) {
 
@@ -19,6 +20,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
 
     const [seconds, setSeconds] = useState(0)
     const [minutes, setMinutes] = useState(15)
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (precios.length >= 1) {
@@ -50,25 +52,26 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
         alert("Debe iniciar sesión para realizar la reserva") :
         axios.get('http://127.0.0.1:8000/api/verified-middleware-example',{ headers:
                 {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
-        }).then(res => {
-            console.log(res)
-            navigate('/CheckoutNow')
-        })
+        }).then(res => navigate('/CheckoutNow'))
             .catch(err => {
-                console.log(err)
                 enviarEmail();
             })
     }
 
     const enviarEmail = () => {
+        toast.error('Tienes que verificar tu correo primero');
         axios.post('http://127.0.0.1:8000/api/email/verification-notification',{},{ headers:
                 {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
-        }).then(res => {console.log(res)})
-            .catch(err => {console.log(err)})
+
+        }).then(res => console.log(res))
+            .catch(err => {
+                toast.error('Hubo un problema. Intenta más tarde.');
+            })
     }
 
     return (
         <div className='containerPadrePagar'>
+            <Toaster />
             <div
                 onClick={ocultarTablaPagar}
                 className="ocultarTablaPagar">
