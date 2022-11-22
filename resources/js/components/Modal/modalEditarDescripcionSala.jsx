@@ -51,7 +51,7 @@ export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDes
         <div className="containerModalEditarDescripcion">
             <button onClick={ocultarModalDescripcion}>VOLVER</button>
             {/* <form action=""> */}
-                <label htmlFor="nombreSala">
+                <label htmlFor="nombreSala" className="inputs1">
                     Nombre De La Sala
                     <input 
                         type="text" 
@@ -60,7 +60,7 @@ export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDes
                         onChange={setNombre}
                     />
                 </label>
-                <label htmlFor="descripcionSala">
+                <label htmlFor="descripcionSala" className="inputs1">
                     Descripción De La Sala
                     <input 
                         type="text" 
@@ -69,7 +69,13 @@ export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDes
                         onChange={setDescripcionSala}
                     />
                 </label>
-                <button id={datasala.id} type="button" onClick={update}>Editar</button>
+                <button  
+                    className="botonEditarDescripcion" 
+                    id={datasala.id} 
+                    ype="button" 
+                    onClick={update}>
+                    Editar
+                </button>
             {/* </form> */}
         </div>
     )
