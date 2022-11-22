@@ -103,7 +103,7 @@ export const Main = () => {
 
     return (
         <div>
-
+       
             <div className={sign ? "container sign-up-mode" : "container"}>
                 <div className="forms-container">
                     <div className="signin-signup">
