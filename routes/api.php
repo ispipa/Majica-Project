@@ -26,7 +26,7 @@ Route::controller(SalasController::class)->group(function(){
     route::get("/sala",  "index");
     route::get("/sala/usuario",  "bought");
     route::post("/sala", "store");
-    route::get("/sala/{id}", "show");
+    route::get("/sala/{idSala}", "show");
     route::put("/sala/{id}", "update");
     route::put("/sala/estado/{id}", "updateEstado");
     route::delete("/sala/{id}", "destroy");

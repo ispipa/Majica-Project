@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import FormularioPago from './tabla';
 import Volver from '../assets/cerca.png';
 import { BsFillBagCheckFill } from "react-icons/bs";
+import { useSubmit } from 'react-router-dom';
 
 
 const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
@@ -40,7 +41,6 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
         const usuarioData = response.data.reverse();
         setContadorCompra(usuarioData.length)
         setRegistros(usuarioData)
-        console.log(usuarioData)
 
     }
 
@@ -58,11 +58,12 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
     
     //AGREGAR
     const agregar = async ()=>{
-        
+       
         document.querySelector(".botonAgregar").classList.add("button__loader");
        
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const sala = response.data;
+        console.log(sala)
         //Si no ha seleccionado un precio, mando un alerta.
         if (precio == "" )
         {
@@ -78,7 +79,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
                 'piso':piso,
                 'sala':id
             });
-            estadoSala("Ocupado", "add", id)
+            estadoSala("Ocupado", id)
             // Reinicio los checkboxes
             setError(false);
             setPrecio("");
@@ -116,15 +117,16 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
     {
         await axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
         dataBase();
-        estadoSala("Disponible", "remove", idSalaDelete)
+        estadoSala("Disponible",idSalaDelete);
+        // estadoSala("Disponible", "remove", idSalaDelete)
     }
 
 
-    const estadoSala = async (disponibilidad,add_Remove,id)=>{
-        await axios.put("http://localhost:8000/api/sala/estado/"+id , {
+    const estadoSala = async (disponibilidad,id)=>{
+        await axios.put("http://localhost:8000/api/sala/estado/"+id+"?update=estado" , {
           "activo": disponibilidad
         });
-        pintarSalasOcupadas(add_Remove,id);
+        pintarSalasOcupadas();
         
     }
 

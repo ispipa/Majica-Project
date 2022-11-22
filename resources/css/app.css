@@ -4,6 +4,7 @@
 @import url(mapas.css);
 @import url(modal.css);
 @import url(tabla.css);
+@import url(modalEditarDescripcion.css);
 
 :root{
     --hover:rgb(155, 155, 155);
