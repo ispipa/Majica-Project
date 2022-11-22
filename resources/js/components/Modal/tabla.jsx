@@ -44,7 +44,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setMinutes(15);
         }
     },)
-    // console.log(seconds);
+
     const comprobarUsuario = () => {
         ( localStorage.getItem('user') && localStorage.getItem('token') ) === null ?
         alert("Debe iniciar sesión para realizar la reserva") :
@@ -66,6 +66,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
         }).then(res => {console.log(res)})
             .catch(err => {console.log(err)})
     }
+
     return (
         <div className='containerPadrePagar'>
             <div
