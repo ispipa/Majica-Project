@@ -20,7 +20,7 @@ export default function Map() {
     const [precios, setPrecios] = useState([]);
     const [idSala, setIdsala] = useState(null);
     const [volver, setVolver] = useState(false);
-    const [aaa, setaaa] = useState([]);
+    const [dataSala, setdataSala] = useState("");
     const [verPiso1, setVerPiso1] = useState(false);
     const [verPiso2, setVerPiso2] = useState(false);
     const [verPiso3, setVerPiso3] = useState(false);
@@ -38,14 +38,14 @@ export default function Map() {
         usuarioLogueado();
     },[]);
 
-
+    
     const usuarioLogueado = ()=>{
-
+          
         if(localStorage.getItem("user")){
             const user = JSON.parse(localStorage.getItem("user"));
             pintarSalasCompradas(user.id);
             setUsuario(user.id)
-
+            
         } else{
             setUsuario("")
             pintarSalasCompradas("");
@@ -66,27 +66,28 @@ export default function Map() {
     //CONSULTA A LA BASE DE DATOS
     const setBaseDeDatos = async (id)=>{
         const response = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=sala");
+        console.log(usuario)
         console.log(response.data.usuarioSala)
 
-        if(response.data.usuarioSala > 0){
+        if(response.data.usuarioSala === usuario){
             const res = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=descripcion&idUsuario="+usuario);
             const sala = res.data[0];
-            setaaa(sala)//cambiar nonbre de funcion aaa
-            console.log(sala)
-            setIdsala(sala.id);
-            setIDisponibilidad("Ocupado");
-            setVerModal(false); //arreglar el estilo al ocultar modal
+            setdataSala(sala)//cambiar nonbre de funcion aaa
+            setDatosSala(sala)
+            mostrarModalEditarDescripcion(sala);
+            // setVerModal(false); //arreglar el estilo al
             
         } else{
 
             const responseData = response.data;
             setDatosSala(responseData)
+            
         }
         pintarSalasOcupadas()
-
+        
     }
-
-
+    
+    
     //SE PINTAN LAS SALAS OCUPADAS
     const pintarSalasOcupadas  = async ()=>{
 
@@ -109,25 +110,26 @@ export default function Map() {
         pintar(201,229);
         pintar(301,329);
     }
-
+    
 
 
     //PINTAR DE VERDE LAS SALAS COMPRADAS
     const pintarSalasCompradas = async (userId)=>{
-        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+userId);
+        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+userId);//tabla relacional
         const pagado = pagados.data;
         pagado.forEach(element => {
-            document.querySelector(".sala"+element.nombre_sala).classList.add("salaComprada");
+            document.querySelector(".sala"+element.sala_pagos).classList.add("salaComprada");
+            console.log(element)
         });
     }
-
+    
 
 
     //SE OBTIENEN LOS DATOS DE LA SALA
     const setDatosSala = async (sala)=>{
         mostrarModalEditarDescripcion(sala);
         setIDisponibilidad(sala.activo);
-        setIdsala(sala.nombre_sala);
+        // setIdsala(sala.nombre_sala);
         setIdsala(sala.id);
         setPiso(sala.piso)
         setIDescripcion(sala.descripcion_sala);
@@ -153,6 +155,10 @@ export default function Map() {
             setEditarDescripcion(true);
         }
       
+    }
+
+    const ocultarModalDescripcion =()=>{
+        setEditarDescripcion(false);
     }
 
 
@@ -266,8 +272,13 @@ export default function Map() {
                         className='logo' />
                 </aside>
             </div>
-            <div className='modalEditarDescripcion'>
-                <ModalEditarDescripcion usuario={usuario} id={idSala} aaa={aaa}/>
+            <div className={EditarDescripcion === true? 'modalEditarDescripcionVisible' : 'modalEditarDescripcion'}>
+                <ModalEditarDescripcion  
+                    id={idSala} 
+                    datasala={dataSala} 
+                    ocultarModalDescripcion={ocultarModalDescripcion}
+                    setDatosSala={setId}
+                    />
             </div>
         </section>
     )

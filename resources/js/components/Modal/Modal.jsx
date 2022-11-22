@@ -118,13 +118,14 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
         await axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
         dataBase();
         estadoSala("Disponible",idSalaDelete);
-        // estadoSala("Disponible", "remove", idSalaDelete)
+     
     }
 
 
     const estadoSala = async (disponibilidad,id)=>{
-        await axios.put("http://localhost:8000/api/sala/estado/"+id+"?update=estado" , {
-          "activo": disponibilidad
+        // http://localhost:8000/api/sala/103?update=estado
+        await axios.put("http://localhost:8000/api/sala/"+id+"?update=estado" , {
+          "activo": disponibilidad,
         });
         pintarSalasOcupadas();
         

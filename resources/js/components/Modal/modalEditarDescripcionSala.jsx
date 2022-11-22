@@ -1,9 +1,10 @@
 import { GrDatabase } from "react-icons/gr";
 import { useEffect } from "react";
 import { useState } from "react";
+import { update } from "lodash";
 
 
-export default function ModalEditarDescripcion ({usuario,id,aaa}) {
+export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDescripcion,setDatosSala}) {
  
     const [descripcion, setDescripcion] = useState("");
     const [nombreSala, setNombreSala] = useState("");
@@ -11,49 +12,65 @@ export default function ModalEditarDescripcion ({usuario,id,aaa}) {
 
     useEffect(() =>
     {
-        setDatos(aaa);
+        setDatos(datasala);
         
-    }, [id])
+    }, [datasala]);
 
-    // const dataBase = async () => {   
-      
-    //     const response = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=descripcion&idUsuario="+usuario);
-    //     const sala = response.data[0];
-    //     if(sala){
-    //         console.log(sala);
-    //         setDatos(sala)
-    //     } else{
-    //         setDescripcion("");
-    //         setNombreSala("");
-    //     }
-    // }
+    
 
-    const setDatos = (sala)=>{
-        console.log(sala)
-        if(sala.descripcion_sala != "" || sala.nombre_sala != ""){
-                setDescripcion(sala.descripcion_sala);
-                setNombreSala(sala.nombre_sala);
-            
-        } else{
-            setDescripcion("");
-            setNombreSala("");
-        }
+    const setDatos = (datasala)=>
+    {
+
+        setDescripcion(datasala.descripcion_sala);
+        setNombreSala(datasala.nombre_sala);
     }
 
+    const setNombre =(e)=>
+    {
+        setNombreSala(e.target.value);
+        console.log(idSala)
+    }
+
+    const setDescripcionSala =(e)=>
+    {
+        setDescripcion(e.target.value);
+    }
+
+    const update = async (e) =>
+    {    
+        await axios.put("http://localhost:8000/api/sala/"+datasala.id+"?update=descripcion" , {
+            'nombre_sala':nombreSala,
+            'descripcion_sala': descripcion
+        });
+        setDatosSala(e);
+
+    }
+    
 
     return(
         <div className="containerModalEditarDescripcion">
-            <form action="">
+            <button onClick={ocultarModalDescripcion}>VOLVER</button>
+            {/* <form action=""> */}
                 <label htmlFor="nombreSala">
                     Nombre De La Sala
-                    <input type="text" id="nombreSala" value={descripcion}/>
+                    <input 
+                        type="text" 
+                        id="nombreSala" 
+                        value={nombreSala}
+                        onChange={setNombre}
+                    />
                 </label>
                 <label htmlFor="descripcionSala">
                     Descripción De La Sala
-                    <input type="text" id="descripcionSala" />
+                    <input 
+                        type="text" 
+                        id="descripcionSala" 
+                        value={descripcion} 
+                        onChange={setDescripcionSala}
+                    />
                 </label>
-
-            </form>
+                <button id={datasala.id} type="button" onClick={update}>Editar</button>
+            {/* </form> */}
         </div>
     )
 }
