@@ -7,7 +7,7 @@ import Paypal from '../assets/CheckOutNow/paypal.png';
 import Card from '../assets/CheckOutNow/tarjeta.png';
 import { BsArrowRight } from 'react-icons/bs';
 import { BsArrowLeft } from 'react-icons/bs';
-
+import Header from '../Header/header';
 
 export const CheckoutNow = () => {
 
@@ -27,6 +27,7 @@ export const CheckoutNow = () => {
 
   return (
     <section className='section_checkout'>
+      <Header />
       <div class="user_options-container">
         <div class="user_options-text">
           <div class="user_options-unregistered">
