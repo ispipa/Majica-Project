@@ -9,26 +9,28 @@ import PisoTres_Azul_SVG from './pisoTres_Azul_SVG';
 import MapaPequeno_piso1_SVG from './mapaPequeno_piso1_SVG';
 import MapaPequeno_piso2_SVG from './mapaPequeno_piso2_SVG';
 import MapaPequeno_piso3_SVG from './mapaPequeno_piso3_SVG';
-import { json } from 'react-router';
+import ModalEditarDescripcion from '../Modal/modalEditarDescripcionSala';
+import { set } from 'lodash';
+
 
 export default function Map() {
 
-    const [idSala, setIdsala] = useState(null);
     const [piso, setPiso] = useState(null);
+    const [usuario, setUsuario] = useState(0);
     const [precios, setPrecios] = useState([]);
+    const [idSala, setIdsala] = useState(null);
     const [volver, setVolver] = useState(false);
-    const [boleano, setBoleano] = useState(false);
+    const [dataSala, setdataSala] = useState("");
     const [verPiso1, setVerPiso1] = useState(false);
     const [verPiso2, setVerPiso2] = useState(false);
     const [verPiso3, setVerPiso3] = useState(false);
     const [verModal, setVerModal] = useState(false);
+    const [descripcion, setIDescripcion] = useState(false);
+    const [disponibilidad, setIDisponibilidad] = useState("");
     const [verMapaGrande1, setVerMapaGrande1] = useState(true);
     const [verMapaGrande2, setVerMapaGrande2] = useState(false);
     const [verMapaGrande3, setVerMapaGrande3] = useState(false);
-    const [disponibilidad, setIDisponibilidad] = useState("");
-    const [descripcion, setIDescripcion] = useState(false);
-    const [usuario, setUsuario] = useState(0);
-
+    const [EditarDescripcion, setEditarDescripcion] = useState(false);
 
     //HAGO UNA CONSULTA PARA PINTAR LAS SALAS OCUPADAS
     useEffect( () =>
@@ -48,7 +50,7 @@ export default function Map() {
             setUsuario("")
             pintarSalasCompradas("");
         }
-        pintarSalasOcupadas("add");
+        pintarSalasOcupadas();
     }
 
 
@@ -63,57 +65,61 @@ export default function Map() {
 
     //CONSULTA A LA BASE DE DATOS
     const setBaseDeDatos = async (id)=>{
-        const response = await axios.get("http://localhost:8000/api/sala/"+id);
-        const responseData = response.data;
-        setDatosSala(responseData)
+        const response = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=sala");
+        console.log(usuario)
+        console.log(response.data.usuarioSala)
+
+        if(response.data.usuarioSala === usuario){
+            const res = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=descripcion&idUsuario="+usuario);
+            const sala = res.data[0];
+            setdataSala(sala)//cambiar nonbre de funcion aaa
+            setDatosSala(sala)
+            mostrarModalEditarDescripcion(sala);
+            // setVerModal(false); //arreglar el estilo al
+            
+        } else{
+
+            const responseData = response.data;
+            setDatosSala(responseData)
+            
+        }
         pintarSalasOcupadas()
         
     }
     
     
     //SE PINTAN LAS SALAS OCUPADAS
-    const pintarSalasOcupadas  = async (add_remove, id)=>{
-        const response = await axios.get("http://localhost:8000/api/pago/all");
+    const pintarSalasOcupadas  = async ()=>{
+
+        const response = await axios.get("http://localhost:8000/api/sala");
         const salas = response.data;
+       
+        const pintar =  (min, max,)=>{
+            for(let i = min; max > i; i++){
 
-        salas.forEach(element => {
-            if(add_remove == "add"){
-                document.querySelector(".sala"+element.sala_pagos).classList.add("ocupado"); 
-            } else if (add_remove == "remove"){
-                document.querySelector(".sala"+id).classList.remove("ocupado"); 
+                if(salas.find(indice => indice.id === i).activo === "Ocupado"){
+                    document.querySelector(".sala"+i).classList.add("ocupado");  
+                }
+                else{
+                    document.querySelector(".sala"+i).classList.remove("ocupado");
+                }
             }
-        });
-
-        // const responsePago = await axios.get("http://localhost:8000/api/pago");
-        // const pago = responsePago.data;
-        // console.log(pago)
-
-
-        // const pintar =  (min, max,)=>{
-        //     for(let i = min; max > i; i++){
-
-        //         if(salas.find(indice => indice.id === i).activo === "Ocupado"){
-        //             document.querySelector(".sala"+i).classList.add("ocupado");  
-        //         }
-        //         else{
-        //             document.querySelector(".sala"+i).classList.remove("ocupado");
-        //         }
-        //     }
-        // }
+        }
         
-        // pintar(101,129);
-        // pintar(201,229);
-        // pintar(301,329);
+        pintar(101,129);
+        pintar(201,229);
+        pintar(301,329);
     }
     
 
 
     //PINTAR DE VERDE LAS SALAS COMPRADAS
     const pintarSalasCompradas = async (userId)=>{
-        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+userId);
+        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+userId);//tabla relacional
         const pagado = pagados.data;
         pagado.forEach(element => {
-            document.querySelector(".sala"+element.nombre_sala).classList.add("salaComprada");
+            document.querySelector(".sala"+element.sala_pagos).classList.add("salaComprada");
+            console.log(element)
         });
     }
     
@@ -121,23 +127,17 @@ export default function Map() {
 
     //SE OBTIENEN LOS DATOS DE LA SALA
     const setDatosSala = async (sala)=>{
-        //si la sala le pertenece al usuario logueado q ese usuario pueda editar la descripcion
-        // if(sala.activo === "Ocupado"){
-        //   const salaComprada = await axios.get("http://localhost:8000/api/pago/usuario?id="+usuario)
-        //   const a = salaComprada.data;
-        //   console.log(a)
-          
-        // }
-
+        mostrarModalEditarDescripcion(sala);
         setIDisponibilidad(sala.activo);
-        setIdsala(sala.nombre_sala);
+        // setIdsala(sala.nombre_sala);
+        setIdsala(sala.id);
         setPiso(sala.piso)
         setIDescripcion(sala.descripcion_sala);
         setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala})
     }
 
 
-    //MOSTAR EL MODAL
+    //MOSTAR EL MODAL SALA
     const setModal = ()=>{
         setIdsala("");
         setVolver(true);//boton de volver
@@ -146,6 +146,19 @@ export default function Map() {
         setPrecios([""])
         document.querySelector(".botonesPisos").classList.add("displayFlex");
         document.querySelector(".containerMapaGrande").classList.add("paddingBottom");
+    }
+
+    //MOSTAR EL MODAL DE EDITAR LA DESCRIPCION DE LA SALA
+    const mostrarModalEditarDescripcion = (salaData)=>{
+        
+        if(salaData.usuarioSala === usuario){
+            setEditarDescripcion(true);
+        }
+      
+    }
+
+    const ocultarModalDescripcion =()=>{
+        setEditarDescripcion(false);
     }
 
 
@@ -258,6 +271,14 @@ export default function Map() {
                         alt="logo virtual museum"
                         className='logo' />
                 </aside>
+            </div>
+            <div className={EditarDescripcion === true? 'modalEditarDescripcionVisible' : 'modalEditarDescripcion'}>
+                <ModalEditarDescripcion  
+                    id={idSala} 
+                    datasala={dataSala} 
+                    ocultarModalDescripcion={ocultarModalDescripcion}
+                    setDatosSala={setId}
+                    />
             </div>
         </section>
     )

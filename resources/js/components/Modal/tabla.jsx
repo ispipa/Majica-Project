@@ -15,10 +15,10 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
     //SUMO TODOS LOS PRECIOS DE ARRAY
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
+    //REDIRECCIONAR A PAGAR
 
     const [seconds, setSeconds] = useState(0)
     const [minutes, setMinutes] = useState(15)
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (precios.length >= 1) {
@@ -44,7 +44,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setMinutes(15);
         }
     },)
-    // console.log(seconds);
+
     const comprobarUsuario = () => {
         ( localStorage.getItem('user') && localStorage.getItem('token') ) === null ?
         alert("Debe iniciar sesión para realizar la reserva") :
@@ -66,6 +66,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                 toast.error('Hubo un problema. Intenta más tarde.');
             })
     }
+
     return (
         <div className='containerPadrePagar'>
             <Toaster />

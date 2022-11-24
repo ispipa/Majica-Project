@@ -33,7 +33,7 @@ class RegisterRequest extends FormRequest
             'artist' => 'required|string',
             'type_of_art' => 'required|string',
             'description_sala' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
         ];
     }
 }
