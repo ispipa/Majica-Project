@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('nombre_sala',50);
             $table->string('descripcion_sala',50);
             //$table->set('precio_sala',['0','1','2'])->index();
+            $table->foreignId('piso')->constrained('pisos');
             $table->set('precio_sala',['0','1','2']);
             $table->enum('activo',['Disponible','Ocupado'])->default('Disponible');
             $table->string('usuarioSala',50)->default('0');
-            // $table->foreignId('usuarioSala')->constrained('users');
             $table->timestamps();
         });
     }

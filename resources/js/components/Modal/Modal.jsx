@@ -58,7 +58,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
     
     //AGREGAR
     const agregar = async ()=>{
-       
+        console.log(usuario)
         document.querySelector(".botonAgregar").classList.add("button__loader");
        
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
