@@ -62,20 +62,20 @@ export default function Map() {
 
     }
 
-
+    
     //CONSULTA A LA BASE DE DATOS
     const setBaseDeDatos = async (id)=>{
         const response = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=sala");
-        console.log(usuario)
-        console.log(response.data.usuarioSala)
+        console.log(usuario);
+        console.log(response.data.usuarioSala);
 
-        if(response.data.usuarioSala === usuario){
+        if(response.data.usuarioSala == usuario){
             const res = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=descripcion&idUsuario="+usuario);
             const sala = res.data[0];
-            setdataSala(sala)//cambiar nonbre de funcion aaa
+            setdataSala(sala)
             setDatosSala(sala)
             mostrarModalEditarDescripcion(sala);
-            // setVerModal(false); //arreglar el estilo al
+    
             
         } else{
 
@@ -119,7 +119,6 @@ export default function Map() {
         const pagado = pagados.data;
         pagado.forEach(element => {
             document.querySelector(".sala"+element.sala_pagos).classList.add("salaComprada");
-            console.log(element)
         });
     }
     
@@ -151,7 +150,7 @@ export default function Map() {
     //MOSTAR EL MODAL DE EDITAR LA DESCRIPCION DE LA SALA
     const mostrarModalEditarDescripcion = (salaData)=>{
         
-        if(salaData.usuarioSala === usuario){
+        if(salaData.usuarioSala == usuario){
             setEditarDescripcion(true);
         }
       
@@ -278,6 +277,7 @@ export default function Map() {
                     datasala={dataSala} 
                     ocultarModalDescripcion={ocultarModalDescripcion}
                     setDatosSala={setId}
+                    set={set}
                     />
             </div>
         </section>
