@@ -9,7 +9,7 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import { useSubmit } from 'react-router-dom';
 
 
-const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
+const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
                    setVerModal, setVolver, setId, descripcion, precio1, precio2, }) => {
 
                        
@@ -201,7 +201,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
                                 </h1>
                                 <h1
                                     style={{opacity: id != "" ? "1" : "0" }}>
-                                    {id}
+                                    {nombreSala}
                                 </h1>
                             </div>
                             <h1

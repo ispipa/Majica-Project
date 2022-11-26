@@ -19,6 +19,7 @@ export default function Map() {
     const [usuario, setUsuario] = useState(0);
     const [precios, setPrecios] = useState([]);
     const [idSala, setIdsala] = useState(null);
+    const [nombreSala, setNombresala] = useState(null);
     const [volver, setVolver] = useState(false);
     const [dataSala, setdataSala] = useState("");
     const [verPiso1, setVerPiso1] = useState(false);
@@ -75,9 +76,8 @@ export default function Map() {
             setdataSala(sala)
             setDatosSala(sala)
             mostrarModalEditarDescripcion(sala);
-    
-            
-        } else{
+        } 
+        else{
 
             const responseData = response.data;
             setDatosSala(responseData)
@@ -130,6 +130,7 @@ export default function Map() {
         setIDisponibilidad(sala.activo);
         // setIdsala(sala.nombre_sala);
         setIdsala(sala.id);
+        setNombresala(sala.nombre_sala);
         setPiso(sala.piso)
         setIDescripcion(sala.descripcion_sala);
         setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala})
@@ -210,6 +211,7 @@ export default function Map() {
             </div>
             <Modal
                 id={idSala}
+                nombreSala={nombreSala}
                 volver={volver}
                 setId={setId}
                 verModal={verModal}
