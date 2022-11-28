@@ -33,15 +33,15 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     }, [id, usuario])
 
     
-    //CONSULTA A LA BASE DE DATOS
+    //CONSULTA A LA BASE DE DATOS 
     const dataBase = async () => {
         setPrecio("");
         setcheck("");
+        //Se obtiene los datos del Carrito de compras
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
-        const usuarioData = response.data.reverse();
-        setContadorCompra(usuarioData.length)
-        setRegistros(usuarioData)
-        console.log(usuarioData)
+        const carritoCompra = response.data.reverse();
+        setContadorCompra(carritoCompra.length);
+        setRegistros(carritoCompra);
 
     }
 
@@ -55,11 +55,9 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 
     //AGREGAR
     const agregar = async ()=>{
-        console.log(usuario)
         document.querySelector(".botonAgregar").classList.add("button__loader");
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const sala = response.data;
-        console.log(sala)
         //Si no ha seleccionado un precio, mando un alerta.
         if (precio == "" )
         {
@@ -82,6 +80,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             setcheck("");
             dataBase();
             checkVerifiqued();
+            pintarSalasOcupadas()
             
             
         }

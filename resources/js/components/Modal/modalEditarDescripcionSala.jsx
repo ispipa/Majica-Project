@@ -13,7 +13,6 @@ export default function ModalEditarDescripcion ({datasala,ocultarModalDescripcio
     useEffect(() =>
     {
         setDatos(datasala);
-        console.log(datasala);
     }, [datasala]);
 
     

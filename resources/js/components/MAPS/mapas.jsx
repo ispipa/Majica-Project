@@ -42,10 +42,9 @@ export default function Map() {
     //SE OBTIENE LOS DATOS DEL USUARIO LOGUEADO DESDE EL LOCALSTORAGE
     const usuariaData = ()=>{
         if(localStorage.getItem("user")){
-             const user = JSON.parse(localStorage.getItem("user"));
+            const user = JSON.parse(localStorage.getItem("user"));
             pintarSalasCompradas(user.id);
-            setUsuario(user.id)
-            console.log(usuario)
+            setUsuario(user.id);
             
         } else{
             setUsuario("")
@@ -122,7 +121,7 @@ export default function Map() {
     
 
 
-    //SE OBTIENEN LOS DATOS DE LA SALA
+    //SE OBTIENEN TODOS LOS DATOS DE LA SALA
     const setDatosSala = (sala)=>{
         mostrarModalEditarDescripcion(sala);
         setIDisponibilidad(sala.activo);
@@ -135,7 +134,7 @@ export default function Map() {
     }
 
 
-    //MOSTAR EL MODAL SALA
+    //MOSTAR MODAL CON LA DESCRIPCION Y LOS PRECIOS DE LA SALA
     const setModal = ()=>{
         setIdsala("");
         setVolver(true);//boton de volver
@@ -148,11 +147,9 @@ export default function Map() {
 
     //MOSTAR EL MODAL DE EDITAR LA DESCRIPCION DE LA SALA
     const mostrarModalEditarDescripcion = (salaData)=>{
-        
         if(salaData.usuarioSala == usuario){
             setEditarDescripcion(true);
         }
-      
     }
 
     const ocultarModalDescripcion =()=>{
