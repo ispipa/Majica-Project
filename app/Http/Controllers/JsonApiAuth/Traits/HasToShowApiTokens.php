@@ -20,7 +20,7 @@ trait HasToShowApiTokens
                 'email' => $user->email,
                 'artist' => $user->artist,
                 'type_of_art' => $user->type_of_art,
-                'description' => $user->description,
+                'description_user' => $user->description_user,
                 'image' => asset($user->image),
                 'telephone' => $user->telephone,
                 'address' => $user->address

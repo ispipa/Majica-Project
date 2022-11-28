@@ -68,6 +68,8 @@ export const Main = () => {
     const Sign_up = (e) => {
         e.preventDefault();
         const data = new FormData();
+        const des = e.target.descripcion.value;
+        console.log(des)
         data.append('name', e.target.nombre.value);
         data.append('last_name', e.target.apellidos.value);
         data.append('email', e.target.email.value);
@@ -76,10 +78,8 @@ export const Main = () => {
         data.append('address', e.target.dirección.value);
         data.append('artist', e.target.tipo_de_artista.value);
         data.append('type_of_art', e.target.tipo_de_arte.value);
-        data.append('description_sala', e.target.descripción.value);
+        data.append('description_user', des);
         data.append('image', e.target.img.files[0]);
-        console.log(data);
-
         axios.post("http://127.0.0.1:8000/api/register", data)
         .then(res => {
             if (res.data.message === 'success') {
@@ -103,7 +103,7 @@ export const Main = () => {
 
     return (
         <div>
-       
+
             <div className={sign ? "container sign-up-mode" : "container"}>
                 <div className="forms-container">
                     <div className="signin-signup">
@@ -300,7 +300,7 @@ export const Main = () => {
                                         style={{ gridArea: "area9" }}
                                     >
                                         <i className="fas fa-user"></i>
-                                        <textarea id="descripción" name="descripción" rows="4" cols="50" placeholder="Descripción" required></textarea>
+                                        <textarea  name="descripcion" rows="4" cols="50" placeholder="Descripción" required></textarea>
                                     </div>
                                 </div>
 

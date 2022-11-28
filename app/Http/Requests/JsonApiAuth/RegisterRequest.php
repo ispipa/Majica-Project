@@ -11,7 +11,7 @@ class RegisterRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string|max:255',
@@ -32,8 +32,8 @@ class RegisterRequest extends FormRequest
             'address' => 'required|string',
             'artist' => 'required|string',
             'type_of_art' => 'required|string',
-            'description_sala' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg',
+            'description_user' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }
