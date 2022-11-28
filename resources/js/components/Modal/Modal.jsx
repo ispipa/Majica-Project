@@ -18,7 +18,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const [check, setcheck] = useState("");
     const [precio, setPrecio] = useState("");
     const [errorr, setError] = useState(false);
-    const [registros, setRegistros] = useState([]);
+    const [carrito, setCarrito] = useState([]);
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [contadorCompra, setContadorCompra] = useState(0);
     // const [usuario, setUsuario] = useState(0);
@@ -30,7 +30,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     
         dataBase();
 
-    }, [id, usuario])
+    }, [usuario])
 
     
     //CONSULTA A LA BASE DE DATOS 
@@ -41,7 +41,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const carritoCompra = response.data.reverse();
         setContadorCompra(carritoCompra.length);
-        setRegistros(carritoCompra);
+        setCarrito(carritoCompra);
 
     }
 
@@ -51,6 +51,22 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setcheck(e.target.id)
         setPrecio(e.target.value)
     }
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //AGREGAR
@@ -66,21 +82,23 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         // Si el registro aun no existe en la base de datos, lo agrego.
         else if (sala.findIndex(element => element.sala_pagos == id) < 0)
         {
-            axios.post('http://localhost:8000/api/pago', {
+
+            const dataSala = {
                 'usuario': usuario,
                 'pagado': 'false',
-                'precio':precio,
-                'piso':piso,
-                'sala':id
-            });
-            estadoSala("Ocupado", id)
-            // Reinicio los checkboxes
+                'precio_pagos':precio,
+                'piso_pagos':piso,
+                'sala_pagos':id
+            }
+            
+            setCarrito([...carrito, dataSala]);
+            agregoAlCarrito_BD(dataSala);
+            estadoSala("Ocupado", id);
+            pintarSalasOcupadas()
             setError(false);
             setPrecio("");
             setcheck("");
-            dataBase();
             checkVerifiqued();
-            pintarSalasOcupadas()
             
             
         }
@@ -92,9 +110,11 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             checkVerifiqued();
         }
     }
-
    
-
+    const agregoAlCarrito_BD = async (dataSala)=>{
+        console.log(dataSala)
+      await  axios.post('http://localhost:8000/api/pago', dataSala);
+    }
 
     //EDITAR
     const editar = (sala) =>
@@ -131,7 +151,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setTimeout(function() {
             setCheckAgregado(true);
             document.querySelector(".botonAgregar").classList.remove("button__loader");
-         }, 500);
+         }, 0);
          
         setTimeout(function() {
             checkFalse();
@@ -284,7 +304,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             </div>
             <div className={mostrarTabla === true ? 'tablaCompra': 'tablaCompra MostrartablaCompra'}>
                 <FormularioPago
-                    datos={registros}
+                    datos={carrito}
                     eliminar={eliminar}
                     setId={setId}
                     ocultarTablaPagar={ocultarTablaPagar}

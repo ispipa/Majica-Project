@@ -6,6 +6,10 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar }) {
 
+
+    
+
+
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
     const precios = [];
     //RECORRO EL ARRAY DE PRECIOS
@@ -15,8 +19,11 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
     //SUMO TODOS LOS PRECIOS DE ARRAY
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-    //REDIRECCIONAR A PAGAR
 
+
+
+
+    //REDIRECCIONAR A PAGAR
     const [seconds, setSeconds] = useState(0)
     const [minutes, setMinutes] = useState(15)
 
@@ -43,6 +50,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setSeconds(0);
             setMinutes(15);
         }
+        
        
     },)
 
