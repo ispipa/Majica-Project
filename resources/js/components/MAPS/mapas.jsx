@@ -36,16 +36,16 @@ export default function Map() {
     //HAGO UNA CONSULTA PARA PINTAR LAS SALAS OCUPADAS
     useEffect( () =>
     {
-        usuarioLogueado();
+        usuariaData();
     },[]);
 
-    
-    const usuarioLogueado = ()=>{
-          
+    //SE OBTIENE LOS DATOS DEL USUARIO LOGUEADO DESDE EL LOCALSTORAGE
+    const usuariaData = ()=>{
         if(localStorage.getItem("user")){
-            const user = JSON.parse(localStorage.getItem("user"));
+             const user = JSON.parse(localStorage.getItem("user"));
             pintarSalasCompradas(user.id);
             setUsuario(user.id)
+            console.log(usuario)
             
         } else{
             setUsuario("")
@@ -55,7 +55,7 @@ export default function Map() {
     }
 
 
-    //SE OBTINEN EL ID DE LA SALA
+    //AL HACER CLICK EN UNA SALA SE OBTINEN EL ID DE LA SALA
     const setId =  (e) => {
         const id = parseInt(e.target.id);
         setBaseDeDatos(id);
@@ -67,18 +67,16 @@ export default function Map() {
     //CONSULTA A LA BASE DE DATOS
     const setBaseDeDatos = async (id)=>{
         const response = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=sala");
-        console.log(usuario);
-        console.log(response.data.usuarioSala);
-
+        //Si la sala esta pagada y le pertenece al usuario logueado 
+        //al hacer click sobre ella se mostrara un modal que le permita editar la descripcion.
         if(response.data.usuarioSala == usuario){
             const res = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=descripcion&idUsuario="+usuario);
             const sala = res.data[0];
-            setdataSala(sala)
+            // setdataSala(sala)
             setDatosSala(sala)
             mostrarModalEditarDescripcion(sala);
         } 
         else{
-
             const responseData = response.data;
             setDatosSala(responseData)
             
@@ -125,10 +123,10 @@ export default function Map() {
 
 
     //SE OBTIENEN LOS DATOS DE LA SALA
-    const setDatosSala = async (sala)=>{
+    const setDatosSala = (sala)=>{
         mostrarModalEditarDescripcion(sala);
         setIDisponibilidad(sala.activo);
-        // setIdsala(sala.nombre_sala);
+        setdataSala(sala)
         setIdsala(sala.id);
         setNombresala(sala.nombre_sala);
         setPiso(sala.piso)

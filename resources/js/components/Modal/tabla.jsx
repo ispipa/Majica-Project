@@ -43,6 +43,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setSeconds(0);
             setMinutes(15);
         }
+       
     },)
 
     const comprobarUsuario = () => {
@@ -53,7 +54,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
         }).then(res => navigate('/CheckoutNow'))
             .catch(err => {
                 enviarEmail();
-            })
+        })
     }
 
     const enviarEmail = () => {

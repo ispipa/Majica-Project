@@ -13,7 +13,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                    setVerModal, setVolver, setId, descripcion, precio1, precio2, }) => {
 
                        
-                       //ESTADOS---
+    //ESTADOS---
     const [checkAgregado, setCheckAgregado] = useState(false);
     const [check, setcheck] = useState("");
     const [precio, setPrecio] = useState("");
@@ -29,8 +29,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     {
     
         dataBase();
-        
-    }, [id])
+
+    }, [id, usuario])
 
     
     //CONSULTA A LA BASE DE DATOS
@@ -41,6 +41,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         const usuarioData = response.data.reverse();
         setContadorCompra(usuarioData.length)
         setRegistros(usuarioData)
+        console.log(usuarioData)
 
     }
 
@@ -52,15 +53,10 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     }
 
 
-
-
-
-    
     //AGREGAR
     const agregar = async ()=>{
         console.log(usuario)
         document.querySelector(".botonAgregar").classList.add("button__loader");
-       
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const sala = response.data;
         console.log(sala)
@@ -102,29 +98,28 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 
 
     //EDITAR
-    const editar = async (sala) =>
+    const editar = (sala) =>
     {
         //optengo el id de la sala que se va a editar
         const idSalaUpdate = sala.find(element => element.sala_pagos == id).id
-        await axios.put("http://localhost:8000/api/pago/"+idSalaUpdate , {
+        axios.put("http://localhost:8000/api/pago/"+idSalaUpdate , {
             'precio': precio,
             'pagado': 'false'
         });
     }
 
     //ELIMINAR
-    const eliminar = async (idSalaDelete) =>
+    const eliminar = (idSalaDelete) =>
     {
-        await axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
+        axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
         dataBase();
         estadoSala("Disponible",idSalaDelete);
      
     }
 
 
-    const estadoSala = async (disponibilidad,id)=>{
-        // http://localhost:8000/api/sala/103?update=estado
-        await axios.put("http://localhost:8000/api/sala/"+id+"?update=estado" , {
+    const estadoSala =  (disponibilidad,id)=>{
+         axios.put("http://localhost:8000/api/sala/"+id+"?update=estado" , {
           "activo": disponibilidad,
         });
         pintarSalasOcupadas();
