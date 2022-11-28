@@ -5,7 +5,7 @@
 @import url(modal.css);
 @import url(tabla.css);
 @import url(modalEditarDescripcion.css);
-
+@import url(checkout.css);
 :root{
     --hover:rgb(155, 155, 155);
 
