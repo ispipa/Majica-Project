@@ -4,7 +4,7 @@ import { useState } from "react";
 import { update } from "lodash";
 
 
-export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDescripcion,setDatosSala}) {
+export default function ModalEditarDescripcion ({datasala,ocultarModalDescripcion,setDatosSala}) {
  
     const [descripcion, setDescripcion] = useState("");
     const [nombreSala, setNombreSala] = useState("");
@@ -13,14 +13,13 @@ export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDes
     useEffect(() =>
     {
         setDatos(datasala);
-        
+        console.log(datasala);
     }, [datasala]);
 
     
 
     const setDatos = (datasala)=>
     {
-
         setDescripcion(datasala.descripcion_sala);
         setNombreSala(datasala.nombre_sala);
     }
@@ -28,7 +27,6 @@ export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDes
     const setNombre =(e)=>
     {
         setNombreSala(e.target.value);
-        console.log(idSala)
     }
 
     const setDescripcionSala =(e)=>
@@ -38,11 +36,17 @@ export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDes
 
     const update = async (e) =>
     {    
-        await axios.put("http://localhost:8000/api/sala/"+datasala.id+"?update=descripcion" , {
-            'nombre_sala':nombreSala,
-            'descripcion_sala': descripcion
-        });
-        setDatosSala(e);
+        const inputNombre = document.querySelector(".inputNombre").value;
+        const inputDescripcion = document.querySelector(".inputDescripcion").value;
+        if(inputNombre != "" && inputDescripcion != ""){
+            await axios.put("http://localhost:8000/api/sala/"+datasala.id+"?update=descripcion" , {
+                'nombre_sala':nombreSala,
+                'descripcion_sala': descripcion
+            });
+            setDatosSala(e);
+        } else{
+            alert("Debe rellenar los dos campos")
+        }
 
     }
     
@@ -58,6 +62,7 @@ export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDes
                         id="nombreSala" 
                         value={nombreSala}
                         onChange={setNombre}
+                        className="inputNombre"
                     />
                 </label>
                 <label htmlFor="descripcionSala" className="inputs1">
@@ -67,13 +72,16 @@ export default function ModalEditarDescripcion ({idSala,datasala,ocultarModalDes
                         id="descripcionSala" 
                         value={descripcion} 
                         onChange={setDescripcionSala}
+                        className="inputDescripcion"
                     />
                 </label>
                 <button  
                     className="botonEditarDescripcion" 
                     id={datasala.id} 
                     ype="button" 
-                    onClick={update}>
+                    onClick={update}
+                    
+                    >
                     Editar
                 </button>
             {/* </form> */}

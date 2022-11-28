@@ -9,7 +9,7 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import { useSubmit } from 'react-router-dom';
 
 
-const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
+const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
                    setVerModal, setVolver, setId, descripcion, precio1, precio2, }) => {
 
                        
@@ -58,7 +58,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
     
     //AGREGAR
     const agregar = async ()=>{
-       
+        console.log(usuario)
         document.querySelector(".botonAgregar").classList.add("button__loader");
        
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
@@ -201,7 +201,7 @@ const Modal = ({ id, piso, disponibilidad, verModal, volver, usuario, pintarSala
                                 </h1>
                                 <h1
                                     style={{opacity: id != "" ? "1" : "0" }}>
-                                    {id}
+                                    {nombreSala}
                                 </h1>
                             </div>
                             <h1
