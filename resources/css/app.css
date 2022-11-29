@@ -6,26 +6,26 @@
 @import url(tabla.css);
 @import url(modalEditarDescripcion.css);
 @import url(checkout.css);
-:root{
-    --hover:rgb(155, 155, 155);
 
+:root {
+    --hover: rgb(155, 155, 155);
 }
+
 .texto {
     fill: #3d3d3d;
 }
 
-.salaUno:hover  {
-    fill:var(--hover);
+.salaUno:hover {
+    fill: var(--hover);
     cursor: pointer;
 }
 
 .salaDos:hover {
-    fill:var(--hover);
+    fill: var(--hover);
     cursor: pointer;
 }
 
 .salaTres:hover {
-    fill:var(--hover);
+    fill: var(--hover);
     cursor: pointer;
 }
-
