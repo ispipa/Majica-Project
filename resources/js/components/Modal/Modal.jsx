@@ -61,6 +61,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         if (precio == "" )
         {
             setError(true);
+            document.querySelector(".botonAgregar").classList.remove("button__loader");
         }
         // Si el registro aun no existe en la base de datos, lo agrego.
         else if (sala.findIndex(element => element.sala_pagos == id) < 0)

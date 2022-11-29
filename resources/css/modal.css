@@ -258,7 +258,6 @@
     border-radius: 20px;
     font-size: 20px;
     display: flex;
-    /* transition: 1s; */
     width: auto;
     min-width: 30px;
     height: 37px;
@@ -269,7 +268,6 @@
 .modalAbvertencia{
     color: rgb(0, 0, 0);
     font-weight: 700;
-    /* margin-left: 15px; */
     margin-bottom: 10px;
     border: 3px solid rgb(255, 255, 255);
     background-color: #ffffff;
@@ -277,6 +275,13 @@
     border-radius: 20px;
     font-size: 20px;
     display: flex;
+    /* transition: 1s; */
+    width: auto;
+    min-width: 30px;
+    height: 37px;
+
+
+
     -webkit-animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
     animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 
