@@ -12,7 +12,6 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
     useEffect(() =>
     {
         setDatos(datasala);
-        console.log(datasala)
     }, [datasala]);
 
     
