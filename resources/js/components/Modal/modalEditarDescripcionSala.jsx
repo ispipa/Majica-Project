@@ -1,7 +1,7 @@
-import { GrDatabase } from "react-icons/gr";
-import { useEffect } from "react";
-import { useState } from "react";
-import { update } from "lodash";
+import { CgClose } from "react-icons/cg";
+import { BsPencilSquare} from "react-icons/bs";
+
+import { useEffect, useState  } from "react";
 
 
 export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocultarModalDescripcion,setDatosSala}) {
@@ -57,10 +57,12 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
 
     return(
         <div className="containerModalEditarDescripcion">
-            <button onClick={ocultarModalDescripcion}>VOLVER</button>
-            {/* <form action=""> */}
-                <label htmlFor="nombreSala" className="inputs1">
-                    Nombre De La Sala
+                <button className="btnVolver" onClick={ocultarModalDescripcion} ><CgClose/></button>
+       
+           
+           
+                <label htmlFor="nombreSala" className="inputs1" value="">
+                    <p> Nombre De La Sala: </p>
                     <input 
                         type="text" 
                         id="nombreSala" 
@@ -69,16 +71,16 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
                         className="inputNombre"
                     />
                 </label>
-                <label htmlFor="descripcionSala" className="inputs1">
-                    Descripción De La Sala
-                    <input 
+        
+                    <p className="pDescripcion">Descripción De La Sala:</p>   
+                    <textarea 
                         type="text" 
                         id="descripcionSala" 
                         value={descripcion} 
                         onChange={setDescripcionSala}
                         className="inputDescripcion"
                     />
-                </label>
+               
                 <button  
                     className="botonEditarDescripcion" 
                     id={datasala.id} 
@@ -86,9 +88,9 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
                     onClick={update}
                     
                     >
-                    Editar
+                    <p>Editar</p> <BsPencilSquare/>
                 </button>
-            {/* </form> */}
+           
         </div>
     )
 }
