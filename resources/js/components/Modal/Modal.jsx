@@ -119,6 +119,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setCarrito(salaDelete);
         axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
         estadoSala("Disponible",idSalaDelete);
+        pintarSalasOcupadas();
      
     }
 
@@ -141,7 +142,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
          
         setTimeout(function() {
             checkFalse();
-         }, 4000);
+         }, 2000);
 
          const checkFalse = ()=>{
             setCheckAgregado(false);
