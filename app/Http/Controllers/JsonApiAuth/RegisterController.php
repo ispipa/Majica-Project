@@ -29,7 +29,7 @@ class RegisterController
                  'address' => $request->get('address'),
                  'artist' => $request->get('artist'),
                  'type_of_art' => $request->get('type_of_art'),
-                 'description_user' => $request->get('description_user'),
+                 'description_sala' => $request->get('description'),
                  'image' => $this->uploadImage($request->file('image')),
              ]);
 
@@ -49,7 +49,7 @@ class RegisterController
         }
     }
 
-    private function uploadImage($file): string
+    public function uploadImage($file)
     {
 
                 $destinationPath = 'images/';
