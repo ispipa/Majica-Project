@@ -1,35 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
-html {
-    background: linear-gradient(142deg, #1b5ca7 10%, #d52b5c 39%, #10001d 90%);
-    height: 100%;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-.modalRegister {
-    position: fixed;
-    top: 20px;
-    font-size: 16px;
-    right: -400px;
-    background-color: #ffffff;
-    color: rgb(77, 77, 77);
-    font-weight: 600;
-    padding: 20px;
-    z-index: 1100;
-    border-radius: 15px;
-    max-width: 320px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    transition: .3s;
-}
-
-.modalRegisterVisible {
-    right: 20px;
-    transition: .3s;
 }
 
 body,
@@ -48,15 +22,11 @@ input {
     overflow: hidden;
     object-fit: cover;
     object-position: center;
-    background: #d52b5c;
 }
 
 
 .preliminar {
     width: 100%;
-    position: absolute;
-
-    height: 100%;
 }
 
 .LogoPreliminar {
@@ -130,8 +100,7 @@ form.sign-in-form {
         "area1 area2"
         "area3 area4"
         "area5 area6"
-        "area7 area8"
-        "area9 area9";
+        "area7 area7";
 }
 
 .content-input {
@@ -204,7 +173,7 @@ textarea {
 
 .input-field-textarea {
     padding: 0 0.4rem;
-    height: 108px;
+    height: 150px;
     overflow: hidden;
 }
 
@@ -643,12 +612,6 @@ textarea {
     }
 }
 
-.foto input[type=file] {
-    transform: translate3d(-11px, 24px, 0px);
-    opacity: 0;
-    z-index: 55;
-    position: absolute;
-}
 
 input[type=file]::-webkit-file-upload-button {
     border: none;
@@ -656,25 +619,18 @@ input[type=file]::-webkit-file-upload-button {
     border-radius: 30px !important;
     padding: 15px 15px;
     font-size: 0.9rem;
-    font-weight: 900;
+    font-weight: 600;
     cursor: pointer;
     margin-right: 30px;
     color: #fff;
 }
 
-.pinput {
-    overflow: auto;
-    margin: 28px 11px;
-    color: white;
-    z-index: 1;
-    font-family: "Poppins", sans-serif;
-    font-weight: 800;
-    font-size: 30px;
-    position: absolute;
-}
-
-.preliminar-v {
-    display: none;
+input[type=file] {
+    padding: 10px 10px;
+    background-color: #f0f0f0;
+    border-radius: 55px;
+    cursor: pointer !important;
+    width: 100%;
 }
 
 .forgotPass {
