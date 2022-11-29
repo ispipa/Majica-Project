@@ -12,7 +12,6 @@ import MapaPequeno_piso3_SVG from './mapaPequeno_piso3_SVG';
 import ModalEditarDescripcion from '../Modal/modalEditarDescripcionSala';
 import { set } from 'lodash';
 
-
 export default function Map() {
 
     const [piso, setPiso] = useState(null);
@@ -59,10 +58,9 @@ export default function Map() {
         const id = parseInt(e.target.id);
         setBaseDeDatos(id);
         setModal()
-
     }
 
-    
+
     //CONSULTA A LA BASE DE DATOS
     const setBaseDeDatos = async (id)=>{
         const response = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=sala");
@@ -71,29 +69,23 @@ export default function Map() {
         if(response.data.usuarioSala == usuario){
             const res = await axios.get("http://localhost:8000/api/sala/"+id+"?sala=descripcion&idUsuario="+usuario);
             const sala = res.data[0];
-            // setdataSala(sala)
             setDatosSala(sala)
             mostrarModalEditarDescripcion(sala);
         } 
         else{
             const responseData = response.data;
             setDatosSala(responseData)
-            
         }
         pintarSalasOcupadas()
-        
     }
     
     
     //SE PINTAN LAS SALAS OCUPADAS
     const pintarSalasOcupadas  = async ()=>{
-
         const response = await axios.get("http://localhost:8000/api/sala");
         const salas = response.data;
-       
         const pintar =  (min, max,)=>{
             for(let i = min; max > i; i++){
-
                 if(salas.find(indice => indice.id === i).activo === "Ocupado"){
                     document.querySelector(".sala"+i).classList.add("ocupado");  
                 }
@@ -102,13 +94,11 @@ export default function Map() {
                 }
             }
         }
-        
         pintar(101,129);
         pintar(201,229);
         pintar(301,329);
     }
     
-
 
     //PINTAR DE VERDE LAS SALAS COMPRADAS
     const pintarSalasCompradas = async (userId)=>{
@@ -120,7 +110,6 @@ export default function Map() {
     }
     
 
-
     //SE OBTIENEN TODOS LOS DATOS DE LA SALA
     const setDatosSala = (sala)=>{
         mostrarModalEditarDescripcion(sala);
@@ -131,6 +120,13 @@ export default function Map() {
         setPiso(sala.piso)
         setIDescripcion(sala.descripcion_sala);
         setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala})
+    }
+
+    //EDITAR NOMBRE Y DESCRIPCION DE LA SALA
+    const updateDescripcion = (nombreSala,descripcion) => {
+        setNombresala(nombreSala);
+        setIDescripcion(descripcion);
+        ocultarModalDescripcion();
     }
 
 
@@ -155,7 +151,6 @@ export default function Map() {
     const ocultarModalDescripcion =()=>{
         setEditarDescripcion(false);
     }
-
 
 
     //SE OCULTAN Y SE MUESTRAN LOS MAPAS GRANDES Y PEQUEÑOS
@@ -184,8 +179,6 @@ export default function Map() {
         setVerMapaGrande3(true);
     }
 
-
-
     return (
         <section className='seccionMapas'>
             <div className='headerMovil'>
@@ -207,6 +200,7 @@ export default function Map() {
             <Modal
                 id={idSala}
                 nombreSala={nombreSala}
+                descripcion={descripcion}
                 volver={volver}
                 setId={setId}
                 verModal={verModal}
@@ -215,7 +209,6 @@ export default function Map() {
                 precio1={precios.precio1}
                 precio2={precios.precio2}
                 disponibilidad={disponibilidad}
-                descripcion={descripcion}
                 piso={piso}
                 usuario={usuario}
                 pintarSalasOcupadas={pintarSalasOcupadas}
@@ -274,6 +267,7 @@ export default function Map() {
                     datasala={dataSala} 
                     ocultarModalDescripcion={ocultarModalDescripcion}
                     setDatosSala={setId}
+                    updateDescripcion={updateDescripcion}
                     set={set}
                     />
             </div>

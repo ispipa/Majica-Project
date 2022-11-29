@@ -21,16 +21,12 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const [carrito, setCarrito] = useState([]);
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [contadorCompra, setContadorCompra] = useState(0);
-    // const [usuario, setUsuario] = useState(0);
-
+   
  
-    
     useEffect(() =>
     {
-    
         dataBase();
-
-    }, [usuario])
+    }, [usuario]);
 
     
     //CONSULTA A LA BASE DE DATOS 
@@ -66,7 +62,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         // Si el registro aun no existe en la base de datos, lo agrego.
         else if (sala.findIndex(element => element.sala_pagos == id) < 0)
         {
-
             const dataSala = {
                 'usuario': usuario,
                 'pagado': 'false',
@@ -84,8 +79,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             setcheck("");
             checkVerifiqued();
             setContadorCompra(contadorCompra + 1);
-            
-            
         }
         //Si el registro ya existe en la base de datos, edito el precio
         else
@@ -96,10 +89,13 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         }
     }
    
+
+    //AGREGAR AL CARRITO EN LA BASE DE DATOS
     const agregoAlCarrito_BD =  (dataSala)=>{
         console.log(dataSala)
         axios.post('http://localhost:8000/api/pago', dataSala);
     }
+
 
     //EDITAR
     const editar = (sala) =>
@@ -112,26 +108,25 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         });
     }
 
+
     //ELIMINAR
     const eliminar = (idSalaDelete) =>
     {  
-       
         const salaDelete = carrito.filter(element => element.sala_pagos !== idSalaDelete)
         setCarrito(salaDelete);
         axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
         estadoSala("Disponible",idSalaDelete);
         pintarSalasOcupadas();
         setContadorCompra(contadorCompra - 1);
-     
     }
 
 
+    //FUNCION PARA CAMBIAR EL ESTADO DE LA SALA ( Disponible / Ocupado )
     const estadoSala =  (disponibilidad,id)=>{
          axios.put("http://localhost:8000/api/sala/"+id+"?update=estado" , {
           "activo": disponibilidad,
         });
         pintarSalasOcupadas();
-        
     }
 
 
@@ -151,6 +146,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         };
     }
 
+
     //BOTON DE VOLVER
     const volverBtn1 = () =>
     {
@@ -160,6 +156,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         document.querySelector(".containerMapaGrande").classList.remove("paddingBottom");
     }
 
+
     //MOSTRAR LA TABLA DE COMPRA
     const mostratTablaCompra = ()=>{
         setMostratTabla(false);
@@ -168,8 +165,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const ocultarTablaPagar =  ()=>{
         setMostratTabla(true);
     }
-
-
 
 
     return (
@@ -276,18 +271,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                             {/* AÑADIR A LA COMPRA */}
                             <span className={checkAgregado === true ?'checkVisible': 'check'}><AiFillCheckCircle/></span>
                         </button>
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
                 </div>
             </div>
