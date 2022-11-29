@@ -52,24 +52,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setPrecio(e.target.value)
     }
 
-
-
-  //RECORRER EL ARRAY CARRITO(REGISTRO), Y ELIMINAR EL INDICE DE LA SALA QUE SE QUIERE BORRAR,
-  //PARA QUE EL BORRAR SEA MUCHO MAS RAPIdo
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //AGREGAR
     const agregar = async ()=>{
         document.querySelector(".botonAgregar").classList.add("button__loader");
@@ -100,6 +82,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             setPrecio("");
             setcheck("");
             checkVerifiqued();
+            setContadorCompra(contadorCompra + 1);
             
             
         }
@@ -132,11 +115,9 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const eliminar = (idSalaDelete) =>
     {  
        
-        const a = carrito.filter(element => element.sala_pagos !== idSalaDelete)
-        setCarrito(a);
-        
+        const salaDelete = carrito.filter(element => element.sala_pagos !== idSalaDelete)
+        setCarrito(salaDelete);
         axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
-        // dataBase();
         estadoSala("Disponible",idSalaDelete);
      
     }
