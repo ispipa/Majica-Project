@@ -121,6 +121,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
         estadoSala("Disponible",idSalaDelete);
         pintarSalasOcupadas();
+        setContadorCompra(contadorCompra - 1);
      
     }
 
