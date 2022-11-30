@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Salas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class SalasController extends Controller
 {
@@ -54,11 +55,21 @@ class SalasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $idSala)
     {
-        $sala = Salas::find($id);
+        
+        if($request->sala === "descripcion"){
+            $sala = Salas::where("id", "=", $idSala)->where("usuarioSala", "=", $request->idUsuario)->get();
+            return $sala;
+        } 
+        else if($request->sala === "sala"){
+            $sala = Salas::find($idSala);
+            return $sala;
+        }
+        
+        // $sala = Salas::find($idSala);
       
-        return $sala;
+        // return $sala;
         
        
     }
@@ -70,7 +81,6 @@ class SalasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
     public function update(Request $request)
     {
         if($request->update === "default"){
@@ -93,6 +103,7 @@ class SalasController extends Controller
              $sala->save();
         }
     }
+
 
     /**
      * Remove the specified resource from storage.
