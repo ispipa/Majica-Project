@@ -1,4 +1,4 @@
-.modal{
+.modal {
     position: fixed;
     display: flex;
     transition: 1.2s;
@@ -7,13 +7,13 @@
     width: 30%;
     height: 44vh;
     bottom: -100%;
-    background:  linear-gradient(#00000000, rgba(20, 0, 15, 0.986));
+    background: linear-gradient(#00000000, rgba(20, 0, 15, 0.986));
     backdrop-filter: blur(14px);
     padding: 0 0px;
     opacity: 0;
 }
 
-.descripcionMapa{
+.descripcionMapa {
     color: white;
     padding: 0 20px;
     margin-top: 0px;
@@ -21,7 +21,7 @@
 }
 
 
-.divContadorCompra{
+.divContadorCompra {
     position: fixed;
     right: 20px;
     width: 40px;
@@ -32,18 +32,18 @@
     align-items: center;
 }
 
-.btnMostrarTabla{
+.btnMostrarTabla {
     font-size: 30px;
     color: #ffffff;
     background-color: rgba(245, 222, 179, 0);
     border: none;
 }
 
-.contadorCompra{
+.contadorCompra {
     color: white;
 }
 
-.modalVisible{
+.modalVisible {
     transition: .5s;
     bottom: 0;
     right: 0;
@@ -54,16 +54,16 @@
     overflow-y: auto;
     opacity: 1;
 }
-.containerModal{
+
+.containerModal {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
 }
 
-.containerModalHijo{
+.containerModalHijo {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,7 +71,7 @@
     height: 100%;
 }
 
-.volver{
+.volver {
     position: absolute;
     top: -35px;
     left: 0;
@@ -83,17 +83,16 @@
     cursor: pointer;
 }
 
-.volver2{
+.volver2 {
     display: none;
 }
-.volver img{
+
+.volver img {
     width: 100%;
 }
 
-
-
 /* DATOS DEL MODAL */
-.headerModal{
+.headerModal {
 
     padding: 20px 20px 0 20px;
     margin-bottom: 10px;
@@ -107,24 +106,23 @@
     padding: 10px 20px 10px 0;
 } */
 
-.descripcionModal{
+.descripcionModal {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
-    border-top: 1px solid  #d52b5b00;
+    border-top: 1px solid #d52b5b00;
 
 }
 
-
-
-.disponibilidad{
+.disponibilidad {
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 7px;
 }
-.numPiso h1{
-    color:#ffffff ;
+
+.numPiso h1 {
+    color: #ffffff;
     display: inline;
     font-size: 35px;
     font-weight: 500;
@@ -133,13 +131,9 @@
     margin-right: 10px;
 }
 
-
-
 /* PRECIOS */
 
-
-
-.seleccione{
+.seleccione {
     font-size: 14px;
     margin-bottom: 15px;
     color: hsl(0, 0%, 94%);
@@ -147,7 +141,7 @@
     letter-spacing: 1px;
 }
 
-.pPrecios{
+.pPrecios {
     font-size: 18px;
     margin-bottom: 10px;
     color: #dbdbdb;
@@ -155,12 +149,14 @@
     letter-spacing: 1px;
 }
 
-@-webkit-keyframes shake-horizontal {
+@keyframes shake-horizontal {
+
     0%,
     100% {
         -webkit-transform: translateX(0);
         transform: translateX(0);
     }
+
     10%,
     30%,
     50%,
@@ -168,22 +164,26 @@
         -webkit-transform: translateX(-10px);
         transform: translateX(-10px);
     }
+
     20%,
     40%,
     60% {
         -webkit-transform: translateX(10px);
         transform: translateX(10px);
     }
+
     80% {
         -webkit-transform: translateX(8px);
         transform: translateX(8px);
     }
+
     90% {
         -webkit-transform: translateX(-8px);
         transform: translateX(-8px);
     }
 }
-.preciosModal{
+
+.preciosModal {
     border-radius: 20px;
     padding: 0 20px;
     display: flex;
@@ -195,9 +195,7 @@
 
 }
 
-
-
-.precioBtn{
+.precioBtn {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -207,13 +205,14 @@
 
 }
 
-.modal h2{
+.modal h2 {
     color: #c42222;
     font-weight: 400;
     margin-bottom: 15px;
 }
 
-.precio1M, .precio2M{
+.precio1M,
+.precio2M {
     font-size: 20px;
     font-weight: 500;
     margin-left: 15px;
@@ -223,7 +222,8 @@
 
 }
 
-.precio1, .precio2{
+.precio1,
+.precio2 {
     font-size: 20px;
     font-weight: 700;
     color: #000000;
@@ -234,21 +234,40 @@
 
 }
 
-.noneMes{
+.noneMes {
     width: 0;
     overflow: hidden;
     transition: .3s;
 }
 
-.nonePrecio{
+.nonePrecio {
     /* font-size: 0; */
-    width:0;
+    width: 0;
     opacity: 0;
     overflow: hidden;
     transition: .3s;
 }
 
-.pSpan{
+.pSpan {
+    color: rgb(0, 0, 0);
+    font-weight: 700;
+    margin-bottom: 10px;
+    border: 3px solid rgb(255, 255, 255);
+    background-color: #ffffff;
+    padding: 0px 18px;
+    border-radius: 20px;
+    font-size: 20px;
+    display: flex;
+    width: auto;
+    min-width: 30px;
+    height: 37px;
+}
+
+.checkbox {
+    margin-right: 10px;
+}
+
+.modalAbvertencia {
     color: rgb(0, 0, 0);
     font-weight: 700;
     margin-bottom: 10px;
@@ -262,41 +281,20 @@
     width: auto;
     min-width: 30px;
     height: 37px;
-}
-.checkbox{
-    margin-right: 10px;
-}
-.modalAbvertencia{
-    color: rgb(0, 0, 0);
-    font-weight: 700;
-    /* margin-left: 15px; */
-    margin-bottom: 10px;
-    border: 3px solid rgb(255, 255, 255);
-    background-color: #ffffff;
-    padding: 0px 18px;
-    border-radius: 20px;
-    font-size: 20px;
-    display: flex;
     -webkit-animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
     animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 
 }
 
-
-
-.comprar:hover{
+.comprar:hover {
     background-color: #3f0132;
 }
 
-
-
-
-.botonAgregar::before{
+.botonAgregar::before {
     content: "AGREGAR A LA COMPRA";
-  
 }
 
-.botonAgregar{
+.botonAgregar {
     border: none;
     width: 90%;
     display: flex;
@@ -315,40 +313,33 @@
     bottom: 10px;
 }
 
-.botonAgregarNone{
+.botonAgregarNone {
     display: none;
 }
-.botonAgregar:hover{
+
+.botonAgregar:hover {
     background-color: #b11e47;
 }
 
-.check{
+.check {
     display: none;
-} .checkVisible{
+}
+
+.checkVisible {
     color: #23cf00;
     font-size: 25px;
     margin-left: 15px;
     display: inline-block;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 :root {
     /* variables */
     --first-color: #d52b5b;
     --first-color-alt: #bb244f;
     --text-color: hsl(305, 100%, 90%);
-  }
-  .button__loader {
+}
+
+.button__loader {
     border: none;
     outline: none;
     position: relative;
@@ -358,56 +349,41 @@
     font-size: 1rem;
     overflow: hidden;
     /* cursor: wait; */
-  }
-  .button__loader::before {
+}
+
+.button__loader::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 150%;
     height: 100%;
-    background: repeating-linear-gradient(60deg, 
-                transparent, 
-                transparent 0.75rem, 
-                var(--first-color-alt) 0.75rem, 
-                var(--first-color-alt) 1.5rem);
+    background: repeating-linear-gradient(60deg,
+            transparent,
+            transparent 0.75rem,
+            var(--first-color-alt) 0.75rem,
+            var(--first-color-alt) 1.5rem);
     animation: load 1s infinite linear;
-  }
-  .button__text {
+}
+
+.button__text {
     position: relative;
-  }
-  /* Loading button animation */
-  @keyframes load {
+}
+
+/* Loading button animation */
+@keyframes load {
     0% {
-      transform: translateX(0);
+        transform: translateX(0);
     }
+
     100% {
-      transform: translateX(-1.75rem);
+        transform: translateX(-1.75rem);
     }
-  }
+}
 
+@media (max-width:1060px) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@media (max-width:1060px){
-
-    .modal{
+    .modal {
         width: 100%;
         transition: 1.5s;
         position: fixed;
@@ -420,57 +396,56 @@
         background-color: #29000aa9;
     }
 
-
-
-    .containerModalHijo{
+    .containerModalHijo {
         height: 280px;
     }
-    .descripcionModal{
+
+    .descripcionModal {
         width: 100%;
-        overflow-y :scroll;
+        overflow-y: scroll;
     }
 
-    .preciosModal{
+    .preciosModal {
         width: 100%;
         margin-top: 0px;
     }
 
-    .precioBtn{
+    .precioBtn {
         margin-top: 0px;
     }
 
-    .pSpan{
+    .pSpan {
         font-size: 18px;
     }
 
-    .modalAbvertencia{
+    .modalAbvertencia {
         font-size: 18px;
     }
 
-    .modalVisible{
+    .modalVisible {
         bottom: 0px;
         transition: .5s;
     }
 
-    .containerModal{
+    .containerModal {
         flex-direction: column;
         width: 100%;
         height: auto;
         transition: .5s;
         overflow: 100%;
     }
-    .volver{
+
+    .volver {
         right: 0 !important;
         top: 0;
         display: none;
     }
 
-    .volver2{
+    .volver2 {
         display: block;
         position: fixed;
         width: 34px;
-        bottom:246px;
-
+        bottom: 246px;
         right: -40px;
         background-color: hsl(347, 100%, 61%);
         backdrop-filter: blur(4px);
@@ -478,26 +453,20 @@
         border-radius: 0 0 0px 0;
         z-index: 3003;
         transition: .5s;
-
     }
 
-    .volver2V{
+    .volver2V {
         /* display: block; */
         right: 0px;
-
-
     }
 
-    .volver2 img{
+    .volver2 img {
         width: 100%;
         height: 100%;
     }
 
-    .botonAgregar{
+    .botonAgregar {
         height: 40px;
 
     }
-
 }
-
-

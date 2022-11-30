@@ -11,8 +11,6 @@ class Pagos extends Model
     protected $fillable = [
         'precio_pagos',
         'sala_pagos',
-        'piso_pagos',
-        'pagado',
         'usuario'
     ];
 

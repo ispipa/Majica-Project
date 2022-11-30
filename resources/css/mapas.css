@@ -7,9 +7,10 @@
 }
 
 /*---------------------------------------------*/
-.pagado{
+.pagado {
     fill: #00ff00 !important;
 }
+
 /* CONTENEDOR */
 .headerMovil {
     display: none;
@@ -20,7 +21,7 @@
     transition: .5s;
     background-repeat: no-repeat;
     background-size: cover;
-    background: linear-gradient(142deg, #1b5ca7 10%, #d52b5c 39%,  #10001d 90%);
+    background: linear-gradient(142deg, #1b5ca7 10%, #d52b5c 39%, #10001d 90%);
     /* background-image: url(../assets/p.png); */
     background-position: 10%;
 }
@@ -105,22 +106,27 @@
     transition: .5s;
 }
 
-.ocupado{
+.ocupado {
     fill: #6b6b6b !important;
-} .ocupado:hover{
-      fill:#5c5c5c !important;
+}
+
+.ocupado:hover {
+    fill: #5c5c5c !important;
 }
 
 
-.salaComprada{
+.salaComprada {
     fill: #48ff00 !important;
-} .salaComprada:hover{
+}
+
+.salaComprada:hover {
     fill: #39c900 !important;
 }
 
-.j{
+.j {
     margin: 60px;
 }
+
 .boton {
     border: none;
     margin: 10px;
@@ -132,13 +138,14 @@
     cursor: pointer;
     transition: 1s;
 }
-.displayFlex{
+
+.displayFlex {
     width: 94%;
     flex-direction: row;
     transition: .5s;
 }
 
-.activo{
+.activo {
     background-color: white;
     font-size: 16px;
 }
@@ -256,7 +263,7 @@
     }
 
 
-    .paddingBottom{
+    .paddingBottom {
         padding-bottom: 250px;
     }
 }
@@ -266,5 +273,5 @@
         height: 200vh;
     }
 
-    
+
 }
