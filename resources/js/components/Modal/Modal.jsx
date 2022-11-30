@@ -31,6 +31,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         //Se obtiene los datos del Carrito de compras
         const response = await axios.get("http://localhost:8000/api/pago?usuario=" + usuario);
         const carritoCompra = response.data.reverse();
+        console.log(carritoCompra)
         setContadorCompra(carritoCompra.length);
         setCarrito(carritoCompra);
     }
