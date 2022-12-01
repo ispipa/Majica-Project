@@ -43,7 +43,6 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                 eliminar(idSala[0])
                 idSala = []
                 precios = []
-                
                 clearInterval(interval)
             };
             return () => clearInterval(interval)
@@ -51,6 +50,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setSeconds(0);
             setMinutes(15);
         }
+       
     });
 
     const comprobarUsuario = () => {
