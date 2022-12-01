@@ -43,7 +43,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                 eliminar(idSala[0])
                 idSala = []
                 precios = []
-                
+                console.log("set")
                 clearInterval(interval)
             };
             return () => clearInterval(interval)
