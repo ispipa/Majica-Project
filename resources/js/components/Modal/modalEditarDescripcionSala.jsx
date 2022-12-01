@@ -18,9 +18,18 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
     //OBTENGO LOS DATOS DE LA SALA
     const setDatos = (datasala)=>
     {
-        setDescripcion(datasala.descripcion_sala);
-        setNombreSala(datasala.nombre_sala);
+        const descripcionSala = datasala.descripcion_sala;
+        const nombreDeLaSala = datasala.nombre_sala;
+        
+        if(descripcionSala !== undefined && nombreDeLaSala !== undefined){
+            setDescripcion(descripcionSala);
+            setNombreSala(nombreDeLaSala);
+        } else{
+            setDescripcion("");
+            setNombreSala("");
+        }
     }
+
 
     //OBTENGO EL VALOR DEL INPUT NOMBRE
     const setNombre =(e)=>
@@ -59,8 +68,7 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
         <div className="containerModalEditarDescripcion">
                 <button className="btnVolver" onClick={ocultarModalDescripcion} ><CgClose/></button>
        
-           
-           
+   
                 <label htmlFor="nombreSala" className="inputs1" value="">
                     <p> Nombre De La Sala: </p>
                     <input 
@@ -80,7 +88,6 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
                         onChange={setDescripcionSala}
                         className="inputDescripcion"
                     />
-               
                 <button  
                     className="botonEditarDescripcion" 
                     id={datasala.id} 

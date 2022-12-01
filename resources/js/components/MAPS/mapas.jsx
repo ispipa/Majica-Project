@@ -13,6 +13,9 @@ import ModalEditarDescripcion from '../Modal/modalEditarDescripcionSala';
 import { set } from 'lodash';
 
 export default function Map() {
+
+
+
     const [piso, setPiso] = useState(null);
     const [usuario, setUsuario] = useState(0);
     const [precios, setPrecios] = useState([]);
@@ -31,26 +34,21 @@ export default function Map() {
     const [verMapaGrande3, setVerMapaGrande3] = useState(false);
     const [EditarDescripcion, setEditarDescripcion] = useState(false);
 
-    //HAGO UNA CONSULTA PARA PINTAR LAS SALAS OCUPADAS
-    useEffect( () =>
-    {
-        usuariaData();
-       
-    },[]);
-
+    
     //SE OBTIENE LOS DATOS DEL USUARIO LOGUEADO DESDE EL LOCALSTORAGE
-    const usuariaData = ()=>{
+   
+    const usuariaData = async ()=>{
         if(localStorage.getItem("user")){
             const user = JSON.parse(localStorage.getItem("user"));
-            console.log(user.id);
-            setUsuario(user.id);
             pintarSalasCompradas(user.id);
+            setUsuario(user.id);
         } else{
-            setUsuario("null")
+            setUsuario("")
             pintarSalasCompradas("");
         }
         pintarSalasOcupadas(); 
     }
+    
 
 
     //AL HACER CLICK EN UNA SALA SE OBTINEN EL ID DE LA SALA
@@ -84,6 +82,7 @@ export default function Map() {
     const pintarSalasOcupadas  = async ()=>{
         const response = await axios.get("http://localhost:8000/api/sala");
         const salas = response.data;
+        
         const pintar =  (min, max,)=>{
             for(let i = min; max > i; i++){
                 if(salas.find(indice => indice.id === i).activo === "Ocupado"){
@@ -108,6 +107,8 @@ export default function Map() {
             document.querySelector(".sala"+element.sala_pagos).classList.add("salaComprada");
         });
     }
+
+    
     
 
     //SE OBTIENEN TODOS LOS DATOS DE LA SALA
@@ -179,6 +180,12 @@ export default function Map() {
         setVerMapaGrande3(true);
     }
 
+    useEffect( () =>
+    {
+        usuariaData();
+       
+    },[]);
+
     return (
         <section className='seccionMapas'>
             <div className='headerMovil'>
@@ -212,6 +219,7 @@ export default function Map() {
                 piso={piso}
                 usuario={usuario}
                 pintarSalasOcupadas={pintarSalasOcupadas}
+                // setDataBaseUpdate={setId}
             />
             <div className='container2'>
                 <div className='containerMapaGrande'>

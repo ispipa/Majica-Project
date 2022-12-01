@@ -7,10 +7,13 @@ import FormularioPago from './tabla';
 import Volver from '../assets/cerca.png';
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { useSubmit } from 'react-router-dom';
+import Modal_usuarioNoLogueado from './modal_UsuarioNoLogueado'
 
 
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario,  pintarSalasOcupadas,
-                   setVerModal, setVolver, setId, descripcion, precio1, precio2, }) => {
+                   setVerModal, setVolver, setId, descripcion, precio1, precio2, 
+                //    setDataBaseUpdate,  
+                dataCarrito }) => {
 
                        
     //ESTADOS---
@@ -20,28 +23,30 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const [errorr, setError] = useState(false);
     const [carrito, setCarrito] = useState([]);
     const [mostrarTabla, setMostratTabla] = useState(true);
+    const [mostrarAlerta, setMostrarAlerta] = useState(false);
     const [contadorCompra, setContadorCompra] = useState(0);
+    // const [usu, setUsu] = useState(usuario);
    
  
     useEffect( () =>
     {
-        dataBase();
-    }, [id]);
+        if(usuario > 0){
+            carritoCompra();
+        } 
+    }, [ id , usuario,  ]);
 
     
-    //CONSULTA A LA BASE DE DATOS 
-    const dataBase = async () => {
+    //CONSULTA DATOS DEL CARRITO
+    const carritoCompra = async () => {
         setPrecio("");
         setcheck("");
         //Se obtiene los datos del Carrito de compras
-        console.log(usuario+" usuario");
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
-        const carritoCompra = response.data.reverse();
-        console.log(carritoCompra)
+        const carritoCompra  = response.data.reverse();
         setCarrito(carritoCompra);
         setContadorCompra(carritoCompra.length);
-
     }
+
 
     //OBTENGO EL VALOR DEL CHECKBOX Y EL PRECIO SELECCIONADO
     const actualizarCheck = (e) =>
@@ -50,56 +55,69 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setPrecio(e.target.value)
     }
 
-    //AGREGAR
-    const agregar = async ()=>{
+    
+    //AGREGAR AL CARRITO ( VALIDACIONES )
+    const agregarAlCarrito = async ()=>
+    {  
         document.querySelector(".botonAgregar").classList.add("button__loader");
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
-        const sala = response.data;
-        //Si no ha seleccionado un precio, mando un alerta.
-        if (precio == "" )
-        {
-            setError(true);
-            document.querySelector(".botonAgregar").classList.remove("button__loader");
-        }
-        // Si el registro aun no existe en la base de datos, lo agrego.
-        else if (sala.findIndex(element => element.sala_pagos == id) < 0)
-        {
-            const dataSala = {
-                'usuario': usuario,
-                'pagado': 'false',
-                'precio_pagos':precio,
-                'piso_pagos':piso,
-                'sala_pagos':id
+        const carrito  = response.data;
+        //Si el usuario ya esta logueado se agrega a la lista de compra (carrito)
+        if(usuario > 0){
+            console.log(carrito)
+            //Si no ha seleccionado un precio, mando un alerta.
+            if (precio == "" ){
+                setError(true);
+                document.querySelector(".botonAgregar").classList.remove("button__loader");
             }
-            
-            setCarrito([...carrito, dataSala]);
-            agregoAlCarrito_BD(dataSala);
-            estadoSala("Ocupado", id);
-            pintarSalasOcupadas()
-            setError(false);
-            setPrecio("");
-            setcheck("");
-            checkVerifiqued();
-            setContadorCompra(contadorCompra + 1);
-        }
-        //Si el registro ya existe en la base de datos, edito el precio
+            // Si el registro aun no existe en la base de datos, lo agrego.
+            else if (carrito.findIndex(element => element.sala_pagos == id) < 0){
+               agregoAlCarrito_dom();
+            }
+            //Si el registro ya existe en la base de datos, se edita el precio.
+            else{
+                editar(carrito);
+                carritoCompra();
+                checkVerifiqued();
+            }
+        }  
         else
         {
-            editar(sala);
-            dataBase();
-            checkVerifiqued();
-        }
+            Alerta_usuarioNoLogueado();
+            document.querySelector(".botonAgregar").classList.remove("button__loader");
+        }     
     }
    
+    //AGREGAR EN LA TABLA ( CARRITO )
+    const agregoAlCarrito_dom =  ()=>{
+        const dataSala = {
+            'usuario': usuario,
+            'pagado': 'false',
+            'precio_pagos':precio,
+            'piso_pagos':piso,
+            'sala_pagos':id
+        }
+        
+        setCarrito([...carrito, dataSala]);
+        agregoAlCarrito_BD(dataSala);
+        estadoSala("Ocupado", id);
+        setError(false);
+        setPrecio("");
+        setcheck("");
+        checkVerifiqued();
+        setContadorCompra(contadorCompra + 1);
+        // setDataBaseUpdate(id2)
+        pintarSalasOcupadas()
+    }
+
 
     //AGREGAR AL CARRITO EN LA BASE DE DATOS
     const agregoAlCarrito_BD =  (dataSala)=>{
-        console.log(dataSala)
         axios.post('http://localhost:8000/api/pago', dataSala);
     }
 
 
-    //EDITAR
+    //EDITAR (BD)
     const editar = (sala) =>
     {
         //optengo el id de la sala que se va a editar
@@ -111,7 +129,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     }
 
 
-    //ELIMINAR
+    //ELIMINAR ( DOM / BD )
     const eliminar = (idSalaDelete) =>
     {  
         const salaDelete = carrito.filter(element => element.sala_pagos !== idSalaDelete)
@@ -168,6 +186,17 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setMostratTabla(true);
     }
 
+    //MOSTRAR ALERTA DE USUARIO NO LOGUEADO
+    const Alerta_usuarioNoLogueado =  ()=>{
+        setPrecio("");
+        setcheck("");
+        setMostrarAlerta(true); 
+    }
+
+    //OCULTAR ALERTE DE USUARIO NO LOGUEADO
+    const ocultarAlerta =  ()=>{
+        setMostrarAlerta(false);
+    }
 
     return (
         <div>
@@ -206,12 +235,12 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                             </div>
                             <h1
                                 className='disponibilidad'
-                                style={{ color: disponibilidad == "Disponible" ? "#afffad" : "red" }}>
+                                style={{ color: disponibilidad == "Disponible" ? "#afffad" : "red"  }}>
                                 { disponibilidad }
                             </h1>
                         </div>
                         <div className={
-                            disponibilidad == "Disponible" ? "descripcionMapa none" : "descripcionMapa" } >
+                            (disponibilidad == "Disponible") ? "descripcionMapa none" : "descripcionMapa"   } >
                             <p
                                 className='descripcionSala'>
                                 {descripcion}
@@ -268,8 +297,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                         <button
                             // style={{ display: disponibilidad === "ocupado" ? "none" : "block" }}
                             className={disponibilidad === "Ocupado" ? "botonAgregarNone" : "botonAgregar" }
-                                     
-                            onClick={agregar}>
+                            id={id}
+                            onClick={agregarAlCarrito}>
                             {/* AÑADIR A LA COMPRA */}
                             <span className={checkAgregado === true ?'checkVisible': 'check'}><AiFillCheckCircle/></span>
                         </button>
@@ -283,6 +312,9 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                     setId={setId}
                     ocultarTablaPagar={ocultarTablaPagar}
                 />
+            </div>
+            <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible': 'Modal_usuarioNoLogueado'}>
+                <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta}/>
             </div>
         </div>
     )
