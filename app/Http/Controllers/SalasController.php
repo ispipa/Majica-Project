@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Salas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class SalasController extends Controller
 {
@@ -54,11 +55,21 @@ class SalasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $idSala)
     {
-        $sala = Salas::find($id);
+        
+        if($request->sala === "descripcion"){
+            $sala = Salas::where("id", "=", $idSala)->where("usuarioSala", "=", $request->idUsuario)->get();
+            return $sala;
+        } 
+        else if($request->sala === "sala"){
+            $sala = Salas::find($idSala);
+            return $sala;
+        }
+        
+        // $sala = Salas::find($idSala);
       
-        return $sala;
+        // return $sala;
         
        
     }
@@ -72,20 +83,27 @@ class SalasController extends Controller
      */
     public function update(Request $request)
     {
-        $sala = Salas::findOrfail($request->id);
-        $sala->nombre_sala = $request->nombre_sala;
-        $sala->descripcion_sala = $request->descripcion_sala;
-        $sala->precio_sala = $request->precio_sala;
-        $sala->activo = $request->activo;
-        $sala->save();
+        if($request->update === "default"){
+            $sala = Salas::findOrfail($request->id);
+            $sala->nombre_sala = $request->nombre_sala;
+            $sala->descripcion_sala = $request->descripcion_sala;
+            $sala->precio_sala = $request->precio_sala;
+            $sala->activo = $request->activo;
+            $sala->save();
+        } 
+        else if($request->update === "descripcion"){
+            $sala = Salas::findOrfail($request->id);
+            $sala->nombre_sala = $request->nombre_sala;
+            $sala->descripcion_sala = $request->descripcion_sala;
+            $sala->save();
+            
+        } else if($request->update === "estado"){
+            $sala = Salas::findOrfail($request->id);
+             $sala->activo = $request->activo;
+             $sala->save();
+        }
     }
 
-    public function updateEstado(Request $request)
-    {
-        $sala = Salas::findOrfail($request->id);
-        $sala->activo = $request->activo;
-        $sala->save();
-    }
 
     /**
      * Remove the specified resource from storage.

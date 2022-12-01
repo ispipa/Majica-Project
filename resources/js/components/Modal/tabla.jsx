@@ -10,6 +10,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
     let precios = [];
     let idSala = [];
 
+
     //RECORRO EL ARRAY DE PRECIOS
     datos.forEach(element => {
         precios.push(parseInt(element.precio_pagos));
@@ -42,6 +43,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                 eliminar(idSala[0])
                 idSala = []
                 precios = []
+                console.log("set")
                 clearInterval(interval)
             };
             return () => clearInterval(interval)
@@ -138,3 +140,9 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
         </div>
     )
 }
+
+
+
+
+
+
