@@ -18,6 +18,7 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
     //OBTENGO LOS DATOS DE LA SALA
     const setDatos = (datasala)=>
     {
+        console.log(datasala)
         const descripcionSala = datasala.descripcion_sala;
         const nombreDeLaSala = datasala.nombre_sala;
         
@@ -51,7 +52,7 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
         //Valido que los inputs no esten vacios
         if(inputNombre != "" && inputDescripcion != ""){
             //Lo edito en la base de datos
-             axios.put("http://localhost:8000/api/sala/"+datasala.id+"?update=descripcion" , {
+             axios.put("http://localhost:8000/api/sala/"+datasala.sala_pagos+"?update=descripcion" , {
                 'nombre_sala':nombreSala,
                 'descripcion_sala': descripcion
             });

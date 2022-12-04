@@ -11,7 +11,7 @@ import Modal_usuarioNoLogueado from './modal_UsuarioNoLogueado'
 
 
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario,  pintarSalasOcupadas,
-                   setVerModal, setVolver, setId, descripcion, precio1, precio2, 
+                   setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado,
                 //    setDataBaseUpdate,  
                 dataCarrito }) => {
 
@@ -96,6 +96,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             'precio_pagos':precio,
             'piso_pagos':piso,
             'sala_pagos':id
+
         }
         
         setCarrito([...carrito, dataSala]);
@@ -106,9 +107,11 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setcheck("");
         checkVerifiqued();
         setContadorCompra(contadorCompra + 1);
-        // setDataBaseUpdate(id2)
-        pintarSalasOcupadas()
+        pintarSalasOcupadas();
     }
+
+
+    
 
 
     //AGREGAR AL CARRITO EN LA BASE DE DATOS
@@ -128,10 +131,14 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         });
     }
 
+   
+  
+
 
     //ELIMINAR ( DOM / BD )
-    const eliminar = (idSalaDelete) =>
+    const eliminar =  (idSalaDelete) =>
     {  
+        // updateUsuario("0",idSalaDelete);
         const salaDelete = carrito.filter(element => element.sala_pagos !== idSalaDelete)
         setCarrito(salaDelete);
         axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
@@ -311,6 +318,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                     eliminar={eliminar}
                     setId={setId}
                     ocultarTablaPagar={ocultarTablaPagar}
+                    cambiarPrecioSeleccionado={cambiarPrecioSeleccionado}
                 />
             </div>
             <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible': 'Modal_usuarioNoLogueado'}>
