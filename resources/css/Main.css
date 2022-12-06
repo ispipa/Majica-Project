@@ -662,3 +662,31 @@ input[type=file]::-webkit-file-upload-button {
 .forgotPass a:hover{
     color: #361100;
 }
+
+
+.pError {
+    color: red;
+    font-size: 9px;
+    text-align: center;
+    display: none;
+}
+
+
+.pError-v {
+    color: red;
+    font-size: 9px;
+    text-align: center;
+    display: block;
+    transition: .4s;
+}
+
+.pError-v-descripcion{
+    color: red;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 9px;
+    translate: 120px -9px;
+    display: block;
+    transition: .4s;
+}
+
