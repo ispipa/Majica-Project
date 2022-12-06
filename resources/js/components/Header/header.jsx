@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Usuario from '../assets/usu2.jpg';
 
 export default function Header() {
 
@@ -9,22 +10,22 @@ export default function Header() {
     const [images, setImages] = useState("")
 
     useEffect(() => {
-        location.pathname === "/" ? setPanel(false) : " "
+        location.pathname === "/" ? setPanel(false)  : setImages(Usuario)
     }, [location.pathname])
-
-    useEffect(() => {
-        if (JSON.parse(localStorage.getItem('user'))) {
-            setImages(JSON.parse(localStorage.getItem('user')).image)
-        }
-    })
 
     const panelUser = () => {
         setPanel(panel === false ? true : false)
         //setPanel(true)
         // location.pathname === "/" ? setPanel(false) : setPanel(panel === false ? true : false)
+        localStorage.clear();
         console.log(panel);
     }
 
+    useEffect(() => {
+        if (JSON.parse(localStorage.getItem('user'))) {
+            setImages(JSON.parse(localStorage.getItem('user')).image);
+        }
+    })
     const panelUs = () => {
         setPanel(false)
         axios.get("http://127.0.0.1:8000/api/logout", { headers: { "Autorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` } }).then(res => {

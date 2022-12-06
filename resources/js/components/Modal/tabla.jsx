@@ -4,11 +4,13 @@ import { GrClose } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 
-export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar }) {
+export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar, cambiarPrecioSeleccionado }) {
 
+    
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
     let precios = [];
     let idSala = [];
+
 
     //RECORRO EL ARRAY DE PRECIOS
     datos.forEach(element => {
@@ -49,6 +51,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setSeconds(0);
             setMinutes(15);
         }
+       
     });
 
     const comprobarUsuario = () => {
@@ -102,19 +105,19 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                                     <td
                                         className="nSala"
                                         id={ar.sala_pagos}
-                                        onClick={setId}>
+                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.sala_pagos}
                                     </td>
                                     <td
                                         className="nPiso"
                                         id={ar.sala_pagos}
-                                        onClick={setId}>
+                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.piso_pagos}
                                     </td>
                                     <td
                                         className="precio"
                                         id={ar.sala_pagos}
-                                        onClick={setId}>
+                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.precio_pagos}€
                                     </td>
                                     <td
@@ -138,3 +141,9 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
         </div>
     )
 }
+
+
+
+
+
+

@@ -36,9 +36,9 @@ class PagosController extends Controller
     public function store(Request $request)
     {
         $pago = new Pagos();
-        $pago->precio_pagos = $request->precio;
-        $pago->sala_pagos = $request->sala;
-        $pago->piso_pagos = $request->piso;
+        $pago->precio_pagos = $request->precio_pagos;
+        $pago->sala_pagos = $request->sala_pagos;
+        $pago->piso_pagos = $request->piso_pagos;
         $pago->usuario = $request->usuario;
         $pago->pagado = $request->pagado;
         $pago->save();

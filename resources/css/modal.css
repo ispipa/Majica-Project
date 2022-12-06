@@ -381,6 +381,49 @@
     }
 }
 
+
+
+
+.Modal_usuarioNoLogueadoVisible{
+    width: 100%;
+    height: 100%;
+    background-color: #00000075;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Modal_usuarioNoLogueado{
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width:1060px) {
 
     .modal {
