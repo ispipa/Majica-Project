@@ -23,7 +23,7 @@ export const Main = () => {
     const [errorName, setErrorName] = useState(false)
     const [errortype_of_art, setErrortype_of_art] = useState(false)
     const [errorPassword, setErrorPassword] = useState(false)
-    
+    const [emailInic, setEmailInic] = useState("")
 
     //imagen
     const [title, setTitle] = useState('')
@@ -67,7 +67,21 @@ export const Main = () => {
               
             }
         })
+        .catch(errors => {
+            console.log(errors.response.data.message);
+            
+            if (errors.response.data.message === "validation.required") {
+                setMensaje("Tu contraseña es incorrecta")
+                setMostrarModalMensaje(true)
+            }else {
+                setMensaje("Tu cuenta no existe")
+                setMostrarModalMensaje(true)
+            }
+        })
     }
+    
+
+    
     const handleImage = (e) =>
     {
         setImg(e.target.files[0]);
@@ -76,6 +90,7 @@ export const Main = () => {
 
     const Sign_up = (e) => {
         e.preventDefault();
+
         const data = new FormData();
         data.append('name', e.target.nombre.value);
         data.append('last_name', e.target.apellidos.value);
@@ -85,7 +100,7 @@ export const Main = () => {
         data.append('address', e.target.dirección.value);
         data.append('artist', e.target.tipo_de_artista.value);
         data.append('type_of_art', e.target.tipo_de_arte.value);
-        data.append('description_sala', e.target.descripción.value);
+        data.append('description_user', e.target.descripción.value);
         data.append('image', e.target.img.files[0]);
         console.log(data);
 
