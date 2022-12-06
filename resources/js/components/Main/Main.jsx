@@ -74,7 +74,7 @@ export const Main = () => {
     const Sign_up = (e) => {
         e.preventDefault();
         const data = new FormData();
-        const des = e.target.descripcion.value;
+        const des = e.target.descripción.value;
         console.log(des)
         data.append('name', e.target.nombre.value);
         data.append('last_name', e.target.apellidos.value);
