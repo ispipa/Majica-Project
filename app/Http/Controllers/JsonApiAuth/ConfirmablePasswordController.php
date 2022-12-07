@@ -10,6 +10,7 @@ use Illuminate\Validation\ValidationException;
 
 class ConfirmablePasswordController
 {
+    
     /** Confirm the user's password.*/
     public function __invoke(Request $request): JsonResponse
     {
