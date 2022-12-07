@@ -11,7 +11,17 @@ import { Link } from "react-router-dom";
 export const Main = () => {
 
     const [mensaje, setMensaje] = useState("");
-    const [mostratModalMensaje, setMostrarModalMensaje] = useState(false);
+    const [mostratModalMensaje , setMostrarModalMensaje] = useState(false);
+    const [errorMail, setErrorMail] = useState(false)
+    const [errorImagen, setErrorImagen] = useState(false)
+    const [errorTelefono, setErrorTelefono] = useState(false)
+    const [errorDireccion, setErrorDireccion] = useState(false)
+    const [errorDescripcion, setErrorDescripcion] = useState(false)
+    const [errorlast_name, setErrorlast_name] = useState(false)
+    const [errorName, setErrorName] = useState(false)
+    const [errortype_of_art, setErrortype_of_art] = useState(false)
+    const [errorPassword, setErrorPassword] = useState(false)
+    
 
     //imagen
     const [title, setTitle] = useState('')
@@ -52,7 +62,7 @@ export const Main = () => {
                 localStorage.setItem('token', JSON.stringify(res.data.token));
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 return navigate('/map');
-
+              
             }
         })
     }
@@ -64,7 +74,7 @@ export const Main = () => {
     const Sign_up = (e) => {
         e.preventDefault();
         const data = new FormData();
-        const des = e.target.descripcion.value;
+        const des = e.target.descripción.value;
         console.log(des)
         data.append('name', e.target.nombre.value);
         data.append('last_name', e.target.apellidos.value);
@@ -94,7 +104,66 @@ export const Main = () => {
                 setTimeout(function () { setMostrarModalMensaje(false) }, 7000);
                 console.log(error);
 
-            });
+        }, (error) => {
+            setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
+            setMostrarModalMensaje(true)
+            setTimeout(function(){ setMostrarModalMensaje(false) }, 7000);
+            // console.log(error.response.data);
+            const errores = error.response.data
+            console.log((errores).errors)
+
+            if (errores.errors.email) {
+                setErrorMail(true)
+            }else{
+                setErrorMail(false)
+            }
+            if (errores.errors.image) {
+                setErrorImagen(true)
+            }else {
+                setErrorImagen(false)
+            }
+            if (errores.errors.telephone) {
+                setErrorTelefono(true)
+            }else {
+                setErrorTelefono(false)
+            }
+            if (errores.errors.address) {
+                setErrorDireccion(true)
+            }else {
+                setErrorDireccion(false)
+            }
+            if (errores.errors.description_sala) {
+                setErrorDescripcion(true)
+            }else {
+                setErrorDescripcion(false)
+            }
+            if (errores.errors.last_name) {
+                setErrorlast_name(true)
+            }else {
+                setErrorlast_name(false)
+            }
+            if (errores.errors.name) {
+                setErrorName(true)
+            }else {
+                setErrorName(false)
+            }
+
+            if (errores.errors.type_of_art) {
+                setErrortype_of_art(true)
+            }else {
+                setErrortype_of_art(false)
+            }
+            if (errores.errors.password) {
+                setErrorPassword(true)
+            }else {
+                setErrorPassword(false)
+            }
+            
+            
+        });
+    
+        
+
     }
 
     return (
@@ -160,6 +229,7 @@ export const Main = () => {
                                 /> */}
                                 <p className='pinput' >FOTO</p>
                             </div>
+                            <p className={errorImagen ? "pError-v" : "pError"}>Debes seleccionar una imagen para continuar</p>
                             <div className="content-input">
                                 <div className="container-inputs">
                                     <div
@@ -171,7 +241,9 @@ export const Main = () => {
                                             className="nombre"
                                             type="text"
                                             placeholder="Nombre"
-                                            required />
+                                            required
+                                        />
+                                        <p className={errorName ? "pError-v" : "pError"}>Ingresa tu nombre para continuar</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -181,7 +253,9 @@ export const Main = () => {
                                             name="apellidos"
                                             type="text"
                                             placeholder="Apellidos"
-                                            required />
+                                            required
+                                        />
+                                           <p className={errorlast_name ? "pError-v" : "pError"}>Ingresa tu apellido para continuar</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -191,7 +265,9 @@ export const Main = () => {
                                             name="email"
                                             type="text"
                                             placeholder="Email"
-                                            required />
+                                            required
+                                        />
+                                         <p className={errorMail ? "pError-v" : "pError"}>Ingresa un correo valido.</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -201,7 +277,9 @@ export const Main = () => {
                                             name="password"
                                             type="password"
                                             placeholder="Contraseña"
-                                            required />
+                                            required
+                                        />
+                                        <p className={errorPassword ? "pError-v" : "pError"}>La contraseña debe tener 8 caracteres</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -211,7 +289,9 @@ export const Main = () => {
                                             name="telefono"
                                             type="text"
                                             placeholder="Teléfono"
-                                            required />
+                                            required
+                                        />
+                                      <p className={errorTelefono ? "pError-v" : "pError"}>Ingresa un telefono valido</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -220,7 +300,9 @@ export const Main = () => {
                                         <input
                                             name="dirección"
                                             type="text"
-                                            placeholder="Dirección" />
+                                            placeholder="Dirección"
+                                        />
+                                        <p className={errorDireccion ? "pError-v" : "pError"}>Ingresa una dirección valida</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -240,13 +322,19 @@ export const Main = () => {
                                             name="tipo_de_arte"
                                             type="text"
                                             placeholder="Tipo de arte"
-                                            required />
+                                            required
+                                        />
+                                        <p className={errortype_of_art ? "pError-v" : "pError"}>Ingresa tu tipo de arte.</p>  
                                     </div>
                                     <div
                                         className="input-field-tx input-field-textarea"
                                         style={{ gridArea: "area9" }}>
                                         <i className="fas fa-user"></i>
-                                        <textarea name="descripcion" rows="4" cols="50" placeholder="Descripción" required />
+                                        <textarea id="descripción" name="descripción" rows="4" cols="50" placeholder="Descripción" required></textarea>
+
+                                    </div>
+                                    <div className='div-descripcion'>
+                                    <p className={errorDescripcion ? "pError-v-descripcion" : "pError"}>Ingresa una descripción de 20 caracteres.</p>
                                     </div>
                                 </div>
                                 <div className="btn-register">
