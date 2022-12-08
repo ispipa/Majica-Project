@@ -8,8 +8,6 @@ import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
-
 export const Main = () => {
 
     const [mensaje, setMensaje] = useState("");
@@ -31,9 +29,9 @@ export const Main = () => {
     const huevos = (event) => {
         var file = event.target.files[0];
         var reader = new FileReader();
-        reader.onload = function(event) {
-          // The file's text will be printed here
-          console.log(event.target.result)
+        reader.onload = function (event) {
+            // The file's text will be printed here
+            console.log(event.target.result)
         };
         reader.readAsText(file);
         setTitle(reader.readAsText(file))
@@ -92,6 +90,8 @@ export const Main = () => {
         e.preventDefault();
 
         const data = new FormData();
+        const des = e.target.descripción.value;
+        console.log(des)
         data.append('name', e.target.nombre.value);
         data.append('last_name', e.target.apellidos.value);
         data.append('email', e.target.email.value);
@@ -102,19 +102,23 @@ export const Main = () => {
         data.append('type_of_art', e.target.tipo_de_arte.value);
         data.append('description_user', e.target.descripción.value);
         data.append('image', e.target.img.files[0]);
-        console.log(data);
-
         axios.post("http://127.0.0.1:8000/api/register", data)
-        .then(res => {
-            if (res.data.message === 'success') {
-                localStorage.setItem('token', JSON.stringify(res.data.token));
-                localStorage.setItem('user', JSON.stringify(res.data.user));
-                setSign(false);
-                setMensaje("Registrado Correctamente");
+            .then(res => {
+                if (res.data.message === 'success') {
+                    localStorage.setItem('token', JSON.stringify(res.data.token));
+                    localStorage.setItem('user', JSON.stringify(res.data.user));
+                    setSign(false);
+                    setMensaje("Registrado Correctamente");
+                    setMostrarModalMensaje(true)
+                    setTimeout(function () { setMostrarModalMensaje(false) }, 4000);
+                    // setInterval(ocultarModalMensaje(), 5000)
+                }
+
+            }, (error) => {
+                setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
                 setMostrarModalMensaje(true)
-                setTimeout(function(){ setMostrarModalMensaje(false) }, 4000);
-                // setInterval(ocultarModalMensaje(), 5000)
-            }
+                setTimeout(function () { setMostrarModalMensaje(false) }, 7000);
+                console.log(error);
 
         }, (error) => {
             setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
@@ -180,16 +184,12 @@ export const Main = () => {
 
     return (
         <div>
-       
             <div className={sign ? "container sign-up-mode" : "container"}>
                 <div className="forms-container">
                     <div className="signin-signup">
                         <form
-                            action=""
                             className="sign-in-form formulario__login"
-                            method=""
-                            onSubmit={Sign_in}
-                        >
+                            onSubmit={Sign_in}>
                             <img src={LogoMJ} className="image" alt="Majica" />
                             <h2 className="title">Iniciar sesion</h2>
                             <div className="content-input">
@@ -198,66 +198,45 @@ export const Main = () => {
                                     <input
                                         name="correo"
                                         type="text"
-                                        placeholder="Email"
-
-                                    />
+                                        placeholder="Email" />
                                 </div>
                                 <div className="input-field">
                                     {/* <i className="fas fa-lock"></i> */}
                                     <input
                                         name="clave"
                                         type="password"
-                                        placeholder="Contraseña"
-                                    />
+                                        placeholder="Contraseña" />
                                 </div>
                                 <div className="btn-register">
                                     <input
-                                        type=""
-                                        value="Crear Cuenta"
+                                        defaultValue="Crear Cuenta"
                                         className="btn solid"
-                                        onClick={Sign_in_btn}
-                                        preventDefault=""
-                                    />
-
+                                        onClick={Sign_in_btn} />
                                     <input
                                         type="submit"
-                                        value="Iniciar sesion"
-                                        className="btn solid"
-                                    />
-
+                                        defaultValue="Iniciar sesion"
+                                        className="btn solid" />
                                 </div>
                                 <div className="forgotPass">
                                     <p><Link to="/forgotPass">¿Olvidaste tu contraseña?</Link></p>
                                 </div>
                             </div>
                         </form>
-
                         <form
-                            action=""
                             className="sign-up-form formulario__login"
-                            method=""
-                            encType=""
                         ></form>
-
                         <form
-                            action=""
                             className="sign-up-form formulario__login"
-                            method=""
-                            enctype="multipart/form-data"
-                            onSubmit={Sign_up}
-                        >
+                            encType="multipart/form-data"
+                            onSubmit={Sign_up}>
                             <h2 className="title">Registrarse</h2>
-
                             <div className="foto">
                                 <input
                                     type="file"
                                     encType="multipart/form-data"
                                     name="img"
                                     aria-label="Archivo"
-                                    className='input-file-doc'
-                                />
-
-
+                                    className='input-file-doc' />
                                 { /* <img
                                     className="preliminar"
                                     src={Usuario}
@@ -265,16 +244,13 @@ export const Main = () => {
                                     alt=""
                                 /> */}
                                 <p className='pinput' >FOTO</p>
-
                             </div>
                             <p className={errorImagen ? "pError-v" : "pError"}>Debes seleccionar una imagen para continuar</p>
                             <div className="content-input">
-
                                 <div className="container-inputs">
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area1" }}
-                                    >
+                                        style={{ gridArea: "area1" }}>
                                         <i className="fas fa-user"></i>
                                         <input
                                             name="nombre"
@@ -285,11 +261,9 @@ export const Main = () => {
                                         />
                                         <p className={errorName ? "pError-v" : "pError"}>Ingresa tu nombre para continuar</p>
                                     </div>
-
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area2" }}
-                                    >
+                                        style={{ gridArea: "area2" }}>
                                         <i className="fas fa-user"></i>
                                         <input
                                             name="apellidos"
@@ -299,11 +273,9 @@ export const Main = () => {
                                         />
                                            <p className={errorlast_name ? "pError-v" : "pError"}>Ingresa tu apellido para continuar</p>
                                     </div>
-
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area3" }}
-                                    >
+                                        style={{ gridArea: "area3" }}>
                                         <i className="fas fa-user"></i>
                                         <input
                                             name="email"
@@ -313,11 +285,9 @@ export const Main = () => {
                                         />
                                          <p className={errorMail ? "pError-v" : "pError"}>Ingresa un correo valido.</p>
                                     </div>
-
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area4" }}
-                                    >
+                                        style={{ gridArea: "area4" }}>
                                         <i className="fas fa-user"></i>
                                         <input
                                             name="password"
@@ -327,11 +297,9 @@ export const Main = () => {
                                         />
                                         <p className={errorPassword ? "pError-v" : "pError"}>La contraseña debe tener 8 caracteres</p>
                                     </div>
-
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area5" }}
-                                    >
+                                        style={{ gridArea: "area5" }}>
                                         <i className="fas fa-user"></i>
                                         <input
                                             name="telefono"
@@ -343,8 +311,7 @@ export const Main = () => {
                                     </div>
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area6" }}
-                                    >
+                                        style={{ gridArea: "area6" }}>
                                         <i className="fas fa-lock"></i>
                                         <input
                                             name="dirección"
@@ -355,20 +322,17 @@ export const Main = () => {
                                     </div>
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area7" }}
-                                    >
+                                        style={{ gridArea: "area7" }}>
                                         <i className="fas fa-user"></i>
                                         <select name="tipo_de_artista" id="type_of_artist">
-                                            <option value="Artista" disabled selected>Artista</option>
-                                            <option value="Dibujante">Dibujante</option>
-                                            <option value="Fotografo">Fotografo</option>
+                                            <option value="Artista" disabled>Artista</option>
+                                            <option defaultValue="Dibujante">Dibujante</option>
+                                            <option defaultValue="Fotografo">Fotografo</option>
                                         </select>
                                     </div>
-
                                     <div
                                         className="input-field"
-                                        style={{ gridArea: "area8" }}
-                                    >
+                                        style={{ gridArea: "area8" }}>
                                         <i className="fas fa-envelope"></i>
                                         <input
                                             name="tipo_de_arte"
@@ -378,11 +342,9 @@ export const Main = () => {
                                         />
                                         <p className={errortype_of_art ? "pError-v" : "pError"}>Ingresa tu tipo de arte.</p>  
                                     </div>
-
                                     <div
                                         className="input-field-tx input-field-textarea"
-                                        style={{ gridArea: "area9" }}
-                                    >
+                                        style={{ gridArea: "area9" }}>
                                         <i className="fas fa-user"></i>
                                         <textarea id="descripción" name="descripción" rows="4" cols="50" placeholder="Descripción" required></textarea>
 
@@ -391,21 +353,15 @@ export const Main = () => {
                                     <p className={errorDescripcion ? "pError-v-descripcion" : "pError"}>Ingresa una descripción de 20 caracteres.</p>
                                     </div>
                                 </div>
-
                                 <div className="btn-register">
                                     <input
-                                        type=""
                                         className="btn"
-                                        value="Iniciar Sesión"
-                                        onClick={Sing_up_btn}
-                                    />
-
+                                        defaultValue="Iniciar Sesión"
+                                        onClick={Sing_up_btn} />
                                     <input
                                         type="submit"
                                         className="btn"
-                                        value="Registrarse"
-                                    />
-
+                                        defaultValue="Registrarse" />
                                 </div>
                             </div>
                             <div className="social-media"></div>
@@ -413,21 +369,15 @@ export const Main = () => {
                     </div>
                     <img
                         src="img/fondo.svg"
-                        className={
-                            sign ? "image fondo-img-none" : "image fondo-img"
-                        }
-                        alt=""
-                    />
+                        className={sign ? "image fondo-img-none" : "image fondo-img"} />
                 </div>
-
                 <div className="panels-container">
                     <div className="panel left-panel">
                         <div className="content">
                             <img
                                 src={LogoVm}
                                 className="LogoPreliminar"
-                                alt="logoMajica"
-                            />
+                                alt="logoMajica" />
                             <div className="text-panel">
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur
@@ -437,18 +387,14 @@ export const Main = () => {
                                     odio provident quod rem beatae nobis, quam,
                                     nulla perferendis?
                                 </p>
-                                <a href="https://www.majica.es/programacion
-                            ">
+                                <a href="https://www.majica.es/programacion">
                                     <button
                                         className="btn transparent"
-                                        id="sign-up-btn"
-                                        onClick=""
-                                    >
+                                        id="sign-up-btn">
                                         Saber mas
                                     </button>
                                 </a>
                             </div>
-
                             {/* <h3>¿Aún no tienes una cuenta?</h3>
                 <p>
                   Regístrate para que puedas iniciar sesión
@@ -467,7 +413,7 @@ export const Main = () => {
                     </div>
                 </div>
             </div>
-            <div className={mostratModalMensaje  === true ? 'modalRegister modalRegisterVisible' : 'modalRegister' }>
+            <div className={mostratModalMensaje === true ? 'modalRegister modalRegisterVisible' : 'modalRegister'}>
                 <div className='containerModalRegister'>
                     <p>{mensaje}</p>
                 </div>

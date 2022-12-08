@@ -1,7 +1,6 @@
 import React from 'react'
 import PaypalMensual from './PaypalMensual'
 import PaypalTrimestral from './PaypalTrimestral'
-import '../../../css/checkoutnew.css'
 
 const Checkout = () => {
     return (

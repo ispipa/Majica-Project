@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Usuario from '../assets/usu2.jpg';
-import Logo from '../assets/Logo.png'
-// import LogoMJ from '../assets/LogoMj.png'
-import LogoMJ from '../assets/LogoMJ.png'
+// import Usuario from '../assets/usu2.jpg';
+// import Logo from '../assets/Logo.png'
+// // import LogoMJ from '../assets/LogoMj.png'
+// import LogoMJ from '../assets/LogoMJ.png'
 import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
 
@@ -34,7 +34,7 @@ export const ForgotPass = () => {
         })
     }
 
-   
+
 
     return (
         <div>
@@ -73,14 +73,14 @@ export const ForgotPass = () => {
                                         type="submit"
                                         value="Enviar Correo"
                                         className="btn solid"
-                                        
+
                                     />
 
                                 </div>
                             </div>
                         </form>
 
-                       {/*  <form
+                        {/*  <form
                             action=""
                             className="sign-up-form formulario__login"
                             method=""
@@ -266,12 +266,13 @@ export const ForgotPass = () => {
                 </button> */}
                         </div>
                         {/* <img src={Logo} className="image" alt="" /> */}
-                    {/* </div> */}
-                    <div className="panel right-panel">
-                        {/* <div className="content">
+                        {/* </div> */}
+                        <div className="panel right-panel">
+                            {/* <div className="content">
                             <img src={LogoVm} className="image-second" alt="Majica" />
                         </div> */}
-                        {/* <img src={Logo} className="image" alt="" /> */}
+                            {/* <img src={Logo} className="image" alt="" /> */}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -280,8 +281,6 @@ export const ForgotPass = () => {
                                 <p>{email}</p>
                             </div>
             </div>
-        </div>
-                    
         </div>
     );
 }

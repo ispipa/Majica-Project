@@ -4,21 +4,29 @@ import { GrClose } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 
-export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar }) {
+export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar, cambiarPrecioSeleccionado }) {
 
+    
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
-    const precios = [];
+    let precios = [];
+    let idSala = [];
+
+
     //RECORRO EL ARRAY DE PRECIOS
     datos.forEach(element => {
-        precios.push(parseInt(element.precio_pagos))
+        precios.push(parseInt(element.precio_pagos));
     });
+
+    datos.forEach(el => {
+        idSala.push(parseInt(el.sala_pagos));
+    })
+
     //SUMO TODOS LOS PRECIOS DE ARRAY
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     //REDIRECCIONAR A PAGAR
-
     const [seconds, setSeconds] = useState(0)
-    const [minutes, setMinutes] = useState(15)
+    const [minutes, setMinutes] = useState(0)
 
     useEffect(() => {
         if (precios.length >= 1) {
@@ -31,35 +39,38 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             }, 1000);
             if (minutes === 9 && seconds === 59) { alert("Tiene 10 minutos para realizar la reserva") };
             if (minutes === 4 && seconds === 59) { alert("Tiene 5 minutos para realizar la reserva") };
-            if (minutes === 0) {
-                alert("Se le ha acabado el plazo para realizar la reserva, por favor intente de nuevo en el tiempo establecido")
-                clearInterval(interval);
-                setSeconds(0);
-                setMinutes(15);
+            if (minutes === 0 && seconds === 0) {
+                alert("Se le ha acabado el plazo para realizar la reserva, por favor intente de nuevo en el tiempo establecido");
+                eliminar(idSala[0])
+                idSala = []
+                precios = []
+                clearInterval(interval)
             };
-
             return () => clearInterval(interval)
         } else {
             setSeconds(0);
             setMinutes(15);
         }
-    },)
+       
+    });
 
     const comprobarUsuario = () => {
-        ( localStorage.getItem('user') && localStorage.getItem('token') ) === null ?
-        alert("Debe iniciar sesión para realizar la reserva") :
-        axios.get('http://127.0.0.1:8000/api/verified-middleware-example',{ headers:
-                {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
-        }).then(res => navigate('/CheckoutNow'))
-            .catch(err => {
-                enviarEmail();
-            })
+        (localStorage.getItem('user') && localStorage.getItem('token')) === null ?
+            alert("Debe iniciar sesión para realizar la reserva") :
+            axios.get('http://127.0.0.1:8000/api/verified-middleware-example', {
+                headers:
+                    { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
+            }).then(res => navigate('/CheckoutNow'))
+                .catch(err => {
+                    enviarEmail();
+                })
     }
 
     const enviarEmail = () => {
         toast.error('Tienes que verificar tu correo primero');
-        axios.post('http://127.0.0.1:8000/api/email/verification-notification',{},{ headers:
-                {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}
+        axios.post('http://127.0.0.1:8000/api/email/verification-notification', {}, {
+            headers:
+                { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
 
         }).then(res => console.log(res))
             .catch(err => {
@@ -87,33 +98,35 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                             <th></th>
                         </tr>
                     </tbody>
-                    {datos.map(ar => {
+                    {datos.map((ar, indx) => {
                         return (
-                            <tr className="tr2">
-                                <td
-                                    className="nSala"
-                                    id={ar.sala_pagos}
-                                    onClick={setId}>
-                                    {ar.sala_pagos}
-                                </td>
-                                <td
-                                    className="nPiso"
-                                    id={ar.sala_pagos}
-                                    onClick={setId}>
-                                    {ar.piso_pagos}
-                                </td>
-                                <td
-                                    className="precio"
-                                    id={ar.sala_pagos}
-                                    onClick={setId}>
-                                    {ar.precio_pagos}€
-                                </td>
-                                <td
-                                    className="borrar"
-                                    onClick={() => eliminar(ar.sala_pagos)}>
-                                    <TiDelete />
-                                </td>
-                            </tr>
+                            <tbody key={indx}>
+                                <tr className="tr2">
+                                    <td
+                                        className="nSala"
+                                        id={ar.sala_pagos}
+                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        {ar.sala_pagos}
+                                    </td>
+                                    <td
+                                        className="nPiso"
+                                        id={ar.sala_pagos}
+                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        {ar.piso_pagos}
+                                    </td>
+                                    <td
+                                        className="precio"
+                                        id={ar.sala_pagos}
+                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        {ar.precio_pagos}€
+                                    </td>
+                                    <td
+                                        className="borrar"
+                                        onClick={() => eliminar(ar.sala_pagos)}>
+                                        <TiDelete />
+                                    </td>
+                                </tr>
+                            </tbody>
                         )
                     })}
                 </table>
@@ -128,3 +141,9 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
         </div>
     )
 }
+
+
+
+
+
+

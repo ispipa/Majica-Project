@@ -11,7 +11,8 @@ input {
     font-family: "Poppins", sans-serif;
     cursor: pointer;
 }
-.foto{
+
+.foto {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -24,14 +25,16 @@ input {
 }
 
 
-.preliminar{
+.preliminar {
     width: 100%;
 }
+
 .LogoPreliminar {
     width: 78%;
     margin-top: 86px;
     transform: (3%, 3%);
 }
+
 .container {
     position: relative;
     width: 100%;
@@ -87,6 +90,7 @@ form.sign-in-form {
     color: #444;
     margin-bottom: 10px;
 }
+
 .container-inputs {
     display: grid;
     gap: 0.5rem;
@@ -98,6 +102,7 @@ form.sign-in-form {
         "area5 area6"
         "area7 area7";
 }
+
 .content-input {
     width: 420px;
 }
@@ -113,6 +118,7 @@ form.sign-in-form {
     padding: 0 0.4rem;
     position: relative;
 }
+
 .input-field-tx {
     max-width: 100%;
     width: 100%;
@@ -132,7 +138,8 @@ form.sign-in-form {
     font-size: 1.1rem;
 }
 
-.input-field input,select {
+.input-field input,
+select {
     background: none;
     outline: none;
     border: none;
@@ -147,7 +154,8 @@ form.sign-in-form {
     padding: 0px 12px;
     resize: none;
 }
-textarea{
+
+textarea {
     background: none;
     outline: none;
     border: none;
@@ -163,9 +171,9 @@ textarea{
 }
 
 
-.input-field-textarea{
+.input-field-textarea {
     padding: 0 0.4rem;
-    height: 150px ;
+    height: 150px;
     overflow: hidden;
 }
 
@@ -203,6 +211,7 @@ textarea{
     color: #4481eb;
     border-color: #4481eb;
 }
+
 .btn-register {
     display: flex;
     width: 100%;
@@ -229,6 +238,7 @@ textarea{
 .btn:hover {
     background-color: #361100;
 }
+
 .panels-container {
     position: absolute;
     height: 100%;
@@ -259,13 +269,15 @@ textarea{
     transition-delay: 0.4s;
     margin-top: 20px;
 }
+
 .image-second {
     width: 94%;
     transition: transform 1.1s ease-in-out;
     transition-delay: 0.4s;
     margin-top: 40px;
 }
-.fondo-img{
+
+.fondo-img {
     width: 119%;
     position: absolute;
     bottom: -50px;
@@ -313,6 +325,7 @@ textarea{
     display: flex;
     flex-direction: column;
 }
+
 .text-panel {
     display: flex;
     flex-direction: column;
@@ -320,6 +333,7 @@ textarea{
     width: 75%;
     margin-top: 10px;
 }
+
 .panel h3 {
     font-weight: 600;
     line-height: 1;
@@ -392,6 +406,7 @@ textarea{
     .preliminar {
         display: none;
     }
+
     .text-panel {
         display: flex;
         flex-direction: column;
@@ -416,6 +431,7 @@ textarea{
         height: 35px;
         font-size: 0.7rem;
     }
+
     .btn.transparent:hover {
         background-color: #d52b5c;
         transform: scale(1.4) translateY(0) translateZ(0);
@@ -442,7 +458,8 @@ textarea{
     .content-input {
         width: 342px;
     }
-    .text-panel > p {
+
+    .text-panel>p {
         display: none;
     }
 
@@ -575,9 +592,11 @@ textarea{
     .image {
         display: none;
     }
+
     .panel .content {
         padding: 0.5rem 1rem;
     }
+
     .container {
         padding: 1.5rem;
     }
@@ -596,7 +615,7 @@ textarea{
 
 input[type=file]::-webkit-file-upload-button {
     border: none;
-    background: #d52b5c ;
+    background: #d52b5c;
     border-radius: 30px !important;
     padding: 15px 15px;
     font-size: 0.9rem;
@@ -605,6 +624,7 @@ input[type=file]::-webkit-file-upload-button {
     margin-right: 30px;
     color: #fff;
 }
+
 input[type=file] {
     padding: 10px 10px;
     background-color: #f0f0f0;
@@ -613,12 +633,12 @@ input[type=file] {
     width: 100%;
 }
 
-.forgotPass{
+.forgotPass {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.forgotPass a:hover{
+.forgotPass a:hover {
     color: #361100;
 }

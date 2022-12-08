@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import Usuario from '../assets/usu2.jpg';
-import Logo from '../assets/Logo.png'
-// import LogoMJ from '../assets/LogoMj.png'
-import LogoMJ from '../assets/LogoMJ.png'
+// import Usuario from '../assets/usu2.jpg';
+// import Logo from '../assets/Logo.png'
+// // import LogoMJ from '../assets/LogoMj.png'
+// import LogoMJ from '../assets/LogoMJ.png'
 import LogoVm from '../assets/Nueva carpeta - copia/LogoVm.png'
 import axios from "axios";
-import {useParams} from "react-router";
-
+import { useParams } from "react-router";
 
 export const ResetPass = () => {
 
@@ -14,7 +13,7 @@ export const ResetPass = () => {
     let { token } = useParams();
     let { email } = useParams();
 
-    const forgotPass= (e) => {
+    const forgotPass = (e) => {
         e.preventDefault();
         const data = new FormData();
         data.append('email', email);
@@ -23,13 +22,11 @@ export const ResetPass = () => {
         data.append('token', token);
         console.log(token, email);
         axios.post(`http://127.0.0.1:8000/api/reset-password`, data)
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-        })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            })
     }
-
-
 
     return (
         <div>
@@ -40,8 +37,7 @@ export const ResetPass = () => {
                             action=""
                             className="sign-in-form formulario__login"
                             method=""
-                            onSubmit={forgotPass}
-                        >
+                            onSubmit={forgotPass}>
                             {/* <img src={LogoMJ} className="image" alt="Majica" /> */}
                             <h2 className="title">Escribe tu nueva contraseña</h2>
                             <div className="content-input">
@@ -51,17 +47,14 @@ export const ResetPass = () => {
                                         name="newPass"
                                         type="password"
                                         placeholder="Nueva Contraseña"
-                                        required
-
-                                    />
+                                        required/>
                                 </div>
                                 <div className="input-field">
                                     <i className="fas fa-lock"></i>
                                     <input
                                         name="confPass"
                                         type="password"
-                                        placeholder="Confirmar contraseña"
-                                    />
+                                        placeholder="Confirmar contraseña"/>
                                 </div>
                                 <div className="btn-register">
                                     {/* <input
@@ -71,14 +64,10 @@ export const ResetPass = () => {
                                         onClick={Sign_in_btn}
                                         preventDefault=""
                                     /> */}
-
                                     <input
                                         type="submit"
                                         value="Enviar"
-                                        className="btn solid"
-
-                                    />
-
+                                        className="btn solid"/>
                                 </div>
                             </div>
                         </form>
@@ -88,10 +77,8 @@ export const ResetPass = () => {
                         className={
                             sign ? "image fondo-img-none" : "image fondo-img"
                         }
-                        alt=""
-                    />
+                        alt="fondo"/>
                 </div>
-
                 <div className="panels-container">
                     <div className="panel left-panel">
                         <div className="content">
@@ -101,11 +88,11 @@ export const ResetPass = () => {
                                 alt="logoMajica"
                             />
                         </div>
-                    <div className="panel right-panel">
+                        <div className="panel right-panel">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     );
 }

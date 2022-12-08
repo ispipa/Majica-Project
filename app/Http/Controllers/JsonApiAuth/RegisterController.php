@@ -29,7 +29,7 @@ class RegisterController
                  'address' => $request->get('address'),
                  'artist' => $request->get('artist'),
                  'type_of_art' => $request->get('type_of_art'),
-                 'description_sala' => $request->get('description'),
+                 'description_user' => $request->get('description_user'),
                  'image' => $this->uploadImage($request->file('image')),
              ]);
 
