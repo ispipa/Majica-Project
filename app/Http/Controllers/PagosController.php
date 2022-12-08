@@ -39,6 +39,7 @@ class PagosController extends Controller
         $pago->precio_pagos = $request->precio_pagos;
         $pago->sala_pagos = $request->sala_pagos;
         $pago->piso_pagos = $request->piso_pagos;
+        $pago->mes_pago= $request->mes_pago;
         $pago->usuario = $request->usuario;
         $pago->pagado = $request->pagado;
         $pago->save();
