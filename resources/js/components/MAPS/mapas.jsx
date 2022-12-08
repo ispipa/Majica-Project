@@ -56,6 +56,7 @@ export default function Map() {
     const setId =  (e) => {
         const id = parseInt(e.target.id);
         setBaseDeDatos(id);
+        pintarSalasCompradas();
         setModal()
     }
 
