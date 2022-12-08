@@ -174,7 +174,7 @@ export const Main = () => {
                         <form
                             className="sign-in-form formulario__login"
                             onSubmit={Sign_in}>
-                            <img src={LogoMJ} className="image" alt="Majica" />
+                            {/* <img src={LogoMJ} className="image" alt="Majica" /> */}
                             <h2 className="title">Iniciar sesion</h2>
                             <div className="content-input">
                                 <div className="input-field">
@@ -193,16 +193,18 @@ export const Main = () => {
                                 </div>
                                 <div className="btn-register">
                                     <input
-                                        defaultValue="Crear Cuenta"
-                                        className="btn solid"
-                                        onClick={Sign_in_btn} />
-                                    <input
                                         type="submit"
-                                        defaultValue="Iniciar sesion"
+                                        value="Entrar"
                                         className="btn solid" />
                                 </div>
                                 <div className="forgotPass">
                                     <p><Link to="/forgotPass">¿Olvidaste tu contraseña?</Link></p>
+                                </div>
+                                <div className="btn-register">
+                                <input
+                                        defaultValue="Crear Cuenta Nueva"
+                                        className="btn solid"
+                                        onClick={Sign_in_btn} />
                                 </div>
                             </div>
                         </form>
