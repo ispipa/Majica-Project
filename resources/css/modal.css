@@ -205,6 +205,10 @@
 
 }
 
+
+.precioBtnNone{
+    display: none;
+}
 .modal h2 {
     color: #c42222;
     font-weight: 400;

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { AiFillCheckCircle } from "react-icons/ai";
 import axios from 'axios';
 import { useState } from 'react';
@@ -22,6 +22,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const [precio, setPrecio] = useState("");
     const [errorr, setError] = useState(false);
     const [carrito, setCarrito] = useState([]);
+    const [mensual, setMensual] = useState(true);
+    const [trimestral, setTrimestral] = useState(true);
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [mostrarAlerta, setMostrarAlerta] = useState(false);
     const [contadorCompra, setContadorCompra] = useState(0);
@@ -45,6 +47,19 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         const carritoCompra  = response.data.reverse();
         setCarrito(carritoCompra);
         setContadorCompra(carritoCompra.length);
+
+        if(carritoCompra.length > 0){
+            if(carritoCompra[0].mes_pago === 'trimestral'){
+                setMensual(false);
+                setTrimestral(true);
+            } else if(carritoCompra[0].mes_pago === 'mensual'){
+                setMensual(true);
+                setTrimestral(false);
+            } else{
+                setMensual(true);
+                setTrimestral(true);
+            }
+        }
     }
 
 
@@ -90,12 +105,15 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
    
     //AGREGAR EN LA TABLA ( CARRITO )
     const agregoAlCarrito_dom =  ()=>{
+
+        
         const dataSala = {
             'usuario': usuario,
             'pagado': 'false',
             'precio_pagos':precio,
             'piso_pagos':piso,
-            'sala_pagos':id
+            'sala_pagos':id,
+            'mes_pago': check == "1" ? 'mensual' : 'trimestral'
 
         }
         
@@ -108,6 +126,16 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         checkVerifiqued();
         setContadorCompra(contadorCompra + 1);
         pintarSalasOcupadas();
+        
+        if(check == 1){
+            setMensual(true);
+            setTrimestral(false);
+        } else{
+            setMensual(false);
+            setTrimestral(true);
+        }
+        
+    
     }
 
 
@@ -145,6 +173,10 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         estadoSala("Disponible",idSalaDelete);
         pintarSalasOcupadas();
         setContadorCompra(contadorCompra - 1);
+        if(contadorCompra == 1){
+            setMensual(true);
+            setTrimestral(true);
+        }
     }
 
 
@@ -266,7 +298,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                     className='pPrecios'>
                                     Precios
                                 </p>
-                                <div className='precioBtn'>
+                                <div className={mensual === true ? 'precioBtn' : 'precioBtn precioBtnNone'}>
                                     <label
                                         className={errorr === true ? 'modalAbvertencia' : 'pSpan'}
                                         for="1" >
@@ -283,7 +315,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                         <p className={ precio1 == undefined ? "noneMes" : "precio1M" }  >{ disponibilidad == "Disponible"  ? " 1 Mes" : "" }   </p>
                                     </label>
                                 </div>
-                                <div className='precioBtn'>
+                                <div className={trimestral === true ? 'precioBtn' : 'precioBtn precioBtnNone'} >
                                     <label
                                         className={errorr === true ? 'modalAbvertencia' : 'pSpan'}
                                         for="2" >
@@ -329,15 +361,4 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 }
 
 export default Modal;
-
-
-
-
-
-
-
-
-
-
-
 
