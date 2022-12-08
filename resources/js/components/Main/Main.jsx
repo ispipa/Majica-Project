@@ -200,10 +200,13 @@ export const Main = () => {
                                 <div className="forgotPass">
                                     <p><Link to="/forgotPass">¿Olvidaste tu contraseña?</Link></p>
                                 </div>
+                                <br />
+                                <hr />
+                                <br />
                                 <div className="btn-register">
                                 <input
                                         defaultValue="Crear Cuenta Nueva"
-                                        className="btn solid"
+                                        className="btn-crearCuenta solid"
                                         onClick={Sign_in_btn} />
                                 </div>
                             </div>
@@ -341,13 +344,22 @@ export const Main = () => {
                                 </div>
                                 <div className="btn-register">
                                     <input
-                                        className="btn"
-                                        defaultValue="Iniciar Sesión"
-                                        onClick={Sing_up_btn} />
-                                    <input
                                         type="submit"
                                         className="btn"
-                                        defaultValue="Registrarse" />
+                                        value="Registrar" />
+                                </div>
+                                <br />
+                                <hr />
+                                <br />
+                                <div>
+                                    <div className="forgotPass">
+                                        <p>¿Ya tienes cuenta?</p>
+                                    </div>
+                                    
+                                    <input
+                                        className="btn-crearCuenta"
+                                        defaultValue="Inicia Sesión"
+                                        onClick={Sing_up_btn} />
                                 </div>
                             </div>
                             <div className="social-media"></div>
