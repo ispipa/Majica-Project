@@ -39,8 +39,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     
     //CONSULTA DATOS DEL CARRITO
     const carritoCompra = async () => {
-        setPrecio("");
-        setcheck("");
+        // setPrecio("");
+        // setcheck("");
         //Se obtiene los datos del Carrito de compras
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const carritoCompra  = response.data.reverse();
@@ -73,7 +73,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     //AGREGAR AL CARRITO ( VALIDACIONES )
     const agregarAlCarrito = async ()=>
     {  
-        setcheck("");
         document.querySelector(".botonAgregar").classList.add("button__loader");
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const carrito  = response.data;
@@ -120,8 +119,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         agregoAlCarrito_BD(dataSala);
         estadoSala("Ocupado", id);
         setError(false);
-        setPrecio("");
-        setcheck("");
+        // setPrecio("");
+        // setcheck("");
         checkVerifiqued();
         setContadorCompra(contadorCompra + 1);
         pintarSalasOcupadas();
@@ -165,7 +164,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     //ELIMINAR ( DOM / BD )
     const eliminar =  (idSalaDelete) =>
     {  
-        // updateUsuario("0",idSalaDelete);
         const salaDelete = carrito.filter(element => element.sala_pagos !== idSalaDelete)
         setCarrito(salaDelete);
         axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
@@ -227,8 +225,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 
     //MOSTRAR ALERTA DE USUARIO NO LOGUEADO
     const Alerta_usuarioNoLogueado =  ()=>{
-        setPrecio("");
-        setcheck("");
+        // setPrecio("");
+        // setcheck("");
         setMostrarAlerta(true); 
     }
 
