@@ -14,8 +14,6 @@ import { set } from 'lodash';
 
 export default function Map() {
 
-
-
     const [piso, setPiso] = useState(null);
     const [usuario, setUsuario] = useState(0);
     const [precios, setPrecios] = useState([]);
@@ -33,8 +31,6 @@ export default function Map() {
     const [verMapaGrande2, setVerMapaGrande2] = useState(false);
     const [verMapaGrande3, setVerMapaGrande3] = useState(false);
     const [EditarDescripcion, setEditarDescripcion] = useState(false);
-    const [a , seta] = useState([])
-
     
     //SE OBTIENE LOS DATOS DEL USUARIO LOGUEADO DESDE EL LOCALSTORAGE
    
@@ -113,7 +109,8 @@ export default function Map() {
         setNombresala(sala.nombre_sala);
         setPiso(sala.piso)
         setIDescripcion(sala.descripcion_sala);
-        setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala})
+        // setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala});
+        setPrecios({"precio1": 60, "precio2": 150});
         
     }
 
@@ -129,7 +126,6 @@ export default function Map() {
         setModal();
         const response = await axios.get("http://localhost:8000/api/sala/"+sala+"?sala=sala");
         const responseData = response.data;
-        console.log(responseData.id);
         setIDisponibilidad("Disponible");
         setdataSala(responseData)
         setIdsala(responseData.id);
@@ -153,7 +149,6 @@ export default function Map() {
 
      //SE OBTINENEN LOS DATOS PARA EL MODAL DE EDITAR DESCRIPCION
     const setData_ModalEditarDescripcion = async (sala)=>{
-
        //Si la sala esta pagada y le pertenece al usuario logueado.
        //al hacer click sobre ella se mostrara un modal que le permita editar la descripcion.
        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+usuario);
@@ -166,19 +161,6 @@ export default function Map() {
           pintarSalasOcupadas();
        }
     }
-
-
-    const cambiarPrecio = async (sala)=>{
-        //Si la sala esta pagada y le pertenece al usuario logueado 
-        //al hacer click sobre ella se mostrara un modal que le permita editar la descripcion.
-        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+usuario);
-        const pagosData = pagados.data;
-        const indice =  pagosData.findIndex( element => element.usuario === usuario && element.pagado === "false" && element.sala_pagos === sala );
-        if(indice >= 0){
-            setIDisponibilidad("Disponible");
-
-        }
-     }
 
     //MOSTAR EL MODAL DE EDITAR LA DESCRIPCION DE LA SALA
     const mostrarModalEditarDescripcion = ()=>{

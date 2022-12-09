@@ -102,11 +102,6 @@ class SalasController extends Controller
              $sala->activo = $request->activo;
              $sala->save();
         }
-        // else if($request->update === "usuario"){
-        //     $sala = Salas::findOrfail($request->id);
-        //     $sala->usuarioSala = $request->usuarioSala;
-        //     $sala->save();
-        // }
     }
 
 

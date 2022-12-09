@@ -27,7 +27,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [mostrarAlerta, setMostrarAlerta] = useState(false);
     const [contadorCompra, setContadorCompra] = useState(0);
-    // const [usu, setUsu] = useState(usuario);
    
  
     useEffect( () =>
@@ -74,12 +73,12 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     //AGREGAR AL CARRITO ( VALIDACIONES )
     const agregarAlCarrito = async ()=>
     {  
+        setcheck("");
         document.querySelector(".botonAgregar").classList.add("button__loader");
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const carrito  = response.data;
         //Si el usuario ya esta logueado se agrega a la lista de compra (carrito)
         if(usuario > 0){
-            console.log(carrito)
             //Si no ha seleccionado un precio, mando un alerta.
             if (precio == "" ){
                 setError(true);
@@ -174,6 +173,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         pintarSalasOcupadas();
         setContadorCompra(contadorCompra - 1);
         if(contadorCompra == 1){
+            carritoCompra();
             setMensual(true);
             setTrimestral(true);
         }
@@ -296,7 +296,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                 <p
                                     style={{ display: errorr === false ? "block" : "none" }}
                                     className='pPrecios'>
-                                    Precios
+                                    Seleccione si desea pagar mensual mensual o trimestaral
                                 </p>
                                 <div className={mensual === true ? 'precioBtn' : 'precioBtn precioBtnNone'}>
                                     <label
@@ -312,7 +312,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                             checked={check == "1" ? true : false}
                                         />
                                         <p className={ precio1 == undefined ? "nonePrecio" : "precio1" } > { precio1 == undefined  ? "" : "" }{ disponibilidad == "Disponible"  ? precio1+" € " : "" }</p>
-                                        <p className={ precio1 == undefined ? "noneMes" : "precio1M" }  >{ disponibilidad == "Disponible"  ? " 1 Mes" : "" }   </p>
+                                        <p className={ precio1 == undefined ? "noneMes" : "precio1M" }  >{ disponibilidad == "Disponible"  ? " Mensual" : "" }   </p>
                                     </label>
                                 </div>
                                 <div className={trimestral === true ? 'precioBtn' : 'precioBtn precioBtnNone'} >
@@ -328,7 +328,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                             checked={check == "2" ? true : false}
                                         />
                                         <p className={ precio2 == undefined ? "nonePrecio" : "precio2" } >{ precio2 == undefined  ? "" : "" }{ disponibilidad == "Disponible"  ? precio2+" € " : "" } </p>
-                                        <p className={ precio2 == undefined ? "noneMes" : "precio2M" }  >{ disponibilidad == "Disponible"  ? " 3 Meses" : "" } </p>
+                                        <p className={ precio2 == undefined ? "noneMes" : "precio2M" }  >{ disponibilidad == "Disponible"  ? " Trimestral" : "" } </p>
                                     </label>
                                 </div>
                             </div>
