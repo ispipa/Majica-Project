@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { AiFillCheckCircle } from "react-icons/ai";
 import axios from 'axios';
 import { useState } from 'react';
@@ -174,6 +174,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         pintarSalasOcupadas();
         setContadorCompra(contadorCompra - 1);
         if(contadorCompra == 1){
+            carritoCompra();
             setMensual(true);
             setTrimestral(true);
         }
@@ -361,11 +362,4 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 }
 
 export default Modal;
-
-
-
-
-
-
-
 
