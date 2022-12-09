@@ -27,7 +27,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [mostrarAlerta, setMostrarAlerta] = useState(false);
     const [contadorCompra, setContadorCompra] = useState(0);
-    // const [usu, setUsu] = useState(usuario);
    
  
     useEffect( () =>
@@ -74,12 +73,12 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     //AGREGAR AL CARRITO ( VALIDACIONES )
     const agregarAlCarrito = async ()=>
     {  
+        setcheck("");
         document.querySelector(".botonAgregar").classList.add("button__loader");
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const carrito  = response.data;
         //Si el usuario ya esta logueado se agrega a la lista de compra (carrito)
         if(usuario > 0){
-            console.log(carrito)
             //Si no ha seleccionado un precio, mando un alerta.
             if (precio == "" ){
                 setError(true);

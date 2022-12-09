@@ -18,7 +18,6 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
     //OBTENGO LOS DATOS DE LA SALA
     const setDatos = (datasala)=>
     {
-        console.log(datasala)
         const descripcionSala = datasala.descripcion_sala;
         const nombreDeLaSala = datasala.nombre_sala;
         
