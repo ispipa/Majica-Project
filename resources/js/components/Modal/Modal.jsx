@@ -297,7 +297,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                 <p
                                     style={{ display: errorr === false ? "block" : "none" }}
                                     className='pPrecios'>
-                                    Precios
+                                    Seleccione si desea pagar mensual mensual o trimestaral
                                 </p>
                                 <div className={mensual === true ? 'precioBtn' : 'precioBtn precioBtnNone'}>
                                     <label
@@ -313,7 +313,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                             checked={check == "1" ? true : false}
                                         />
                                         <p className={ precio1 == undefined ? "nonePrecio" : "precio1" } > { precio1 == undefined  ? "" : "" }{ disponibilidad == "Disponible"  ? precio1+" € " : "" }</p>
-                                        <p className={ precio1 == undefined ? "noneMes" : "precio1M" }  >{ disponibilidad == "Disponible"  ? " 1 Mes" : "" }   </p>
+                                        <p className={ precio1 == undefined ? "noneMes" : "precio1M" }  >{ disponibilidad == "Disponible"  ? " Mensual" : "" }   </p>
                                     </label>
                                 </div>
                                 <div className={trimestral === true ? 'precioBtn' : 'precioBtn precioBtnNone'} >
@@ -329,7 +329,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                             checked={check == "2" ? true : false}
                                         />
                                         <p className={ precio2 == undefined ? "nonePrecio" : "precio2" } >{ precio2 == undefined  ? "" : "" }{ disponibilidad == "Disponible"  ? precio2+" € " : "" } </p>
-                                        <p className={ precio2 == undefined ? "noneMes" : "precio2M" }  >{ disponibilidad == "Disponible"  ? " 3 Meses" : "" } </p>
+                                        <p className={ precio2 == undefined ? "noneMes" : "precio2M" }  >{ disponibilidad == "Disponible"  ? " Trimestral" : "" } </p>
                                     </label>
                                 </div>
                             </div>

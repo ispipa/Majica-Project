@@ -113,7 +113,8 @@ export default function Map() {
         setNombresala(sala.nombre_sala);
         setPiso(sala.piso)
         setIDescripcion(sala.descripcion_sala);
-        setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala})
+        // setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala});
+        setPrecios({"precio1": 60, "precio2": 150});
         
     }
 
