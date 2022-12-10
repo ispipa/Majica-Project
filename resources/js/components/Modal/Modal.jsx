@@ -269,6 +269,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                     style={{opacity: id != "" ? "1" : "0" }}>
                                     {nombreSala}
                                 </h1>
+                                <h3 className="piso">Piso {piso}</h3>
                             </div>
                             <h1
                                 className='disponibilidad'
@@ -294,7 +295,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                 <p
                                     style={{ display: errorr === false ? "block" : "none" }}
                                     className='pPrecios'>
-                                    Seleccione si desea pagar mensual mensual o trimestaral
+                                    Seleccione si desea pagar <b>mensual</b> o <b>trimestaral</b> 
                                 </p>
                                 <div className={mensual === true ? 'precioBtn' : 'precioBtn precioBtnNone'}>
                                     <label
