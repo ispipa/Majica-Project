@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('piso_pagos')->constrained('pisos');
             //$table->foreign('precios_pagos')->references('precio_sala')->on('salas');
             $table->enum('pagado',['true','false'])->default('false');
-            $table->enum('mes_pago',['mensual','trimestral'])->default('');
+            $table->enum('mes_pago',['mensual','trimestral'])->default(null);
             $table->timestamps();
 
         });

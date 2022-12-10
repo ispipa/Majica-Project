@@ -52,7 +52,7 @@ const PaypalMensual = () => {
 			createSubscription={(data, actions) => {
 				return actions.subscription
 					.create({
-						plan_id: "P-9K913015YJ498554WMN6I5XA",
+						plan_id: 'P-25T12664XG228441XMOKGNZI',
 					})
 					.then((orderId) => {
 						// Your code here after create the order
@@ -84,7 +84,7 @@ const PaypalMensual = () => {
 	return (
 		<PayPalScriptProvider
 			options={{
-				"client-id": "AXcG6OB3Ow9GMsbXF53vLEIrmiPFFW_vVkeuLpb4_kQZBf2p6TCS69_s8eNy5FAcC9kju1l2giHD9OcB",
+				"client-id": "AQy1c_FMYLca9qzw3wu7taJTS2YoQadl1Z8lml0kQdK7oKIfeJKzWA1nmZB2WIiF3is9__6Iv_hqNITo",
 				components: "buttons",
 				intent: "subscription",
 				vault: true,
@@ -95,3 +95,4 @@ const PaypalMensual = () => {
 }
 
 export default PaypalMensual
+

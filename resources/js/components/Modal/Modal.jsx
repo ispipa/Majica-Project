@@ -9,13 +9,12 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import { useSubmit } from 'react-router-dom';
 import Modal_usuarioNoLogueado from './modal_UsuarioNoLogueado'
 
-
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario,  pintarSalasOcupadas,
                    setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado,
                 //    setDataBaseUpdate,  
                 dataCarrito }) => {
 
-                       
+
     //ESTADOS---
     const [checkAgregado, setCheckAgregado] = useState(false);
     const [check, setcheck] = useState("");
@@ -28,7 +27,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const [mostrarAlerta, setMostrarAlerta] = useState(false);
     const [contadorCompra, setContadorCompra] = useState(0);
    
- 
     useEffect( () =>
     {
         if(usuario > 0){
@@ -39,13 +37,13 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     
     //CONSULTA DATOS DEL CARRITO
     const carritoCompra = async () => {
-        setPrecio("");
-        setcheck("");
-        //Se obtiene los datos del Carrito de compras
-        const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
-        const carritoCompra  = response.data.reverse();
-        setCarrito(carritoCompra);
-        setContadorCompra(carritoCompra.length);
+            setPrecio("");
+            setcheck("");
+            //Se obtiene los datos del Carrito de compras
+            const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
+            const carritoCompra  = response.data.reverse();
+            setCarrito(carritoCompra);
+            setContadorCompra(carritoCompra.length);
 
         if(carritoCompra.length > 0){
             if(carritoCompra[0].mes_pago === 'trimestral'){
@@ -301,15 +299,15 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                 <div className={mensual === true ? 'precioBtn' : 'precioBtn precioBtnNone'}>
                                     <label
                                         className={errorr === true ? 'modalAbvertencia' : 'pSpan'}
-                                        for="1" >
+                                        htmlFor="1" >
                                         <input
                                             id="1"
-                                            name='1'
+                                            name='checkbox'
                                             type="radio"
                                             value={precio1}
                                             className='checkbox'
                                             onClick={actualizarCheck}
-                                            checked={check == "1" ? true : false}
+                                            readOnly={check == "1" ? true : false}
                                         />
                                         <p className={ precio1 == undefined ? "nonePrecio" : "precio1" } > { precio1 == undefined  ? "" : "" }{ disponibilidad == "Disponible"  ? precio1+" € " : "" }</p>
                                         <p className={ precio1 == undefined ? "noneMes" : "precio1M" }  >{ disponibilidad == "Disponible"  ? " Mensual" : "" }   </p>
@@ -318,14 +316,15 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                 <div className={trimestral === true ? 'precioBtn' : 'precioBtn precioBtnNone'} >
                                     <label
                                         className={errorr === true ? 'modalAbvertencia' : 'pSpan'}
-                                        for="2" >
+                                        htmlFor="2" >
                                         <input
                                             id="2"
+                                            name="checkbox"
                                             type="radio"
                                             value={precio2}
                                             className='checkbox'
                                             onClick={actualizarCheck}
-                                            checked={check == "2" ? true : false}
+                                            readOnly={check == "2" ? true : false}
                                         />
                                         <p className={ precio2 == undefined ? "nonePrecio" : "precio2" } >{ precio2 == undefined  ? "" : "" }{ disponibilidad == "Disponible"  ? precio2+" € " : "" } </p>
                                         <p className={ precio2 == undefined ? "noneMes" : "precio2M" }  >{ disponibilidad == "Disponible"  ? " Trimestral" : "" } </p>
