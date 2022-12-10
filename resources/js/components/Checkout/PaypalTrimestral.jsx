@@ -34,8 +34,8 @@ const PaypalTrimestral = () => {
 
         return (
             <PayPalButtons
-                createSubscription={(data, actions) => {
-                    return actions.subscription
+                createSubscription={ async (data, actions) => {
+                    return await actions.subscription
                         .create({
                             plan_id: "P-1DB085477F127313PMN6KG5A",
                         })
@@ -45,7 +45,7 @@ const PaypalTrimestral = () => {
                         });
                 }}
 
-                onApprove={async (data, actions) => {
+                onApprove= { async (data, actions) => {
                     alert(`Se ha registrado bajo el codigo de suscripcion ${data.orderID}`)
                     setPaid(true);
                 }}
@@ -66,15 +66,19 @@ const PaypalTrimestral = () => {
     }
 
     return (
-        <PayPalScriptProvider
-            options={{
-                "client-id": "AXcG6OB3Ow9GMsbXF53vLEIrmiPFFW_vVkeuLpb4_kQZBf2p6TCS69_s8eNy5FAcC9kju1l2giHD9OcB",
-                components: "buttons",
-                intent: "subscription",
-                vault: true,
-            }}>
-            <ButtonWrapper type="subscription" />
-        </PayPalScriptProvider>
+        <div className='container_paypal'>
+            <div className='sub-container-paypal'>
+                <PayPalScriptProvider
+                    options={{
+                        "client-id": "AQy1c_FMYLca9qzw3wu7taJTS2YoQadl1Z8lml0kQdK7oKIfeJKzWA1nmZB2WIiF3is9__6Iv_hqNITo",
+                        components: "buttons",
+                        intent: "subscription",
+                        vault: true,
+                    }}>
+                    <ButtonWrapper type="subscription" />
+                </PayPalScriptProvider>
+            </div>
+        </div>
     );
 }
 

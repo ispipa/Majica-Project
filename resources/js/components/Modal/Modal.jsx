@@ -14,7 +14,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                 //    setDataBaseUpdate,  
                 dataCarrito }) => {
 
-
     //ESTADOS---
     const [checkAgregado, setCheckAgregado] = useState(false);
     const [check, setcheck] = useState("");
@@ -34,11 +33,10 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         } 
     }, [ id , usuario,  ]);
 
-    
     //CONSULTA DATOS DEL CARRITO
     const carritoCompra = async () => {
             setPrecio("");
-            setcheck("");
+            // setcheck("");
             //Se obtiene los datos del Carrito de compras
             const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
             const carritoCompra  = response.data.reverse();
@@ -59,7 +57,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         }
     }
 
-
     //OBTENGO EL VALOR DEL CHECKBOX Y EL PRECIO SELECCIONADO
     const actualizarCheck = (e) =>
     {
@@ -67,11 +64,10 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setPrecio(e.target.value)
     }
 
-    
     //AGREGAR AL CARRITO ( VALIDACIONES )
     const agregarAlCarrito = async ()=>
     {  
-        setcheck("");
+        // setcheck("");
         document.querySelector(".botonAgregar").classList.add("button__loader");
         const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
         const carrito  = response.data;
@@ -103,7 +99,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     //AGREGAR EN LA TABLA ( CARRITO )
     const agregoAlCarrito_dom =  ()=>{
 
-        
         const dataSala = {
             'usuario': usuario,
             'pagado': 'false',
@@ -111,7 +106,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             'piso_pagos':piso,
             'sala_pagos':id,
             'mes_pago': check == "1" ? 'mensual' : 'trimestral'
-
         }
         
         setCarrito([...carrito, dataSala]);
@@ -119,7 +113,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         estadoSala("Ocupado", id);
         setError(false);
         setPrecio("");
-        setcheck("");
+        // setcheck("");
         checkVerifiqued();
         setContadorCompra(contadorCompra + 1);
         pintarSalasOcupadas();
@@ -131,19 +125,12 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             setMensual(false);
             setTrimestral(true);
         }
-        
-    
     }
-
-
-    
-
 
     //AGREGAR AL CARRITO EN LA BASE DE DATOS
     const agregoAlCarrito_BD =  (dataSala)=>{
         axios.post('http://localhost:8000/api/pago', dataSala);
     }
-
 
     //EDITAR (BD)
     const editar = (sala) =>
@@ -155,10 +142,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             'pagado': 'false'
         });
     }
-
-   
-  
-
 
     //ELIMINAR ( DOM / BD )
     const eliminar =  (idSalaDelete) =>
@@ -177,7 +160,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         }
     }
 
-
     //FUNCION PARA CAMBIAR EL ESTADO DE LA SALA ( Disponible / Ocupado )
     const estadoSala =  (disponibilidad,id)=>{
          axios.put("http://localhost:8000/api/sala/"+id+"?update=estado" , {
@@ -185,7 +167,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         });
         pintarSalasOcupadas();
     }
-
 
     //Mostrar un check en el boton de agregar al ser agregado a lista de compra.
     const checkVerifiqued=()=>{
@@ -202,7 +183,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             setCheckAgregado(false);
         };
     }
-
 
     //BOTON DE VOLVER
     const volverBtn1 = () =>
@@ -226,7 +206,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     //MOSTRAR ALERTA DE USUARIO NO LOGUEADO
     const Alerta_usuarioNoLogueado =  ()=>{
         setPrecio("");
-        setcheck("");
+        // setcheck("");
         setMostrarAlerta(true); 
     }
 
@@ -350,6 +330,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                     setId={setId}
                     ocultarTablaPagar={ocultarTablaPagar}
                     cambiarPrecioSeleccionado={cambiarPrecioSeleccionado}
+                    check={check}
                 />
             </div>
             <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible': 'Modal_usuarioNoLogueado'}>

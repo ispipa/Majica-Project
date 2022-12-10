@@ -3,14 +3,13 @@ import { TiDelete } from "react-icons/ti";
 import { GrClose } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
+import PaypalMensual from "../Checkout/PaypalMensual";
 
-export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar, cambiarPrecioSeleccionado }) {
+export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar, cambiarPrecioSeleccionado, check }) {
 
-    
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
     let precios = [];
     let idSala = [];
-
 
     //RECORRO EL ARRAY DE PRECIOS
     datos.forEach(element => {
@@ -25,11 +24,16 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
     //REDIRECCIONAR A PAGAR
-    const [seconds, setSeconds] = useState(0)
-    const [minutes, setMinutes] = useState(0)
+
+    const [seconds, setSeconds] = useState(59)
+    const [minutes, setMinutes] = useState(14)
+    const conteoPrecios = precios.length;
+    const navigate = useNavigate()
 
     useEffect(() => {
-        if (precios.length >= 1) {
+        
+        if (conteoPrecios >= 1) {
+            
             const interval = setInterval(() => {
                 setSeconds(seconds => seconds - 1);
                 if (seconds === 0) {
@@ -37,22 +41,24 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                     setSeconds(59);
                 }
             }, 1000);
+
             if (minutes === 9 && seconds === 59) { alert("Tiene 10 minutos para realizar la reserva") };
             if (minutes === 4 && seconds === 59) { alert("Tiene 5 minutos para realizar la reserva") };
             if (minutes === 0 && seconds === 0) {
-                alert("Se le ha acabado el plazo para realizar la reserva, por favor intente de nuevo en el tiempo establecido");
+                alert();
                 eliminar(idSala[0])
                 idSala = []
                 precios = []
                 clearInterval(interval)
             };
+
             return () => clearInterval(interval)
+
         } else {
-            setSeconds(0);
-            setMinutes(15);
+            setSeconds(59)
+            setMinutes(14)
         }
-       
-    });
+    },[conteoPrecios, seconds, minutes]);
 
     const comprobarUsuario = () => {
         (localStorage.getItem('user') && localStorage.getItem('token')) === null ?
@@ -60,7 +66,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             axios.get('http://127.0.0.1:8000/api/verified-middleware-example', {
                 headers:
                     { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
-            }).then(res => navigate('/CheckoutNow'))
+            }).then(navigate('/'))
                 .catch(err => {
                     enviarEmail();
                 })
@@ -133,7 +139,7 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             </div>
             <div className="divTotal">
                 <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
-                <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
+                <Link to={check == 1 ? "/paypalMensual" : "/paypalTrimestral"} ><button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button></Link>
                 <p className='total'>
                     Total : {total}€
                 </p>

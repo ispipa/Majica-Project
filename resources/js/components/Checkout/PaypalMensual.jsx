@@ -5,6 +5,8 @@ import {
 	PayPalButtons,
 	usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
+import '../../../css/paypalcheckout.css'
+import axios from 'axios';
 
 const PaypalMensual = () => {
 
@@ -14,10 +16,9 @@ const PaypalMensual = () => {
 	const handleApprove = (orderId) => {
 		setPaid(true)
 		console.log(paid);
-	}
-
-	if (paid) {
-		alert("Gracias por su suscripcion")
+		if (paid) {
+			alert("Gracias por su suscripcion")
+		}
 	}
 
 	if (error) {
@@ -49,8 +50,8 @@ const PaypalMensual = () => {
 					return actions.resolve()
 				};
 			}}
-			createSubscription={(data, actions) => {
-				return actions.subscription
+			createSubscription={ async (data, actions) => {
+				return await actions.subscription
 					.create({
 						plan_id: 'P-25T12664XG228441XMOKGNZI',
 					})
@@ -60,10 +61,10 @@ const PaypalMensual = () => {
 					});
 			}}
 
-			onApprove={async (data, actions) => {
+			onApprove={ (data, actions) => {
 				// const success = await actions.subscription.capture();
-				alert(`Se ha registrado bajo el codigo de suscripcion ${data.orderID}`)
 				handleApprove(data.orderID)
+				return alert(`Se ha registrado bajo el codigo de suscripcion ${data.orderID}`)
 			}}
 
 			onError={(error) => {
@@ -74,7 +75,7 @@ const PaypalMensual = () => {
 			onCancel={() => {
 				alert('Ha cancelado continuar con el proceso de suscripcion')
 			}}
-			
+
 			style={{
 				label: "subscribe",
 			}}
@@ -82,15 +83,19 @@ const PaypalMensual = () => {
 	}
 
 	return (
-		<PayPalScriptProvider
-			options={{
-				"client-id": "AQy1c_FMYLca9qzw3wu7taJTS2YoQadl1Z8lml0kQdK7oKIfeJKzWA1nmZB2WIiF3is9__6Iv_hqNITo",
-				components: "buttons",
-				intent: "subscription",
-				vault: true,
-			}}>
-			<ButtonWrapper type="subscription" />
-		</PayPalScriptProvider>
+		<div className='container_paypal'>
+			<div className='sub-container-paypal'>
+			<PayPalScriptProvider
+				options={{
+					"client-id": "AQy1c_FMYLca9qzw3wu7taJTS2YoQadl1Z8lml0kQdK7oKIfeJKzWA1nmZB2WIiF3is9__6Iv_hqNITo",
+					components: "buttons",
+					intent: "subscription",
+					vault: true,
+				}}>
+				<ButtonWrapper type="subscription" />
+			</PayPalScriptProvider>
+			</div>
+		</div>
 	);
 }
 
