@@ -7,14 +7,24 @@ import {
 import '../../../css/paypalcheckout.css'
 import toast, { Toaster } from 'react-hot-toast';
 
-const PaypalMensual = () => {
+const PaypalMensual = ({datos}) => {
 
 	const [paid, setPaid] = useState(false);
 
 	const handleApprove = (orderId) => {
 		setPaid(true)
+		if(paid){
+			editar(datos)
+		}
 	}
 
+	const editar = (sala) => {
+
+		const idSalaUpdate = sala.find(element => element.sala_pagos == id).id
+		axios.put("http://localhost:8000/api/pago/" + idSalaUpdate, {
+			'pagado': true
+		});
+	}
 
 	const ButtonWrapper = ({ type }) => {
 		const [{ options }, dispatch] = usePayPalScriptReducer();
@@ -42,6 +52,7 @@ const PaypalMensual = () => {
 			// 		return actions.resolve()
 			// 	};
 			// }}
+
 			createSubscription={async (data, actions) => {
 				return await actions.subscription
 					.create({
@@ -59,7 +70,7 @@ const PaypalMensual = () => {
 			}}
 
 			onError={(error) => {
-				toast.error(error);
+				toast.error("Ha ocurrido un error, intente nuevamente");
 			}}
 
 			onCancel={() => {

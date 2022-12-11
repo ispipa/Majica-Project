@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import styled from "@emotion/styled";
+import axios from 'axios';
 
 const ModalWrapper = styled.div`
   position: fixed;
