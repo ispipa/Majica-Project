@@ -8,6 +8,8 @@ import Volver from '../assets/cerca.png';
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { useSubmit } from 'react-router-dom';
 import Modal_usuarioNoLogueado from './modal_UsuarioNoLogueado'
+import ModalPaypal from "./ModalPaypal";
+
 
 
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
@@ -234,7 +236,9 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                     <div className='containerModalHijo'>
                         <div className='headerModal'>
                             <div className='numPiso'>
-                                
+                                <h1>
+                                    Sala
+                                </h1>
                                 <h1
                                     style={{ opacity: id != "" ? "1" : "0" }}>
                                     {nombreSala}
@@ -285,9 +289,9 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible' : 'Modal_usuarioNoLogueado'}>
                 <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta} />
             </div>
-            <ModalPaypal open={openModal} onClose={toggleModal}>
+            {/* <ModalPaypal open={openModal} onClose={toggleModal}>
                 {check == 1 ? <PaypalMensual /> : <PaypalTrimestral />}
-            </ModalPaypal>
+            </ModalPaypal> */}
         </div>
     )
 }
