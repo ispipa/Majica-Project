@@ -263,8 +263,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                         <div className={
                             disponibilidad == "Disponible" ? "descripcionModal" : "descripcionModal none" } >
                             <div className='preciosModal'>
-                                <p className="precioMensual"><span style={{ opacity: id != "" ? "1" : ".5" }}>{id == "" ? "00" : precio1}€ </span><span className="pMensual">mensual</span></p>
-                                <p className="precioTrimestral"> Si activas el pago trimestral esta sala te saldria por un precio de <span className="pTrimestral">{precio2}€</span> los 3 meses</p>  
+                                <p className="precioMensual"><span style={{ opacity: id != "" ? "1" : ".2" }}>{id == "" ? "00" : precio1}€ </span><span className="pMensual">mensual</span></p>
+                                <p className="precioTrimestral"> Si activas el pago trimestral esta sala te saldria por un precio de <span className="pTrimestral" style={{ opacity: id != "" ? "1" : ".2" }}s>{id == "" ? "00 " : precio2}€</span> los 3 meses</p>  
                             </div>
                         </div>
                         <button
