@@ -18,7 +18,6 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
     //OBTENGO LOS DATOS DE LA SALA
     const setDatos = (datasala)=>
     {
-        console.log(datasala)
         const descripcionSala = datasala.descripcion_sala;
         const nombreDeLaSala = datasala.nombre_sala;
         
@@ -68,8 +67,6 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
     return(
         <div className="containerModalEditarDescripcion">
                 <button className="btnVolver" onClick={ocultarModalDescripcion} ><CgClose/></button>
-       
-   
                 <label htmlFor="nombreSala" className="inputs1" value="">
                     <p> Nombre De La Sala: </p>
                     <input 

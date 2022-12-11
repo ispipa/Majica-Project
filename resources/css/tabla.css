@@ -4,27 +4,42 @@
     right: -100%;
     width: 0%;
     transition: .3s;
-    height: 40vh;
-    padding: 0px 0px 20px 0px;
+    height: 50vh;
+    padding: 0px 0px 75px 0px;
     background: linear-gradient(#ffffff, #ffffff);
     backdrop-filter: blur(10px);
     z-index: 200;
+    border-bottom: 1px solid rgb(153, 153, 153);
 }
-
+ 
 .ocultarTablaPagar {
     position: fixed;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: black; */
+    border-bottom: 1px solid rgba(189, 157, 157, 0);
     top: 2px;
     left: 2px;
     z-index: 250;
     font-size: 18px;
-    padding: 5px 7px 0 7px;
-    border-radius: 100%;
+    padding: 0px 20px 0px 0;
     transition: .3s;
+    width: 100%;
+    align-items: center;
+    
 }
 
-.ocultarTablaPagar:hover {
-    background-color: #ffdce6;
+.oTabla{
+    padding: 5px 7px 0 7px;
+    margin-top: -3px;
+    border-radius: 100%;
+    transition: .3s;
+   
+} 
+.oTabla:hover{
+    background-color: rgb(255, 214, 214);
 }
+
 
 .MostrartablaCompra {
     right: 0;
@@ -51,9 +66,15 @@ td {
 
 /*---------------------------------------------*/
 /* CONTAINER PAGAR */
-
+.reserva{
+    background-color: black;
+    position: absolute;
+    top: 0;
+    z-index: 500;
+}
 
 .containerPadrePagar {
+    padding-top: 25px;
     position: relative;
     width: 100%;
     height: 100%;
@@ -67,6 +88,7 @@ td {
     height: 100%;
     background: #00000000;
     overflow-y: scroll;
+    
 }
 
 .tablaPagar {
@@ -90,18 +112,18 @@ td {
 
 .botonPagarr {
     border: none;
-    width: 100px;
+    width: 100%;
     height: 30px;
     border: 20px;
     color: white;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
-    position: absolute;
+    /* position: absolute; */
     border-radius: 20px;
-    right: 10px;
     bottom: 5px;
     background-color: #340049;
+    margin-top: 10px;
 }
 
 .editar {
@@ -145,37 +167,80 @@ tr {
     transition: .2s;
 }
 
+
+.divFrecuencia{
+    display: flex;
+    
+    /* border: 1px solid rgb(0, 110, 255); */
+    
+}
+
+.divTotal .pFrecuencia{
+    margin-bottom: 7px;
+    font-size: 15px;
+}
+
+.pagarMensual,
+.pagarTrimestral{
+    border: 1px solid rgb(43, 43, 43);
+    border-radius: 10px;
+    padding: 0 7px;
+    height: 25px;
+    margin-right: 5px;
+    
+    
+}
+
+.pagarMensualActivo,
+.pagarTrimestralActivo{
+    border: 1px solid black;
+    color: white;
+    background-color: #000000;
+}
+
+.checkFrecuencia{
+    color: rgb(0, 216, 0);
+}
+
 .divTotal {
-    /* background: linear-gradient(rgba(255, 255, 255, 0.733),rgb(255, 255, 255));
-    backdrop-filter: blur(5px); */
     position: absolute;
-    bottom: -15px;
+    bottom: -70px;
     width: 100%;
-    padding: 20px;
+    padding: 0px;
+    border-top: 1px solid rgb(221, 221, 221);
+    height: auto;
+    padding: 5px 20px;
+    background-color: rgb(255, 255, 255);
     /* border-bottom: 2px solid white; */
 
 }
 
 .total {
+    margin-top: 5px;
+
     position: absolute;
-    bottom: 5px;
-    right: 130px;
+    bottom:  42px;
+    right: 40px;
     font-weight: 600;
     color: #1d1d1d;
-    font-size: 18px;
+    font-size: 22px;
 }
 
-.timer {
+/* .timer {
     position: absolute;
-    bottom: 5px;
-    font-weight: 600;
-    color: #1d1d1d;
-    font-size: 16px;
-}
+    width: auto;
+} */
 
 @media (max-width: 1440px) {
     .timer {
-        width: 25%;
+        
+        top: 0;
+        font-weight: 600;
+        color: #d66161;
+        font-size: 16px;
+        position: absolute;
+        right: 15px;
+        top: 0;
     }
 }
 
@@ -199,6 +264,7 @@ tr {
     .timer,
     .total {
         font-size: 1em;
+        color: white;
     }
 
     .botonPagarr {

@@ -14,8 +14,6 @@ import { set } from 'lodash';
 
 export default function Map() {
 
-
-
     const [piso, setPiso] = useState(null);
     const [usuario, setUsuario] = useState(0);
     const [precios, setPrecios] = useState([]);
@@ -33,8 +31,6 @@ export default function Map() {
     const [verMapaGrande2, setVerMapaGrande2] = useState(false);
     const [verMapaGrande3, setVerMapaGrande3] = useState(false);
     const [EditarDescripcion, setEditarDescripcion] = useState(false);
-    const [a , seta] = useState([])
-
     
     //SE OBTIENE LOS DATOS DEL USUARIO LOGUEADO DESDE EL LOCALSTORAGE
    
@@ -56,6 +52,7 @@ export default function Map() {
     const setId =  (e) => {
         const id = parseInt(e.target.id);
         setBaseDeDatos(id);
+        pintarSalasCompradas(usuario);
         setModal()
     }
 
@@ -105,6 +102,8 @@ export default function Map() {
     
     //SE OBTIENEN TODOS LOS DATOS DE LA SALA
     const setDatosSala = (sala)=>{
+        let precio = parseInt(sala.precio_sala);
+        const precioTrimestral = (precio / 2) + (precio + precio);
         // mostrarModalEditarDescripcion(sala);
         setIDisponibilidad(sala.activo);
         setdataSala(sala)
@@ -112,7 +111,7 @@ export default function Map() {
         setNombresala(sala.nombre_sala);
         setPiso(sala.piso)
         setIDescripcion(sala.descripcion_sala);
-        setPrecios({"precio1": sala.precio_sala, "precio2":sala.precio_sala})
+        setPrecios({"precio1": precio, "precio2":precioTrimestral});
         
     }
 
@@ -128,14 +127,15 @@ export default function Map() {
         setModal();
         const response = await axios.get("http://localhost:8000/api/sala/"+sala+"?sala=sala");
         const responseData = response.data;
-        console.log(responseData.id);
+        let precio = parseInt(responseData.precio_sala);
+        const precioTrimestral = (precio / 2) + (precio + precio);
         setIDisponibilidad("Disponible");
-        setdataSala(responseData)
+        setdataSala(responseData);
         setIdsala(responseData.id);
         setNombresala(responseData.nombre_sala);
         setPiso(responseData.piso)
         setIDescripcion(responseData.descripcion_sala);
-        setPrecios({"precio1": responseData.precio_sala, "precio2":responseData.precio_sala})
+        setPrecios({"precio1": precio, "precio2": precioTrimestral})
     }
 
     //MOSTAR MODAL CON LA DESCRIPCION Y LOS PRECIOS DE LA SALA
@@ -152,7 +152,6 @@ export default function Map() {
 
      //SE OBTINENEN LOS DATOS PARA EL MODAL DE EDITAR DESCRIPCION
     const setData_ModalEditarDescripcion = async (sala)=>{
-
        //Si la sala esta pagada y le pertenece al usuario logueado.
        //al hacer click sobre ella se mostrara un modal que le permita editar la descripcion.
        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+usuario);
@@ -165,19 +164,6 @@ export default function Map() {
           pintarSalasOcupadas();
        }
     }
-
-
-    const cambiarPrecio = async (sala)=>{
-        //Si la sala esta pagada y le pertenece al usuario logueado 
-        //al hacer click sobre ella se mostrara un modal que le permita editar la descripcion.
-        const pagados = await axios.get("http://127.0.0.1:8000/api/sala/usuario?id="+usuario);
-        const pagosData = pagados.data;
-        const indice =  pagosData.findIndex( element => element.usuario === usuario && element.pagado === "false" && element.sala_pagos === sala );
-        if(indice >= 0){
-            setIDisponibilidad("Disponible");
-
-        }
-     }
 
     //MOSTAR EL MODAL DE EDITAR LA DESCRIPCION DE LA SALA
     const mostrarModalEditarDescripcion = ()=>{
@@ -287,15 +273,15 @@ export default function Map() {
                     <div className='botonesPisos'>
                         <button
                             onClick={() => mostrarPiso1()}
-                            className={verMapaGrande1 ? 'boton activo' : 'boton'}>Piso 1
+                            className={verMapaGrande1 ? 'boton activoRed' : 'boton'}>Piso 1
                         </button>
                         <button
                             onClick={() => mostrarPiso2()}
-                            className={verMapaGrande2 ? 'boton activo' : 'boton'}>Piso 2
+                            className={verMapaGrande2 ? 'boton activoGren' : 'boton'}>Piso 2
                         </button>
                         <button
                             onClick={() => mostrarPiso3()}
-                            className={verMapaGrande3 ? 'boton activo' : 'boton'}>Piso 3
+                            className={verMapaGrande3 ? 'boton activoBlue' : 'boton'}>Piso 3
                         </button>
                     </div>
                     <img

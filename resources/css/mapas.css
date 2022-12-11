@@ -134,25 +134,45 @@
     width: 60%;
     font-weight: 600;
     height: 30px;
-    background-color: rgba(255, 255, 255, 0.548);
+    background-color: rgb(255, 255, 255);
     cursor: pointer;
-    transition: 1s;
+    transition: .2s;
 }
 
 .displayFlex {
-    width: 94%;
-    flex-direction: row;
+    width: 100%;
     transition: .5s;
+    position: fixed;
+    left: 0px;
+    bottom: 50px;
+    max-width: 160px;
+    
 }
 
 .activo {
     background-color: white;
     font-size: 16px;
+} 
+
+.activoRed{
+    background-color: rgb(255, 25, 63);
+    font-size: 16px;
+    box-shadow: rgba(0, 0, 0, 0.404) 0px 3px 8px;
 }
 
-.boton:hover {
-    background-color: white;
+.activoGren{
+    background-color: rgb(46, 230, 0);
+    font-size: 16px;
+    box-shadow: rgba(0, 0, 0, 0.404) 0px 3px 8px;
 }
+
+.activoBlue{
+    background-color: #00aeff;
+    font-size: 16px;
+    box-shadow: rgba(0, 0, 0, 0.404) 0px 3px 8px;
+}
+
+
 
 /*---------------------------------------------*/
 
