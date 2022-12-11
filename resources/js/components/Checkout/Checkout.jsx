@@ -7,11 +7,11 @@ const Checkout = () => {
         <div className='container-checkout'>
             <div className='checkout-mensual'>
                 <p>Suscripcion Mensual</p>
-                {/* <PaypalMensual/> */}
+                <PaypalMensual/>
             </div>
             <div className='checkout-trimestral'>
                 <p>Suscripcion Trimestral</p>
-                <PaypalTrimestral />
+                {/* <PaypalTrimestral /> */}
             </div>
         </div>
     )

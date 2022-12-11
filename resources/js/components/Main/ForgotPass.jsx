@@ -10,7 +10,9 @@ import axios from "axios";
 export const ForgotPass = () => {
 
     const [sign, setSign] = useState(false);
-    const forgotPass = (e) => {
+    const [email, setEmail] = useState("");
+    const [mostratModalMensaje , setMostrarModalMensaje] = useState(false);
+    const forgotPass= (e) => {
         e.preventDefault();
         let correoUser = e.target.correo.value;
         axios.post(`http://127.0.0.1:8000/api/forgot-password`,
@@ -18,8 +20,17 @@ export const ForgotPass = () => {
                 email: correoUser
             }
         ).then(res => {
-            console.log(res);
-            console.log(res.data);
+            // console.log(res);
+            // console.log(res.data.errors);
+            // console.log(res);
+            setEmail("Correo enviado")
+            setMostrarModalMensaje(true)
+        }).catch(errors => {
+            console.log(errors.response.data.errors);
+            if (errors.response.data.errors) {
+                setMostrarModalMensaje(true)
+                setEmail("Introduce un correo valido")
+            }
         })
     }
 
@@ -47,6 +58,7 @@ export const ForgotPass = () => {
                                         required
 
                                     />
+                        
                                 </div>
                                 <div className="btn-register">
                                     {/* <input
@@ -263,6 +275,11 @@ export const ForgotPass = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className={mostratModalMensaje  === true ? 'modalRegister modalRegisterVisible' : 'modalRegister' }>
+                            <div className='containerModalRegister'>
+                                <p>{email}</p>
+                            </div>
             </div>
         </div>
     );
