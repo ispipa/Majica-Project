@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
+import { AiFillCheckCircle } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
 import { GrClose } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 
-export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar, cambiarPrecioSeleccionado }) {
+export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, frecuencia, ocultarTablaPagar, cambiarPrecioSeleccionado }) {
 
     
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
     let precios = [];
     let idSala = [];
+    const [mensual, setMensual] = useState(true);
+    const [trimestral, setTrimestral] = useState(false);
 
 
     //RECORRO EL ARRAY DE PRECIOS
@@ -23,6 +26,9 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
 
     //SUMO TODOS LOS PRECIOS DE ARRAY
     let total = precios.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    
+
 
     //REDIRECCIONAR A PAGAR
     const [seconds, setSeconds] = useState(0)
@@ -80,13 +86,18 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
 
     return (
         <div className='containerPadrePagar'>
+
+          
             <Toaster />
             <div
                 onClick={ocultarTablaPagar}
                 className="ocultarTablaPagar">
-                <GrClose />
+                <div className="oTabla"><GrClose /></div>
+                <div className="divTimer">   <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p></div>
+                
             </div>
             <div className='containerPagar'>
+                
                 <table className='tablaPagar' >
                     <tbody>
                         <tr className="tr">
@@ -131,12 +142,17 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                     })}
                 </table>
             </div>
-            <div className="divTotal">
-                <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
-                <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
+         
+            <div className="divTotal"> 
+                <p className="pFrecuencia">Frecuencia de pago</p>
+                <div className="divFrecuencia">
+                    <button className={ frecuencia === "mensual" ? "pagarMensual pagarMensualActivo" : "pagarMensual"} onClick={()=>cambiaFrecuenciaPago ("mensual")}>Mensual <span className={ frecuencia === "mensual" ? "checkFrecuencia" : "none"}><AiFillCheckCircle/></span></button>
+                    <button className={frecuencia === "trimestral" ? "pagarTrimestral pagarTrimestralActivo" : "pagarTrimestral"} onClick={()=>cambiaFrecuenciaPago ("trimestral")}>Trimestral <span className={ frecuencia === "trimestral" ? "checkFrecuencia" : "none"}><AiFillCheckCircle/></span></button>
+                </div>
                 <p className='total'>
                     Total : {total}€
                 </p>
+                <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
             </div>
         </div>
     )
