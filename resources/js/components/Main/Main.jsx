@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 export const Main = () => {
 
     const [mensaje, setMensaje] = useState("");
-    const [mostratModalMensaje , setMostrarModalMensaje] = useState(false);
+    const [mostratModalMensaje, setMostrarModalMensaje] = useState(false);
     const [errorMail, setErrorMail] = useState(false)
     const [errorImagen, setErrorImagen] = useState(false)
     const [errorTelefono, setErrorTelefono] = useState(false)
@@ -62,26 +62,25 @@ export const Main = () => {
                 localStorage.setItem('token', JSON.stringify(res.data.token));
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 return navigate('/map');
-              
-            }
-        })
-        .catch(errors => {
-            console.log(errors.response.data.message);
-            
-            if (errors.response.data.message === "validation.required") {
-                setMensaje("Tu contraseña es incorrecta")
-                setMostrarModalMensaje(true)
-            }else {
-                setMensaje("Tu cuenta no existe")
-                setMostrarModalMensaje(true)
-            }
-        })
-    }
-    
 
-    
-    const handleImage = (e) =>
-    {
+            }
+        })
+            .catch(errors => {
+                console.log(errors.response.data.message);
+
+                if (errors.response.data.message === "validation.required") {
+                    setMensaje("Tu contraseña es incorrecta")
+                    setMostrarModalMensaje(true)
+                } else {
+                    setMensaje("Tu cuenta no existe")
+                    setMostrarModalMensaje(true)
+                }
+            })
+    }
+
+
+
+    const handleImage = (e) => {
         setImg(e.target.files[0]);
     }
 
@@ -91,7 +90,7 @@ export const Main = () => {
 
         const data = new FormData();
         const des = e.target.descripción.value;
-        console.log(des)
+        // console.log(des)
         data.append('name', e.target.nombre.value);
         data.append('last_name', e.target.apellidos.value);
         data.append('email', e.target.email.value);
@@ -118,67 +117,69 @@ export const Main = () => {
                 setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
                 setMostrarModalMensaje(true)
                 setTimeout(function () { setMostrarModalMensaje(false) }, 7000);
-                console.log(error);
+                // console.log(error);
+                const errores = error.response.data
+                console.log((errores).errors);
 
-        }, (error) => {
-            setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
-            setMostrarModalMensaje(true)
-            setTimeout(function(){ setMostrarModalMensaje(false) }, 7000);
-            // console.log(error.response.data);
-            const errores = error.response.data
-            console.log((errores).errors)
+                if (errores.errors.email) {
+                    setErrorMail(true)
+                } else {
+                    setErrorMail(false)
+                }
+                if (errores.errors.image) {
+                    setErrorImagen(true)
+                } else {
+                    setErrorImagen(false)
+                }
+                if (errores.errors.telephone) {
+                    setErrorTelefono(true)
+                } else {
+                    setErrorTelefono(false)
+                }
+                if (errores.errors.address) {
+                    setErrorDireccion(true)
+                } else {
+                    setErrorDireccion(false)
+                }
+                if (errores.errors.description_sala) {
+                    setErrorDescripcion(true)
+                } else {
+                    setErrorDescripcion(false)
+                }
+                if (errores.errors.last_name) {
+                    setErrorlast_name(true)
+                } else {
+                    setErrorlast_name(false)
+                }
+                if (errores.errors.name) {
+                    setErrorName(true)
+                } else {
+                    setErrorName(false)
+                }
+                if (errores.errors.type_of_art) {
+                    setErrortype_of_art(true)
+                } else {
+                    setErrortype_of_art(false)
+                }
+                if (errores.errors.password) {
+                    setErrorPassword(true)
+                } else {
+                    setErrorPassword(false)
+                }
 
-            if (errores.errors.email) {
-                setErrorMail(true)
-            }else{
-                setErrorMail(false)
-            }
-            if (errores.errors.image) {
-                setErrorImagen(true)
-            }else {
-                setErrorImagen(false)
-            }
-            if (errores.errors.telephone) {
-                setErrorTelefono(true)
-            }else {
-                setErrorTelefono(false)
-            }
-            if (errores.errors.address) {
-                setErrorDireccion(true)
-            }else {
-                setErrorDireccion(false)
-            }
-            if (errores.errors.description_sala) {
-                setErrorDescripcion(true)
-            }else {
-                setErrorDescripcion(false)
-            }
-            if (errores.errors.last_name) {
-                setErrorlast_name(true)
-            }else {
-                setErrorlast_name(false)
-            }
-            if (errores.errors.name) {
-                setErrorName(true)
-            }else {
-                setErrorName(false)
-            }
 
-            if (errores.errors.type_of_art) {
-                setErrortype_of_art(true)
-            }else {
-                setErrortype_of_art(false)
-            }
-            if (errores.errors.password) {
-                setErrorPassword(true)
-            }else {
-                setErrorPassword(false)
-            }
-            
-            
-        });
-    
-        
+            }, (error) => {
+                setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
+                setMostrarModalMensaje(true)
+                setTimeout(function () { setMostrarModalMensaje(false) }, 7000);
+                // console.log(error.response.data);
+                // const errores = error.response.data
+                // console.log((errores).errors)
+
+
+            });
+
+
 
     }
 
@@ -220,7 +221,7 @@ export const Main = () => {
                                 <hr />
                                 <br />
                                 <div className="btn-register">
-                                <input
+                                    <input
                                         defaultValue="Crear Cuenta Nueva"
                                         className="btn-crearCuenta solid"
                                         onClick={Sign_in_btn} />
@@ -276,7 +277,7 @@ export const Main = () => {
                                             placeholder="Apellidos"
                                             required
                                         />
-                                           <p className={errorlast_name ? "pError-v" : "pError"}>Ingresa tu apellido para continuar</p>
+                                        <p className={errorlast_name ? "pError-v" : "pError"}>Ingresa tu apellido para continuar</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -288,7 +289,7 @@ export const Main = () => {
                                             placeholder="Email"
                                             required
                                         />
-                                         <p className={errorMail ? "pError-v" : "pError"}>Ingresa un correo valido.</p>
+                                        <p className={errorMail ? "pError-v" : "pError"}>Ingresa un correo valido.</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -312,7 +313,7 @@ export const Main = () => {
                                             placeholder="Teléfono"
                                             required
                                         />
-                                      <p className={errorTelefono ? "pError-v" : "pError"}>Ingresa un telefono valido</p>
+                                        <p className={errorTelefono ? "pError-v" : "pError"}>Ingresa un telefono valido</p>
                                     </div>
                                     <div
                                         className="input-field"
@@ -345,7 +346,7 @@ export const Main = () => {
                                             placeholder="Tipo de arte"
                                             required
                                         />
-                                        <p className={errortype_of_art ? "pError-v" : "pError"}>Ingresa tu tipo de arte.</p>  
+                                        <p className={errortype_of_art ? "pError-v" : "pError"}>Ingresa tu tipo de arte.</p>
                                     </div>
                                     <div
                                         className="input-field-tx input-field-textarea"
@@ -355,27 +356,26 @@ export const Main = () => {
 
                                     </div>
                                     <div className='div-descripcion'>
-                                    <p className={errorDescripcion ? "pError-v-descripcion" : "pError"}>Ingresa una descripción de 20 caracteres.</p>
+                                        <p className={errorDescripcion ? "pError-v-descripcion" : "pError"}>Ingresa una descripción de 20 caracteres.</p>
                                     </div>
                                 </div>
+                                <hr />
                                 <div className="btn-register">
                                     <input
                                         type="submit"
                                         className="btn"
                                         value="Registrar" />
-                                </div>
-                                <br />
-                                <hr />
-                                <br />
-                                <div>
-                                    <div className="forgotPass">
-                                        <p>¿Ya tienes cuenta?</p>
-                                    </div>
-                                    
                                     <input
                                         className="btn-crearCuenta"
                                         defaultValue="Inicia Sesión"
                                         onClick={Sing_up_btn} />
+                                </div>
+                                <div>
+                                    {/* <div className="forgotPass">
+                                            <p>¿Ya tienes cuenta?</p>
+                                        </div> */}
+
+
                                 </div>
                             </div>
                             <div className="social-media"></div>
@@ -394,20 +394,15 @@ export const Main = () => {
                                 alt="logoMajica" />
                             <div className="text-panel">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Neque, accusamus animi
-                                    distinctio blanditiis dignissimos doloremque
-                                    corrupti ad. Sed, porro accusamus incidunt
-                                    odio provident quod rem beatae nobis, quam,
-                                    nulla perferendis?
+                                    Virutal Museum es una plataforma donde los artistas pueden mostrar sus obras de forma digital
                                 </p>
-                                <a href="https://www.majica.es/programacion">
-                                    <button
-                                        className="btn transparent"
-                                        id="sign-up-btn">
-                                        Saber mas
-                                    </button>
-                                </a>
+                                <Link to="/map">
+                                <button
+                                    className="btn transparent"
+                                    id="sign-up-btn">
+                                    ¡Ver mapas!
+                                </button>
+                                </Link>
                             </div>
                             {/* <h3>¿Aún no tienes una cuenta?</h3>
                 <p>
