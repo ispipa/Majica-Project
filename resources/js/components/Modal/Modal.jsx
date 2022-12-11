@@ -9,7 +9,7 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import { useSubmit } from 'react-router-dom';
 import Modal_usuarioNoLogueado from './modal_UsuarioNoLogueado'
 import ModalPaypal from "./ModalPaypal";
-
+import PaypalTrimestral from "../Checkout/PaypalTrimestral";
 
 
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
@@ -289,9 +289,9 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible' : 'Modal_usuarioNoLogueado'}>
                 <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta} />
             </div>
-            {/* <ModalPaypal open={openModal} onClose={toggleModal}>
+            <ModalPaypal open={openModal} onClose={toggleModal}>
                 {check == 1 ? <PaypalMensual /> : <PaypalTrimestral />}
-            </ModalPaypal> */}
+            </ModalPaypal>
         </div>
     )
 }

@@ -9,6 +9,7 @@ import '../../../css/paypalcheckout.css'
 import toast, { Toaster } from 'react-hot-toast';
 
 const PaypalTrimestral = () => {
+    
 
     const [paid, setPaid] = useState(false);
 
