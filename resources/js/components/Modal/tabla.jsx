@@ -7,7 +7,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import PaypalMensual from "../Checkout/PaypalMensual";
 import ModalPaypal from "./ModalPaypal";
 
-export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, frecuencia, ocultarTablaPagar, cambiarPrecioSeleccionado }) {
+export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, frecuencia, setId, ocultarTablaPagar, cambiarPrecioSeleccionado, check, handleModal }) {
+
+    //VARIABLES DE ESTADO
+    const [openModal, setOpenModal] = useState(false)
 
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
     let precios = [];
@@ -126,9 +129,8 @@ export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, 
 
     return (
         <div className='containerPadrePagar'>
-
-          
-            <Toaster />
+            <Toaster
+                position="top" />
             <div
                 onClick={ocultarTablaPagar}
                 className="ocultarTablaPagar">
@@ -182,19 +184,33 @@ export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, 
                     })}
                 </table>
             </div>
-         
-            <div className="divTotal"> 
-                <p className="pFrecuencia">Frecuencia de pago</p>
-                <div className="divFrecuencia">
-                    <button className={ frecuencia === "mensual" ? "pagarMensual pagarMensualActivo" : "pagarMensual"} onClick={()=>cambiaFrecuenciaPago ("mensual")}>Mensual <span className={ frecuencia === "mensual" ? "checkFrecuencia" : "none"}><AiFillCheckCircle/></span></button>
-                    <button className={frecuencia === "trimestral" ? "pagarTrimestral pagarTrimestralActivo" : "pagarTrimestral"} onClick={()=>cambiaFrecuenciaPago ("trimestral")}>Trimestral <span className={ frecuencia === "trimestral" ? "checkFrecuencia" : "none"}><AiFillCheckCircle/></span></button>
-                </div>
+            <div className="divTotal">
+                <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
+                
+                {/* <Link to={check == 1 ? "/paypalMensual" : "/paypalTrimestral"} ><button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button></Link> */}
+                <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
                 <p className='total'>
                     Total : {total}€
                 </p>
                 <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
             </div>
+            <div className="divTotal">
+            <p className="pFrecuencia">Frecuencia de pago</p>
+                <div className="divFrecuencia">
+                    <button className={ frecuencia === "mensual" ? "pagarMensual pagarMensualActivo" : "pagarMensual"} onClick={()=>cambiaFrecuenciaPago ("mensual")}>Mensual <span className={ frecuencia === "mensual" ? "checkFrecuencia" : "none"}><AiFillCheckCircle/></span></button>
+                    <button className={frecuencia === "trimestral" ? "pagarTrimestral pagarTrimestralActivo" : "pagarTrimestral"} onClick={()=>cambiaFrecuenciaPago ("trimestral")}>Trimestral <span className={ frecuencia === "trimestral" ? "checkFrecuencia" : "none"}><AiFillCheckCircle/></span></button>
+                </div>
+               
+                {/* <Link to={check == 1 ? "/paypalMensual" : "/paypalTrimestral"} ><button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button></Link> */}
+                <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
+
+                <p className='total'>
+                    Total : {total}€
+                </p>
+                
+            </div>
         </div>
+      
     )
 }
 

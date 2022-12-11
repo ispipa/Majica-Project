@@ -8,9 +8,9 @@ import Volver from '../assets/cerca.png';
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { useSubmit } from 'react-router-dom';
 import Modal_usuarioNoLogueado from './modal_UsuarioNoLogueado'
+import toast from "react-hot-toast";
 import ModalPaypal from "./ModalPaypal";
 import PaypalTrimestral from "../Checkout/PaypalTrimestral";
-
 
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
     setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado,
@@ -82,15 +82,16 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             document.querySelector(".botonAgregar").classList.remove("button__loader");
         }
     }
-   
+
     //AGREGAR EN LA TABLA ( CARRITO )
-    const agregoAlCarrito_dom =  ()=>{
+    const agregoAlCarrito_dom = () => {
+
         const dataSala = {
             'usuario': usuario,
             'pagado': 'false',
-            'precio_pagos':precio1,
-            'piso_pagos':piso,
-            'sala_pagos':id,
+            'precio_pagos': precio1,
+            'piso_pagos': piso,
+            'sala_pagos': id,
             'mes_pago': check == "1" ? 'mensual' : 'trimestral'
         }
 
@@ -284,6 +285,12 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                     cambiarPrecioSeleccionado={cambiarPrecioSeleccionado}
                     cambiaFrecuenciaPago ={cambiaFrecuenciaPago }
                     frecuencia={frecuencia}
+                    check={check}
+                    handleModal={handleModal}
+                    cambiaFrecuenciaPago ={cambiaFrecuenciaPago }
+                    frecuencia={frecuencia}
+                    // check={check}
+                    // handleModal={handleModal}
                 />
             </div>
             <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible' : 'Modal_usuarioNoLogueado'}>
