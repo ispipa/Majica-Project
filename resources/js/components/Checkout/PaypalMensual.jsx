@@ -7,11 +7,17 @@ import {
 import '../../../css/paypalcheckout.css'
 import toast, { Toaster } from 'react-hot-toast';
 
-const PaypalMensual = () => {
+const PaypalMensual = ({data}) => {
 
 	const [paid, setPaid] = useState(false);
 
 	const handleApprove = (orderId) => {
+		data.forEach(element => {
+			axios.put("http://localhost:8000/api/pago/" + element.sala_pagos+"?pagoo=pagoTrue", {
+			'pagado': 'true'
+			});
+			// console.log("http://localhost:8000/api/pago/" + element.id+"?pago=pagoTrue")
+		});
 		setPaid(true)
 	}
 
@@ -20,6 +26,7 @@ const PaypalMensual = () => {
 		const [{ options }, dispatch] = usePayPalScriptReducer();
 
 		useEffect(() => {
+			prueba();
 			dispatch({
 				type: "resetOptions",
 				value: {
@@ -30,6 +37,9 @@ const PaypalMensual = () => {
 		}, [type]);
 
 		return (
+
+
+			
 			<PayPalButtons
 			// onClick={(data, actions) => {
 
@@ -54,12 +64,14 @@ const PaypalMensual = () => {
 			}}
 
 			onApprove={(data, actions) => {
-				handleApprove(data.orderID)
+				handleApprove(data.orderID);
+				
 				toast.success(`Se ha registrado su suscripcion, GRACIAS ARTISTA!`)
 			}}
 
 			onError={(error) => {
-				toast.error(error);
+				// toast.error("A ocurrido un error");
+				console.log(error)
 			}}
 
 			onCancel={() => {
@@ -70,6 +82,16 @@ const PaypalMensual = () => {
 				label: "subscribe",
 			}}
 		/>);
+	}
+
+	const prueba = ()=>{
+		console.log(data);
+        
+    
+			
+			
+     
+		
 	}
 
 	return (

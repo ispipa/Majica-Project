@@ -294,7 +294,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                 <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta} />
             </div>
             <ModalPaypal open={openModal} onClose={toggleModal}>
-                {check == 1 ? <PaypalMensual /> : <PaypalTrimestral />}
+                {frecuencia == "mensual" ? <PaypalMensual data={carrito} /> : <PaypalTrimestral data={carrito} />}
             </ModalPaypal>
         </div>
     )

@@ -186,7 +186,7 @@ export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, 
             </div>
             <div className="divTotal">
                 <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
-                
+
                 {/* <Link to={check == 1 ? "/paypalMensual" : "/paypalTrimestral"} ><button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button></Link> */}
                 <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
                 <p className='total'>
