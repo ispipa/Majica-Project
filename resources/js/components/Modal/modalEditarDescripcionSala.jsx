@@ -67,8 +67,6 @@ export default function ModalEditarDescripcion ({updateDescripcion,datasala,ocul
     return(
         <div className="containerModalEditarDescripcion">
                 <button className="btnVolver" onClick={ocultarModalDescripcion} ><CgClose/></button>
-       
-   
                 <label htmlFor="nombreSala" className="inputs1" value="">
                     <p> Nombre De La Sala: </p>
                     <input 

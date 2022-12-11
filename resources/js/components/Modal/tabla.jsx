@@ -4,16 +4,16 @@ import { TiDelete } from "react-icons/ti";
 import { GrClose } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
+import PaypalMensual from "../Checkout/PaypalMensual";
+import ModalPaypal from "./ModalPaypal";
 
 export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, frecuencia, ocultarTablaPagar, cambiarPrecioSeleccionado }) {
 
-    
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
     let precios = [];
     let idSala = [];
     const [mensual, setMensual] = useState(true);
     const [trimestral, setTrimestral] = useState(false);
-
 
     //RECORRO EL ARRAY DE PRECIOS
     datos.forEach(element => {
@@ -31,11 +31,17 @@ export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, 
 
 
     //REDIRECCIONAR A PAGAR
-    const [seconds, setSeconds] = useState(0)
+
+    const [seconds, setSeconds] = useState(2)
     const [minutes, setMinutes] = useState(0)
+    const [primerAlerta, setPrimerAlerta] = useState("")
+    const conteoPrecios = precios.length;
+    const navigate = useNavigate()
 
     useEffect(() => {
-        if (precios.length >= 1) {
+
+        if (conteoPrecios >= 1) {
+
             const interval = setInterval(() => {
                 setSeconds(seconds => seconds - 1);
                 if (seconds === 0) {
@@ -43,30 +49,64 @@ export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, 
                     setSeconds(59);
                 }
             }, 1000);
-            if (minutes === 9 && seconds === 59) { alert("Tiene 10 minutos para realizar la reserva") };
-            if (minutes === 4 && seconds === 59) { alert("Tiene 5 minutos para realizar la reserva") };
+
+            if (minutes === 9 && seconds === 59) {
+                toast('Tiene menos de 10 minutos para reservar la sala.',
+                    {
+                        icon: '💨',
+                        style: {
+                            borderRadius: '10px',
+                            background: '#333',
+                            color: '#fff',
+                        },
+                    }
+                );
+            };
+            if (minutes === 4 && seconds === 59) {
+                toast('Tiene menos de 5 minutos para reservar la sala.',
+                    {
+                        icon: '😔',
+                        style: {
+                            borderRadius: '10px',
+                            background: '#333',
+                            color: '#fff',
+                        },
+                    }
+                );
+            };
             if (minutes === 0 && seconds === 0) {
-                alert("Se le ha acabado el plazo para realizar la reserva, por favor intente de nuevo en el tiempo establecido");
+                toast('Ha consumido el tiempo para almacenar la reserva, intente de nuevo',
+                    {
+                        icon: '😑',
+                        style: {
+                            borderRadius: '10px',
+                            background: '#333',
+                            color: '#fff',
+                        },
+                    }
+                );
                 eliminar(idSala[0])
                 idSala = []
                 precios = []
                 clearInterval(interval)
             };
+
             return () => clearInterval(interval)
+
         } else {
-            setSeconds(0);
-            setMinutes(15);
+            setSeconds(59)
+            setMinutes(14)
         }
-       
-    });
+    }, [conteoPrecios, seconds]);
 
     const comprobarUsuario = () => {
-        (localStorage.getItem('user') && localStorage.getItem('token')) === null ?
+        handleModal
+            (localStorage.getItem('user') && localStorage.getItem('token')) === null ?
             alert("Debe iniciar sesión para realizar la reserva") :
             axios.get('http://127.0.0.1:8000/api/verified-middleware-example', {
                 headers:
                     { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
-            }).then(res => navigate('/CheckoutNow'))
+            }).then()
                 .catch(err => {
                     enviarEmail();
                 })
@@ -116,19 +156,19 @@ export default function FormularioPago({ datos, eliminar, cambiaFrecuenciaPago, 
                                     <td
                                         className="nSala"
                                         id={ar.sala_pagos}
-                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        onClick={() => cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.sala_pagos}
                                     </td>
                                     <td
                                         className="nPiso"
                                         id={ar.sala_pagos}
-                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        onClick={() => cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.piso_pagos}
                                     </td>
                                     <td
                                         className="precio"
                                         id={ar.sala_pagos}
-                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        onClick={() => cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.precio_pagos}€
                                     </td>
                                     <td

@@ -10,9 +10,11 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import { CheckoutNow } from "./Checkout/CheckoutNew";
+// import { CheckoutNow } from "./Checkout/CheckoutNew";
 import { Verified } from "./Main/Verified";
-import Checkout from "./Checkout/Checkout";
+// import Checkout from "./Checkout/Checkout";
+import PaypalMensual from "./Checkout/PaypalMensual";
+import PaypalTrimestral from "./Checkout/PaypalTrimestral";
 
 const App = () => {
 
@@ -27,12 +29,12 @@ const App = () => {
                 <Route
                     path="/map"
                     element={<Map />} />
-                <Route
+                {/* <Route
                     path="/checkout"
                     element={<Checkout />} />
                 <Route
                     path="/CheckoutNow"
-                    element={<CheckoutNow />} />
+                    element={<CheckoutNow />} /> */}
                 <Route
                     path="/forgotPass"
                     element={<ForgotPass />}/>
@@ -45,6 +47,12 @@ const App = () => {
                 <Route
                     path="/already-verified"
                     element={<AlreadyVer />}/>
+                <Route 
+                    path="/paypalMensual"
+                    element={<PaypalMensual/>} />
+                <Route 
+                    path="/paypalTrimestral"
+                    element={<PaypalTrimestral/>} />
             </Routes>
         </BrowserRouter>
     );

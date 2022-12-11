@@ -79,8 +79,8 @@ app.get('/execute-payment', executePayment);
 //Suscripcion----------------------------------------------------------
 /* 
 1. Se crea el producto al cual se le apegara un plan de pago.
-2. Se crea el plan de pago, uniendo el id del producto.
-3. Se crea la subscripcion
+2. Se crea el plan de pago, uniendo el id del producto, ya sea pagos mensuales o trimestrales.
+3. Se genera la subscripcion en base al plan_id generado anteriormente, puede ser mensual o trimestral
 */
 
 const createProduct = async (req, res) => {
@@ -352,45 +352,45 @@ const generateSubscriptionTriMonth = async (req, res) => {
     }
 }
 
-const captureSubscription = async (req, res) => {
-    try {
-        const { id } = req.query.subscription_id;
-        const token = req.query.ba_token;
-        const params = new URLSearchParams();
-        params.append("grant_type", "client_credentials")
+// const captureSubscription = async (req, res) => {
+//     try {
+//         const { id } = req.query.subscription_id;
+//         const token = req.query.ba_token;
+//         const params = new URLSearchParams();
+//         params.append("grant_type", "client_credentials")
 
-        const { data: { access_token } } = await axios.post(`${PAYPAL_API}/v1/oauth2/token`, params, {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            auth: {
-                username: process.env.PAYPAL_CLIENT,
-                password: process.env.PAYPAL_SECRET
-            },
-        })
+//         const { data: { access_token } } = await axios.post(`${PAYPAL_API}/v1/oauth2/token`, params, {
+//             headers: {
+//                 "Content-Type": "application/x-www-form-urlencoded",
+//             },
+//             auth: {
+//                 username: process.env.PAYPAL_CLIENT,
+//                 password: process.env.PAYPAL_SECRET
+//             },
+//         })
 
-        const capture = {
-            note: "Charging as the balance reached the limit",
-            capture_type: "OUTSTANDING_BALANCE",
-            amount: {
-                currency_code: "EUR",
-                value: '100',
-            }
-        }
+//         const capture = {
+//             note: "Charging as the balance reached the limit",
+//             capture_type: "OUTSTANDING_BALANCE",
+//             amount: {
+//                 currency_code: "EUR",
+//                 value: '100',
+//             }
+//         }
 
-        const response = await axios.post(`${PAYPAL_API}/v1/billing/subscriptions/${id}/capture`, capture, {
-            headers: {
-                Authorization: `Bearer ${access_token}`
-            }
-        })
-        console.log(token);
-        res.json(response.data)
-    } catch (error) {
-        return res.status(500).send(error)
-    }
+//         const response = await axios.post(`${PAYPAL_API}/v1/billing/subscriptions/${id}/capture`, capture, {
+//             headers: {
+//                 Authorization: `Bearer ${access_token}`
+//             }
+//         })
+//         console.log(token);
+//         res.json(response.data)
+//     } catch (error) {
+//         return res.status(500).send(error)
+//     }
 
 
-}
+// }
 
 app.post('/create-product', createProduct);
 app.post('/create-plan', createPlanMonth);
@@ -402,7 +402,7 @@ app.get('/generate-subscription-month', generateSubscriptionMonth);
 app.get('/generate-subscription-tri-month', generateSubscriptionTriMonth);
 app.post('/generate-subscription-tri-month', generateSubscriptionTriMonth);
 
-app.get('/capture-subscription', captureSubscription);
+// app.get('/capture-subscription', captureSubscription);
 
 app.listen(3002, () => {
     console.log("Escuchando en http://localhost:3002");
