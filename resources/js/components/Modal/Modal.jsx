@@ -88,8 +88,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 
         const dataSala = {
             'usuario': usuario,
-            'pagado': 'false',
-            'precio_pagos': precio1,
+            'pagado': "false",
+            'precio_pagos': precio,
             'piso_pagos': piso,
             'sala_pagos': id,
             'mes_pago': check == "1" ? 'mensual' : 'trimestral'
@@ -117,7 +117,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         const idSalaUpdate = sala.find(element => element.sala_pagos == id).id
         axios.put("http://localhost:8000/api/pago/" + idSalaUpdate, {
             'precio': precio,
-            'pagado': 'false'
+            'pagado': false
         });
     }
 
@@ -287,8 +287,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                     frecuencia={frecuencia}
                     check={check}
                     handleModal={handleModal}
-                    cambiaFrecuenciaPago ={cambiaFrecuenciaPago }
-                    frecuencia={frecuencia}
                     // check={check}
                     // handleModal={handleModal}
                 />
@@ -296,8 +294,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible' : 'Modal_usuarioNoLogueado'}>
                 <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta} />
             </div>
-            <ModalPaypal open={openModal} onClose={toggleModal}>
-                {check == 1 ? <PaypalMensual /> : <PaypalTrimestral />}
+            <ModalPaypal open={openModal} onClose={toggleModal} idSala={id}>
+                {check == 1 ? <PaypalMensual datos={carrito} /> : <PaypalTrimestral datos={carrito} />}
             </ModalPaypal>
         </div>
     )
