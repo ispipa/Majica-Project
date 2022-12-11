@@ -264,7 +264,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                             disponibilidad == "Disponible" ? "descripcionModal" : "descripcionModal none" } >
                             <div className='preciosModal'>
                                 <p className="precioMensual">{precio1}€ <span className="pMensual">mensual</span></p>
-                                <p className="precioTrimestral">{precio2}€ <span className="pTrimestral">Trimestral</span></p>  
+                                <p className="precioTrimestral"> Si activas el pago trimestral esta sala saldria por un precio de <span className="pTrimestral">{precio2}€</span> los 3 meses</p>  
                             </div>
                         </div>
                         <button
