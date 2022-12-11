@@ -1,28 +1,20 @@
-import React from 'react'
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react'
 import {
 	PayPalScriptProvider,
 	PayPalButtons,
 	usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
+import '../../../css/paypalcheckout.css'
+import toast, { Toaster } from 'react-hot-toast';
 
 const PaypalMensual = () => {
 
 	const [paid, setPaid] = useState(false);
-	const [error, setError] = useState(null);
 
 	const handleApprove = (orderId) => {
 		setPaid(true)
-		console.log(paid);
 	}
 
-	if (paid) {
-		alert("Gracias por su suscripcion")
-	}
-
-	if (error) {
-		alert(error)
-	}
 
 	const ButtonWrapper = ({ type }) => {
 		const [{ options }, dispatch] = usePayPalScriptReducer();
@@ -37,22 +29,23 @@ const PaypalMensual = () => {
 			});
 		}, [type]);
 
-		return (<PayPalButtons
-			onClick={(data, actions) => {
+		return (
+			<PayPalButtons
+			// onClick={(data, actions) => {
 
-				const yaSuscrito = false
+			// 	const yaSuscrito = false
 
-				if (yaSuscrito) {
-					setError("Ya ha solicitado una suscripcion con esta cuenta")
-					return actions.reject()
-				} else {
-					return actions.resolve()
-				};
-			}}
-			createSubscription={(data, actions) => {
-				return actions.subscription
+			// 	if (yaSuscrito) {
+			// 		setError("Ya ha solicitado una suscripcion con esta cuenta")
+			// 		return actions.reject()
+			// 	} else {
+			// 		return actions.resolve()
+			// 	};
+			// }}
+			createSubscription={async (data, actions) => {
+				return await actions.subscription
 					.create({
-						plan_id: "P-9K913015YJ498554WMN6I5XA",
+						plan_id: 'P-25T12664XG228441XMOKGNZI',
 					})
 					.then((orderId) => {
 						// Your code here after create the order
@@ -60,21 +53,19 @@ const PaypalMensual = () => {
 					});
 			}}
 
-			onApprove={async (data, actions) => {
-				// const success = await actions.subscription.capture();
-				alert(`Se ha registrado bajo el codigo de suscripcion ${data.orderID}`)
+			onApprove={(data, actions) => {
 				handleApprove(data.orderID)
+				toast.success(`Se ha registrado su suscripcion, GRACIAS ARTISTA!`)
 			}}
 
 			onError={(error) => {
-				setError(error);
-				console.error(error)
+				toast.error(error);
 			}}
 
 			onCancel={() => {
-				alert('Ha cancelado continuar con el proceso de suscripcion')
+				toast.error("Ha cancelado el proceso de suscripcion");
 			}}
-			
+
 			style={{
 				label: "subscribe",
 			}}
@@ -82,16 +73,23 @@ const PaypalMensual = () => {
 	}
 
 	return (
-		<PayPalScriptProvider
-			options={{
-				"client-id": "AXcG6OB3Ow9GMsbXF53vLEIrmiPFFW_vVkeuLpb4_kQZBf2p6TCS69_s8eNy5FAcC9kju1l2giHD9OcB",
-				components: "buttons",
-				intent: "subscription",
-				vault: true,
-			}}>
-			<ButtonWrapper type="subscription" />
-		</PayPalScriptProvider>
+		<div className='container_paypal'>
+			<div className='sub-container-paypal'>
+				<Toaster 
+					position='bottom-left' />
+				<PayPalScriptProvider
+					options={{
+						"client-id": "AQy1c_FMYLca9qzw3wu7taJTS2YoQadl1Z8lml0kQdK7oKIfeJKzWA1nmZB2WIiF3is9__6Iv_hqNITo",
+						components: "buttons",
+						intent: "subscription",
+						vault: true,
+					}}>
+					<ButtonWrapper type="subscription" />
+				</PayPalScriptProvider>
+			</div>
+		</div>
 	);
 }
 
 export default PaypalMensual
+
