@@ -206,9 +206,11 @@
     font-size: 30px;
     font-weight: 700;
     margin-top: 20px;
-    /* background-color: #000000d7;
-    padding: 0 20px; */
+    background-color: #000000d7;
+    padding: 0 20px; 
     border-radius: 10px;
+    
+    /* border: 1px solid rgb(0, 255, 64); */
 }
 
 .pMensual{
@@ -379,6 +381,7 @@
     font-size: 25px;
     margin-left: 15px;
     display: inline-block;
+    
 }
 
 :root {

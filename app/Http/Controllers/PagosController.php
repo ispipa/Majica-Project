@@ -68,10 +68,17 @@ class PagosController extends Controller
     public function update(Request $request, $id)
     {
 
-        $pago = Pagos::findOrFail($id);
-        $pago->precio_pagos = $request->precio;
-        $pago->pagado = $request->pagado;
-        $pago->save();
+        if($request->pagoo === "pagoTrue"){
+            // $pago = Pagos::where("sala_pagos", $id);
+            $pago = Pagos::where('sala_pagos', $id)->first();;
+            $pago->pagado = $request->pagado;
+            $pago->save();
+        } else{
+            $pago = Pagos::findOrFail($id);
+            $pago->precio_pagos = $request->precio;
+            $pago->pagado = $request->pagado;
+            $pago->save();
+        }
         // return $pago;
     }
 
