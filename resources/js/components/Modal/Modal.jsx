@@ -8,11 +8,15 @@ import Volver from '../assets/cerca.png';
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { useSubmit } from 'react-router-dom';
 import Modal_usuarioNoLogueado from './modal_UsuarioNoLogueado'
+import toast from "react-hot-toast";
+import ModalPaypal from "./ModalPaypal";
+import PaypalMensual from "../Checkout/PaypalMensual";
+import PaypalTrimestral from "../Checkout/PaypalTrimestral";
 
-const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario,  pintarSalasOcupadas,
-                   setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado,
-                //    setDataBaseUpdate,  
-                dataCarrito }) => {
+const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
+    setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado,
+    //    setDataBaseUpdate,  
+    dataCarrito }) => {
 
     //ESTADOS---
     const [checkAgregado, setCheckAgregado] = useState(false);
@@ -25,32 +29,41 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [mostrarAlerta, setMostrarAlerta] = useState(false);
     const [contadorCompra, setContadorCompra] = useState(0);
-   
-    useEffect( () =>
-    {
-        if(usuario > 0){
+    const [openModal, setOpenModal] = useState(false);
+
+    useEffect(() => {
+        if (usuario > 0) {
             carritoCompra();
-        } 
-    }, [ id , usuario,  ]);
+        }
+    }, [id, usuario,]);
+
+    const handleModal = (check) => {
+        toggleModal();
+        if (check == 1) {navigate}
+    }
+
+    const toggleModal = () => {
+        setOpenModal(!openModal)
+    }
 
     //CONSULTA DATOS DEL CARRITO
     const carritoCompra = async () => {
-            setPrecio("");
-            // setcheck("");
-            //Se obtiene los datos del Carrito de compras
-            const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
-            const carritoCompra  = response.data.reverse();
-            setCarrito(carritoCompra);
-            setContadorCompra(carritoCompra.length);
+        setPrecio("");
+        // setcheck("");
+        //Se obtiene los datos del Carrito de compras
+        const response = await axios.get("http://localhost:8000/api/pago?usuario=" + usuario);
+        const carritoCompra = response.data.reverse();
+        setCarrito(carritoCompra);
+        setContadorCompra(carritoCompra.length);
 
-        if(carritoCompra.length > 0){
-            if(carritoCompra[0].mes_pago === 'trimestral'){
+        if (carritoCompra.length > 0) {
+            if (carritoCompra[0].mes_pago === 'trimestral') {
                 setMensual(false);
                 setTrimestral(true);
-            } else if(carritoCompra[0].mes_pago === 'mensual'){
+            } else if (carritoCompra[0].mes_pago === 'mensual') {
                 setMensual(true);
                 setTrimestral(false);
-            } else{
+            } else {
                 setMensual(true);
                 setTrimestral(true);
             }
@@ -58,56 +71,54 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     }
 
     //OBTENGO EL VALOR DEL CHECKBOX Y EL PRECIO SELECCIONADO
-    const actualizarCheck = (e) =>
-    {
+    const actualizarCheck = (e) => {
         setcheck(e.target.id)
         setPrecio(e.target.value)
     }
 
     //AGREGAR AL CARRITO ( VALIDACIONES )
-    const agregarAlCarrito = async ()=>
-    {  
+    const agregarAlCarrito = async () => {
         // setcheck("");
         document.querySelector(".botonAgregar").classList.add("button__loader");
-        const response = await axios.get("http://localhost:8000/api/pago?usuario="+usuario);
-        const carrito  = response.data;
+        const response = await axios.get("http://localhost:8000/api/pago?usuario=" + usuario);
+        const carrito = response.data;
         //Si el usuario ya esta logueado se agrega a la lista de compra (carrito)
-        if(usuario > 0){
+        if (usuario > 0) {
             //Si no ha seleccionado un precio, mando un alerta.
-            if (precio == "" ){
+            if (precio == "") {
                 setError(true);
                 document.querySelector(".botonAgregar").classList.remove("button__loader");
             }
             // Si el registro aun no existe en la base de datos, lo agrego.
-            else if (carrito.findIndex(element => element.sala_pagos == id) < 0){
-               agregoAlCarrito_dom();
+            else if (carrito.findIndex(element => element.sala_pagos == id) < 0) {
+                agregoAlCarrito_dom();
             }
             //Si el registro ya existe en la base de datos, se edita el precio.
-            else{
+            else {
                 editar(carrito);
                 carritoCompra();
                 checkVerifiqued();
             }
-        }  
-        else
-        {
+            toast.success("Suscripcion añadida al carrito")
+        }
+        else {
             Alerta_usuarioNoLogueado();
             document.querySelector(".botonAgregar").classList.remove("button__loader");
-        }     
+        }
     }
-   
+
     //AGREGAR EN LA TABLA ( CARRITO )
-    const agregoAlCarrito_dom =  ()=>{
+    const agregoAlCarrito_dom = () => {
 
         const dataSala = {
             'usuario': usuario,
             'pagado': 'false',
-            'precio_pagos':precio,
-            'piso_pagos':piso,
-            'sala_pagos':id,
+            'precio_pagos': precio,
+            'piso_pagos': piso,
+            'sala_pagos': id,
             'mes_pago': check == "1" ? 'mensual' : 'trimestral'
         }
-        
+
         setCarrito([...carrito, dataSala]);
         agregoAlCarrito_BD(dataSala);
         estadoSala("Ocupado", id);
@@ -117,43 +128,41 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         checkVerifiqued();
         setContadorCompra(contadorCompra + 1);
         pintarSalasOcupadas();
-        
-        if(check == 1){
+
+        if (check == 1) {
             setMensual(true);
             setTrimestral(false);
-        } else{
+        } else {
             setMensual(false);
             setTrimestral(true);
         }
     }
 
     //AGREGAR AL CARRITO EN LA BASE DE DATOS
-    const agregoAlCarrito_BD =  (dataSala)=>{
+    const agregoAlCarrito_BD = (dataSala) => {
         axios.post('http://localhost:8000/api/pago', dataSala);
     }
 
     //EDITAR (BD)
-    const editar = (sala) =>
-    {
+    const editar = (sala) => {
         //optengo el id de la sala que se va a editar
         const idSalaUpdate = sala.find(element => element.sala_pagos == id).id
-        axios.put("http://localhost:8000/api/pago/"+idSalaUpdate , {
+        axios.put("http://localhost:8000/api/pago/" + idSalaUpdate, {
             'precio': precio,
             'pagado': 'false'
         });
     }
 
     //ELIMINAR ( DOM / BD )
-    const eliminar =  (idSalaDelete) =>
-    {  
+    const eliminar = (idSalaDelete) => {
         // updateUsuario("0",idSalaDelete);
         const salaDelete = carrito.filter(element => element.sala_pagos !== idSalaDelete)
         setCarrito(salaDelete);
-        axios.delete("http://localhost:8000/api/pago/"+idSalaDelete);
-        estadoSala("Disponible",idSalaDelete);
+        axios.delete("http://localhost:8000/api/pago/" + idSalaDelete);
+        estadoSala("Disponible", idSalaDelete);
         pintarSalasOcupadas();
         setContadorCompra(contadorCompra - 1);
-        if(contadorCompra == 1){
+        if (contadorCompra == 1) {
             carritoCompra();
             setMensual(true);
             setTrimestral(true);
@@ -161,32 +170,31 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     }
 
     //FUNCION PARA CAMBIAR EL ESTADO DE LA SALA ( Disponible / Ocupado )
-    const estadoSala =  (disponibilidad,id)=>{
-         axios.put("http://localhost:8000/api/sala/"+id+"?update=estado" , {
-          "activo": disponibilidad,
+    const estadoSala = (disponibilidad, id) => {
+        axios.put("http://localhost:8000/api/sala/" + id + "?update=estado", {
+            "activo": disponibilidad,
         });
         pintarSalasOcupadas();
     }
 
     //Mostrar un check en el boton de agregar al ser agregado a lista de compra.
-    const checkVerifiqued=()=>{
-        setTimeout(function() {
+    const checkVerifiqued = () => {
+        setTimeout(function () {
             setCheckAgregado(true);
             document.querySelector(".botonAgregar").classList.remove("button__loader");
-         }, 0);
-         
-        setTimeout(function() {
-            checkFalse();
-         }, 2000);
+        }, 0);
 
-         const checkFalse = ()=>{
+        setTimeout(function () {
+            checkFalse();
+        }, 2000);
+
+        const checkFalse = () => {
             setCheckAgregado(false);
         };
     }
 
     //BOTON DE VOLVER
-    const volverBtn1 = () =>
-    {
+    const volverBtn1 = () => {
         setVolver(false);
         setVerModal(false);
         document.querySelector(".botonesPisos").classList.remove("displayFlex");
@@ -195,23 +203,23 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 
 
     //MOSTRAR LA TABLA DE COMPRA
-    const mostratTablaCompra = ()=>{
+    const mostratTablaCompra = () => {
         setMostratTabla(false);
     }
     //OCULTAR LA TABLA DE COMPRA
-    const ocultarTablaPagar =  ()=>{
+    const ocultarTablaPagar = () => {
         setMostratTabla(true);
     }
 
     //MOSTRAR ALERTA DE USUARIO NO LOGUEADO
-    const Alerta_usuarioNoLogueado =  ()=>{
+    const Alerta_usuarioNoLogueado = () => {
         setPrecio("");
         // setcheck("");
-        setMostrarAlerta(true); 
+        setMostrarAlerta(true);
     }
 
     //OCULTAR ALERTE DE USUARIO NO LOGUEADO
-    const ocultarAlerta =  ()=>{
+    const ocultarAlerta = () => {
         setMostrarAlerta(false);
     }
 
@@ -228,11 +236,11 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                 </button>
             </div>
             <div
-                className={ volver ? 'volver2 volver2V' : 'volver2'}
+                className={volver ? 'volver2 volver2V' : 'volver2'}
                 onClick={() => volverBtn1()}>
-                <img src={Volver}/>
+                <img src={Volver} />
             </div>
-            <div className={ verModal ? 'modal modalVisible' : 'modal'}>
+            <div className={verModal ? 'modal modalVisible' : 'modal'}>
                 <div
                     className='volver'
                     onClick={() => volverBtn1()}>
@@ -246,25 +254,25 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                     Sala
                                 </h1>
                                 <h1
-                                    style={{opacity: id != "" ? "1" : "0" }}>
+                                    style={{ opacity: id != "" ? "1" : "0" }}>
                                     {nombreSala}
                                 </h1>
                             </div>
                             <h1
                                 className='disponibilidad'
-                                style={{ color: disponibilidad == "Disponible" ? "#afffad" : "red"  }}>
-                                { disponibilidad }
+                                style={{ color: disponibilidad == "Disponible" ? "#afffad" : "red" }}>
+                                {disponibilidad}
                             </h1>
                         </div>
                         <div className={
-                            (disponibilidad == "Disponible") ? "descripcionMapa none" : "descripcionMapa"   } >
+                            (disponibilidad == "Disponible") ? "descripcionMapa none" : "descripcionMapa"} >
                             <p
                                 className='descripcionSala'>
                                 {descripcion}
                             </p>
                         </div>
                         <div className={
-                            disponibilidad == "Disponible" ? "descripcionModal" : "descripcionModal none" } >
+                            disponibilidad == "Disponible" ? "descripcionModal" : "descripcionModal none"} >
                             <div className='preciosModal' >
                                 <p
                                     className='seleccione'
@@ -289,8 +297,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                             onClick={actualizarCheck}
                                             readOnly={check == "1" ? true : false}
                                         />
-                                        <p className={ precio1 == undefined ? "nonePrecio" : "precio1" } > { precio1 == undefined  ? "" : "" }{ disponibilidad == "Disponible"  ? precio1+" € " : "" }</p>
-                                        <p className={ precio1 == undefined ? "noneMes" : "precio1M" }  >{ disponibilidad == "Disponible"  ? " Mensual" : "" }   </p>
+                                        <p className={precio1 == undefined ? "nonePrecio" : "precio1"} > {precio1 == undefined ? "" : ""}{disponibilidad == "Disponible" ? precio1 + " € " : ""}</p>
+                                        <p className={precio1 == undefined ? "noneMes" : "precio1M"}  >{disponibilidad == "Disponible" ? " Mensual" : ""}   </p>
                                     </label>
                                 </div>
                                 <div className={trimestral === true ? 'precioBtn' : 'precioBtn precioBtnNone'} >
@@ -306,24 +314,24 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                                             onClick={actualizarCheck}
                                             readOnly={check == "2" ? true : false}
                                         />
-                                        <p className={ precio2 == undefined ? "nonePrecio" : "precio2" } >{ precio2 == undefined  ? "" : "" }{ disponibilidad == "Disponible"  ? precio2+" € " : "" } </p>
-                                        <p className={ precio2 == undefined ? "noneMes" : "precio2M" }  >{ disponibilidad == "Disponible"  ? " Trimestral" : "" } </p>
+                                        <p className={precio2 == undefined ? "nonePrecio" : "precio2"} >{precio2 == undefined ? "" : ""}{disponibilidad == "Disponible" ? precio2 + " € " : ""} </p>
+                                        <p className={precio2 == undefined ? "noneMes" : "precio2M"}  >{disponibilidad == "Disponible" ? " Trimestral" : ""} </p>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <button
                             // style={{ display: disponibilidad === "ocupado" ? "none" : "block" }}
-                            className={disponibilidad === "Ocupado" ? "botonAgregarNone" : "botonAgregar" }
+                            className={disponibilidad === "Ocupado" ? "botonAgregarNone" : "botonAgregar"}
                             id={id}
                             onClick={agregarAlCarrito}>
                             {/* AÑADIR A LA COMPRA */}
-                            <span className={checkAgregado === true ?'checkVisible': 'check'}><AiFillCheckCircle/></span>
+                            <span className={checkAgregado === true ? 'checkVisible' : 'check'}><AiFillCheckCircle /></span>
                         </button>
                     </div>
                 </div>
             </div>
-            <div className={mostrarTabla === true ? 'tablaCompra': 'tablaCompra MostrartablaCompra'}>
+            <div className={mostrarTabla === true ? 'tablaCompra' : 'tablaCompra MostrartablaCompra'}>
                 <FormularioPago
                     datos={carrito}
                     eliminar={eliminar}
@@ -331,11 +339,15 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                     ocultarTablaPagar={ocultarTablaPagar}
                     cambiarPrecioSeleccionado={cambiarPrecioSeleccionado}
                     check={check}
+                    handleModal={handleModal}
                 />
             </div>
-            <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible': 'Modal_usuarioNoLogueado'}>
-                <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta}/>
+            <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible' : 'Modal_usuarioNoLogueado'}>
+                <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta} />
             </div>
+            <ModalPaypal open={openModal} onClose={toggleModal}>
+                {check == 1 ? <PaypalMensual /> : <PaypalTrimestral />}
+            </ModalPaypal>
         </div>
     )
 }

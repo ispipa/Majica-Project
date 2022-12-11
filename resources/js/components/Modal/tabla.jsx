@@ -4,8 +4,12 @@ import { GrClose } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 import PaypalMensual from "../Checkout/PaypalMensual";
+import ModalPaypal from "./ModalPaypal";
 
-export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar, cambiarPrecioSeleccionado, check }) {
+export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPagar, cambiarPrecioSeleccionado, check, handleModal }) {
+
+    //VARIABLES DE ESTADO
+    const [openModal, setOpenModal] = useState(false)
 
     //ALMACENO TODOS LOS PRECIOS EN UN ARRAY
     let precios = [];
@@ -25,15 +29,16 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
 
     //REDIRECCIONAR A PAGAR
 
-    const [seconds, setSeconds] = useState(59)
-    const [minutes, setMinutes] = useState(14)
+    const [seconds, setSeconds] = useState(2)
+    const [minutes, setMinutes] = useState(0)
+    const [primerAlerta, setPrimerAlerta] = useState("")
     const conteoPrecios = precios.length;
     const navigate = useNavigate()
 
     useEffect(() => {
-        
+
         if (conteoPrecios >= 1) {
-            
+
             const interval = setInterval(() => {
                 setSeconds(seconds => seconds - 1);
                 if (seconds === 0) {
@@ -42,10 +47,41 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                 }
             }, 1000);
 
-            if (minutes === 9 && seconds === 59) { alert("Tiene 10 minutos para realizar la reserva") };
-            if (minutes === 4 && seconds === 59) { alert("Tiene 5 minutos para realizar la reserva") };
+            if (minutes === 9 && seconds === 59) {
+                toast('Tiene menos de 10 minutos para reservar la sala.',
+                    {
+                        icon: '💨',
+                        style: {
+                            borderRadius: '10px',
+                            background: '#333',
+                            color: '#fff',
+                        },
+                    }
+                );
+            };
+            if (minutes === 4 && seconds === 59) {
+                toast('Tiene menos de 5 minutos para reservar la sala.',
+                    {
+                        icon: '😔',
+                        style: {
+                            borderRadius: '10px',
+                            background: '#333',
+                            color: '#fff',
+                        },
+                    }
+                );
+            };
             if (minutes === 0 && seconds === 0) {
-                alert();
+                toast('Ha consumido el tiempo para almacenar la reserva, intente de nuevo',
+                    {
+                        icon: '😑',
+                        style: {
+                            borderRadius: '10px',
+                            background: '#333',
+                            color: '#fff',
+                        },
+                    }
+                );
                 eliminar(idSala[0])
                 idSala = []
                 precios = []
@@ -58,15 +94,16 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             setSeconds(59)
             setMinutes(14)
         }
-    },[conteoPrecios, seconds, minutes]);
+    }, [conteoPrecios, seconds]);
 
     const comprobarUsuario = () => {
-        (localStorage.getItem('user') && localStorage.getItem('token')) === null ?
+        handleModal
+            (localStorage.getItem('user') && localStorage.getItem('token')) === null ?
             alert("Debe iniciar sesión para realizar la reserva") :
             axios.get('http://127.0.0.1:8000/api/verified-middleware-example', {
                 headers:
                     { "Authorization": `Bearer ${JSON.parse(localStorage.getItem('token'))}` }
-            }).then(navigate('/'))
+            }).then()
                 .catch(err => {
                     enviarEmail();
                 })
@@ -86,7 +123,8 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
 
     return (
         <div className='containerPadrePagar'>
-            <Toaster />
+            <Toaster
+                position="top" />
             <div
                 onClick={ocultarTablaPagar}
                 className="ocultarTablaPagar">
@@ -111,19 +149,19 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
                                     <td
                                         className="nSala"
                                         id={ar.sala_pagos}
-                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        onClick={() => cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.sala_pagos}
                                     </td>
                                     <td
                                         className="nPiso"
                                         id={ar.sala_pagos}
-                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        onClick={() => cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.piso_pagos}
                                     </td>
                                     <td
                                         className="precio"
                                         id={ar.sala_pagos}
-                                        onClick={()=>cambiarPrecioSeleccionado(ar.sala_pagos)}>
+                                        onClick={() => cambiarPrecioSeleccionado(ar.sala_pagos)}>
                                         {ar.precio_pagos}€
                                     </td>
                                     <td
@@ -139,7 +177,8 @@ export default function FormularioPago({ datos, eliminar, setId, ocultarTablaPag
             </div>
             <div className="divTotal">
                 <p className={precios.length >= 1 ? "timer" : "display : none"}>Tiempo de Reserva: {seconds < 10 ? `${minutes}:0${seconds}` : minutes + ":" + seconds}</p>
-                <Link to={check == 1 ? "/paypalMensual" : "/paypalTrimestral"} ><button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button></Link>
+                {/* <Link to={check == 1 ? "/paypalMensual" : "/paypalTrimestral"} ><button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button></Link> */}
+                <button className='botonPagarr' onClick={comprobarUsuario}>Pagar</button>
                 <p className='total'>
                     Total : {total}€
                 </p>

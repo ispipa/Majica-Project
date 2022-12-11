@@ -157,13 +157,8 @@ export const Main = () => {
                 setErrorPassword(true)
             }else {
                 setErrorPassword(false)
-            }
-            
-            
+            } 
         });
-    
-        
-
     }
 
     return (
