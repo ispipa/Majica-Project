@@ -96,6 +96,11 @@ export default function Map() {
         });
     }
 
+    const pintarSalasPagadas = ()=>{
+        pintarSalasCompradas(usuario);
+    }
+
+    
     
     
     //SE OBTIENEN TODOS LOS DATOS DE LA SALA
@@ -160,6 +165,7 @@ export default function Map() {
           mostrarModalEditarDescripcion();
           setDatosSala(dataSala);
           pintarSalasOcupadas();
+          
        }
     }
 
@@ -238,6 +244,7 @@ export default function Map() {
                 piso={piso}
                 usuario={usuario}
                 pintarSalasOcupadas={pintarSalasOcupadas}
+                pintarSalasPagadas={pintarSalasPagadas}
                 cambiarPrecioSeleccionado={cambiarPrecioSeleccionado}
             />
             <div className='container2'>

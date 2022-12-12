@@ -22,6 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
 Route::controller(SalasController::class)->group(function(){
     route::get("/sala",  "index");
     route::get("/sala/usuario",  "bought");

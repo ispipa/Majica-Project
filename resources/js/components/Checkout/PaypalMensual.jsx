@@ -7,11 +7,12 @@ import {
 import '../../../css/paypalcheckout.css'
 import toast, { Toaster } from 'react-hot-toast';
 
-const PaypalMensual = ({data}) => {
+const PaypalMensual = ({data, pintarSalasPagadas}) => {
 
 	const [paid, setPaid] = useState(false);
 
 	const handleApprove = (orderId) => {
+		
 		data.forEach(element => {
 			axios.put("http://localhost:8000/api/pago/" + element.sala_pagos+"?pagoo=pagoTrue", {
 			'pagado': 'true'
@@ -25,11 +26,11 @@ const PaypalMensual = ({data}) => {
 	}
 
 	const editar = (sala) => {
-
 		const idSalaUpdate = sala.find(element => element.sala_pagos == id).id
 		axios.put("http://localhost:8000/api/pago/" + idSalaUpdate, {
 			'pagado': true
 		});
+	
 	}
 
 	const ButtonWrapper = ({ type }) => {
@@ -76,8 +77,8 @@ const PaypalMensual = ({data}) => {
 
 			onApprove={(data, actions) => {
 				handleApprove(data.orderID);
-				
 				toast.success(`Se ha registrado su suscripcion, GRACIAS ARTISTA!`)
+				pintarSalasPagadas();
 			}}
 
 			onError={(error) => {

@@ -14,7 +14,7 @@ import PaypalTrimestral from "../Checkout/PaypalTrimestral";
 import PaypalMensual from "../Checkout/PaypalMensual";
 
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
-             setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado, }) => {
+                 pintarSalasPagadas, setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado, }) => {
 
     //ESTADOS---
     const array = [];
@@ -121,6 +121,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             'pagado': false
         });
     }
+
+    
 
    
     //ELIMINAR ( DOM / BD )
@@ -298,7 +300,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                 <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta} />
             </div>
             <ModalPaypal open={openModal} onClose={toggleModal}>
-                {frecuencia == "mensual" ? <PaypalMensual data={carrito} /> : <PaypalTrimestral data={carrito} />}
+                {frecuencia == "mensual" ? <PaypalMensual data={carrito} pintarSalasPagadas={pintarSalasPagadas} /> : <PaypalTrimestral data={carrito} />}
             </ModalPaypal>
         </div>
     )
