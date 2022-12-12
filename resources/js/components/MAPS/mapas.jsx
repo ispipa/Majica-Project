@@ -33,7 +33,6 @@ export default function Map() {
     const [EditarDescripcion, setEditarDescripcion] = useState(false);
     
     //SE OBTIENE LOS DATOS DEL USUARIO LOGUEADO DESDE EL LOCALSTORAGE
-   
     const usuariaData = async ()=>{
         if(localStorage.getItem("user")){
             const user = JSON.parse(localStorage.getItem("user"));
@@ -72,7 +71,6 @@ export default function Map() {
     const pintarSalasOcupadas  = async ()=>{
         const response = await axios.get("http://localhost:8000/api/sala");
         const salas = response.data;
-        
         const pintar =  (min, max,)=>{
             for(let i = min; max > i; i++){
                 if(salas.find(indice => indice.id === i).activo === "Ocupado"){

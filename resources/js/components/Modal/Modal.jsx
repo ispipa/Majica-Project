@@ -14,19 +14,17 @@ import PaypalTrimestral from "../Checkout/PaypalTrimestral";
 import PaypalMensual from "../Checkout/PaypalMensual";
 
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
-    setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado,
-    //    setDataBaseUpdate,  
-    dataCarrito }) => {
+             setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado, }) => {
 
     //ESTADOS---
+    const array = [];
     const [checkAgregado, setCheckAgregado] = useState(false);
     const [check, setcheck] = useState("");
     const [precio, setPrecio] = useState("");
     const [errorr, setError] = useState(false);
     const [carrito, setCarrito] = useState([]);
-    const array = [];
     const [frecuencia, setFrecuencia] = useState("mensual");
-    const [trimestral, setTrimestral] = useState(true);
+    const [boleano, setboleano] = useState(false);
     const [mostrarTabla, setMostratTabla] = useState(true);
     const [mostrarAlerta, setMostrarAlerta] = useState(false);
     const [contadorCompra, setContadorCompra] = useState(0);
@@ -40,7 +38,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 
     const handleModal = (check) => {
         toggleModal();
-        if (check == 1) {navigate}
+        if (frecuencia == "mensual") {navigate}
     }
 
     const toggleModal = () => {
@@ -55,6 +53,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         setCarrito(carritoCompra);
         setContadorCompra(carritoCompra.length);
         setFrecuencia("mensual");
+        setboleano(false);
     }
 
 
@@ -69,6 +68,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             // Si el registro aun no existe en la base de datos, lo agrego.
             if (carrito.findIndex(element => element.sala_pagos == id) < 0){
                agregoAlCarrito_dom();
+               
             }
             //Si el registro ya existe en la base de datos, se edita el precio.
             else {
@@ -86,7 +86,6 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
 
     //AGREGAR EN LA TABLA ( CARRITO )
     const agregoAlCarrito_dom = () => {
-
         const dataSala = {
             'usuario': usuario,
             'pagado': "false",
@@ -96,6 +95,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             'mes_pago': frecuencia == 'mensual' ? 'mensual' : 'trimestral'
         }
 
+        // setCarrito([...carrito, dataSala]);
         setCarrito([...carrito, dataSala]);
         agregoAlCarrito_BD(dataSala);
         estadoSala("Ocupado", id);
@@ -158,28 +158,30 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         };
     }
 
-
-    const cambiaFrecuenciaPago = (frecuencia)=>{
-        setFrecuencia(frecuencia);
-
-        if(frecuencia === "mensual"){
+ 
+    const cambiaFrecuenciaPago = (parametroFrecuencia)=>{
+        setFrecuencia(parametroFrecuencia);
+        if(parametroFrecuencia === "mensual" ){
             carritoCompra();
+            
         } else{
-            setCarrito(array);
-            carrito.forEach(element => {
-                const precio = parseInt(element.precio_pagos)
-                let precio_mes = 0;
-                frecuencia === "trimestral" ? precio_mes = (precio / 2) + (precio + precio) : precio_mes = 0;
-                const obj = {
-                    'usuario': element.usuario,
-                    'pagado': element.pagado,
-                    'precio_pagos': precio_mes,
-                    'piso_pagos': element.piso_pagos,
-                    'sala_pagos': element.sala_pagos,
-                    'mes_pago': element.mes_pago
-                };
-                array.push(obj);
-            });
+            if(parametroFrecuencia !== frecuencia){
+                setCarrito(array);
+                carrito.forEach(element => {
+                    const precio = parseInt(element.precio_pagos)
+                    let precio_mes = 0;
+                    parametroFrecuencia === "trimestral" ? precio_mes = (precio / 2) + (precio + precio) : precio_mes = 0;
+                    const obj = {
+                        'usuario': element.usuario,
+                        'pagado': element.pagado,
+                        'precio_pagos': precio_mes,
+                        'piso_pagos': element.piso_pagos,
+                        'sala_pagos': element.sala_pagos,
+                        'mes_pago': element.mes_pago
+                    };
+                    array.push(obj);
+                });
+            }
         }
     }
 
