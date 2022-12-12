@@ -5,7 +5,7 @@
     z-index: 3001;
     backdrop-filter: blur(4px);
     width: 30%;
-    height: 40vh;
+    height: 45vh;
     bottom: -100%;
     background: linear-gradient(#00000000, rgba(20, 0, 15, 0.986));
     backdrop-filter: blur(14px);
@@ -105,10 +105,12 @@
     width: 100%;
     /* height: 50%; */
     display: flex;
+    flex-direction: column;
     padding-bottom: 100px;
     overflow-y: auto;
-    align-items: center;
+    align-items: flex-start;
     border-top: 1px solid #d52b5b00;
+    
 
 }
 
@@ -188,27 +190,56 @@
     }
 }
 
+
+.noneMes1 {
+    width: 10px;
+    overflow: hidden;
+    transition: .3s;
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 62px;
+    border: 1px solid red;
+}
+
+
+
+.nonePrecio {
+    /* font-size: 0; */
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: .3s;
+    font-weight: 500;
+}
+
+
 .preciosModal {
     border-radius: 20px;
     padding: 0 20px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
     /* justify-content: space-between; */
-    width: 100%;
+    width: auto;
     height: 100%;
     position: relative;
+    transition: .5s;
+}
 
+.preciosModalVacio{
+    width: 0;
 }
 
 .precioMensual{
-    color: rgb(80, 243, 121) !important;
+    color: rgb(0, 0, 0) !important;
     font-size: 30px;
     font-weight: 700;
     margin-top: 20px;
-    /* background-color: #000000d7;
-    padding: 0 20px; */
-    border-radius: 10px;
+    background-color: #ffffffd7;
+    width: auto;
+    padding: 0 20px;
+    border-radius: 40px;
 }
 
 .pMensual{
@@ -218,10 +249,11 @@
 
 .precioTrimestral{
     color: rgb(255, 255, 255) !important;
-    font-size: 16px;
+    font-size: 14px;
     background-color: #00000000;
     /* padding: 0 20px; */
     border-radius: 10px;
+    margin-top: 10px;
 }
 
 .pTrimestral{
@@ -275,25 +307,7 @@
 
 }
 
-.noneMes {
-    width: 0;
-    overflow: hidden;
-    transition: .3s;
-    font-weight: 600;
-    font-size: 18px;
-    margin-top: 2px;
-}
 
-
-
-.nonePrecio {
-    /* font-size: 0; */
-    width: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: .3s;
-    font-weight: 500;
-}
 
 .pSpan {
     font-weight: 300;
@@ -379,6 +393,7 @@
     font-size: 25px;
     margin-left: 15px;
     display: inline-block;
+    
 }
 
 :root {

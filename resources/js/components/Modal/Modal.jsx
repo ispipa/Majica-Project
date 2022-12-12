@@ -11,6 +11,7 @@ import Modal_usuarioNoLogueado from './modal_UsuarioNoLogueado'
 import toast from "react-hot-toast";
 import ModalPaypal from "./ModalPaypal";
 import PaypalTrimestral from "../Checkout/PaypalTrimestral";
+import PaypalMensual from "../Checkout/PaypalMensual";
 
 const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario, pintarSalasOcupadas,
     setVerModal, setVolver, setId, descripcion, precio1, precio2, cambiarPrecioSeleccionado,
@@ -75,7 +76,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                 carritoCompra();
                 checkVerifiqued();
             }
-            toast.success("Suscripcion añadida al carrito")
+            toast.success("Suscripcion añadida al carrito");
         }
         else {
             Alerta_usuarioNoLogueado();
@@ -89,10 +90,10 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
         const dataSala = {
             'usuario': usuario,
             'pagado': "false",
-            'precio_pagos': precio,
+            'precio_pagos': precio1,
             'piso_pagos': piso,
             'sala_pagos': id,
-            'mes_pago': check == "1" ? 'mensual' : 'trimestral'
+            'mes_pago': frecuencia == 'mensual' ? 'mensual' : 'trimestral'
         }
 
         setCarrito([...carrito, dataSala]);
@@ -115,7 +116,7 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
     const editar = (sala) => {
         //optengo el id de la sala que se va a editar
         const idSalaUpdate = sala.find(element => element.sala_pagos == id).id
-        axios.put("http://localhost:8000/api/pago/" + idSalaUpdate, {
+        axios.put("http://localhost:8000/api/pago/" + idSalaUpdate+"?pago=''", {
             'precio': precio,
             'pagado': false
         });
@@ -262,8 +263,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
                         <div className={
                             disponibilidad == "Disponible" ? "descripcionModal" : "descripcionModal none" } >
                             <div className='preciosModal'>
-                                <p className="precioMensual">{precio1}€ <span className="pMensual">mensual</span></p>
-                                <p className="precioTrimestral">{precio2}€ <span className="pTrimestral">Trimestral</span></p>  
+                                <p className="precioMensual"><span style={{ opacity: id != "" ? "1" : ".2" }}>{id == "" ? "00" : precio1}€ </span><span className="pMensual">mensual</span></p>
+                                <p className="precioTrimestral"> Si activas el pago trimestral esta sala te saldria por un precio de <span className="pTrimestral" style={{ opacity: id != "" ? "1" : ".2" }}s>{id == "" ? "00 " : precio2}€</span> los 3 meses</p>  
                             </div>
                         </div>
                         <button
@@ -294,8 +295,8 @@ const Modal = ({ id, nombreSala, piso, disponibilidad, verModal, volver, usuario
             <div className={mostrarAlerta === true ? 'Modal_usuarioNoLogueadoVisible' : 'Modal_usuarioNoLogueado'}>
                 <Modal_usuarioNoLogueado ocultarAlerta={ocultarAlerta} />
             </div>
-            <ModalPaypal open={openModal} onClose={toggleModal} idSala={id}>
-                {check == 1 ? <PaypalMensual datos={carrito} /> : <PaypalTrimestral datos={carrito} />}
+            <ModalPaypal open={openModal} onClose={toggleModal}>
+                {frecuencia == "mensual" ? <PaypalMensual data={carrito} /> : <PaypalTrimestral data={carrito} />}
             </ModalPaypal>
         </div>
     )
