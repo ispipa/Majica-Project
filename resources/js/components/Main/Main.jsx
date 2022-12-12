@@ -347,21 +347,12 @@ export const Main = () => {
                                         type="submit"
                                         className="btn"
                                         value="Registrar" />
-                                </div>
-                                <br />
-                                <hr />
-                                <br />
-                                <div>
-                                    <div className="forgotPass">
-                                        <p>¿Ya tienes cuenta?</p>
-                                    </div>
-                                    
                                     <input
                                         className="btn-crearCuenta"
                                         defaultValue="Inicia Sesión"
                                         onClick={Sing_up_btn} />
-                                </div>
                             </div>
+                                </div>
                             <div className="social-media"></div>
                         </form>
                     </div>
