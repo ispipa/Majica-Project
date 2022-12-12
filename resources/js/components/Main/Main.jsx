@@ -369,12 +369,8 @@ export const Main = () => {
                                 alt="logoMajica" />
                             <div className="text-panel">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Neque, accusamus animi
-                                    distinctio blanditiis dignissimos doloremque
-                                    corrupti ad. Sed, porro accusamus incidunt
-                                    odio provident quod rem beatae nobis, quam,
-                                    nulla perferendis?
+                                Virtual Museum es una plataforma donde los artistas pueden mostrar sus obras de forma digital. 
+
                                 </p>
                                 <a href="https://www.majica.es/programacion">
                                     <button
