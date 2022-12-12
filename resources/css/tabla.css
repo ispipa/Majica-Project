@@ -281,6 +281,7 @@ tr {
     .timer,
     .total {
         font-size: 0.8em;
+        color: #000000;
     }
 
     .tablaCompra {

@@ -71,10 +71,10 @@
 @media (width <=650px) {
 
     .header{
-        padding: 0px 0 0 10px;
+        padding: 0px 60px 0 10px;
     }
     .image-icon-user {
-        margin-top: 10px;
+        margin-top: 0px;
     }
 
     .image-icon-user>img {

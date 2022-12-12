@@ -25,7 +25,7 @@
     position: fixed;
     right: 20px;
     width: 40px;
-    top: 20px;
+    top: 12px;
     z-index: 200;
     display: flex;
     justify-content: space-between;
@@ -501,22 +501,24 @@
         align-items: flex-start;
         overflow-y: auto;
         background-color: #29000aa9;
+     
     }
 
     .containerModalHijo {
         height: 280px;
-        overflow: scroll;
+        overflow-y: scroll;
     }
     
     .descripcionModal {
         width: 100%;
-        overflow: scroll;
-        margin-bottom: 60px;
+        padding-top: 20px;
+        margin-bottom: -5px;
     }
 
     .preciosModal {
         width: 100%;
         margin-top: 0px;
+    
     }
 
     .precioBtn {

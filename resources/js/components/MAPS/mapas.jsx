@@ -39,7 +39,7 @@ export default function Map() {
             pintarSalasCompradas(user.id);
             setUsuario(user.id);
         } else{
-            setUsuario("")
+            setUsuario("");
             pintarSalasCompradas("");
         }
         pintarSalasOcupadas(); 
@@ -68,11 +68,13 @@ export default function Map() {
     
     
     //SE PINTAN LAS SALAS OCUPADAS
+    //recorro 1 a 1 las salas salas y voy preguntando si el en la posicio q va, es ocupado o disponible
     const pintarSalasOcupadas  = async ()=>{
         const response = await axios.get("http://localhost:8000/api/sala");
-        const salas = response.data;
+        const salas = response.data; //->objeto
         const pintar =  (min, max,)=>{
             for(let i = min; max > i; i++){
+                console.log(salas.find(indice => indice.id === i).activo);
                 if(salas.find(indice => indice.id === i).activo === "Ocupado"){
                     document.querySelector(".sala"+i).classList.add("ocupado");  
                 }

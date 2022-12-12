@@ -78,6 +78,7 @@
 
 .mapaPequenoSVG {
     width: 100%;
+    margin-bottom: 135px;
 }
 
 .mapaPequenoPiso2_SVG {
@@ -104,6 +105,9 @@
     align-items: center;
     justify-content: center;
     transition: .5s;
+    margin-top: -110px;
+    position: relative;
+    z-index: 1000;
 }
 
 .ocupado {
@@ -209,11 +213,12 @@
 /*---------------------------------------------*/
 /* VERSION MOVIL */
 
-@media (max-width:1000px) {
+@media (max-width:1060px) {
     .seccionMapas .container2 {
         padding-top: 30px;
     }
-
+    
+    
 
 
     .headerMovil {
