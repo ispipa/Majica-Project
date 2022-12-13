@@ -102,14 +102,7 @@ export const Main = () => {
                 setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
                 setMostrarModalMensaje(true)
                 setTimeout(function () { setMostrarModalMensaje(false) }, 7000);
-                console.log(error);
-
-        }, (error) => {
-            setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
-            setMostrarModalMensaje(true)
-            setTimeout(function(){ setMostrarModalMensaje(false) }, 7000);
-            // console.log(error.response.data);
-            const errores = error.response.data
+                const errores = error.response.data
             console.log((errores).errors)
 
             if (errores.errors.email) {
@@ -158,6 +151,13 @@ export const Main = () => {
             }else {
                 setErrorPassword(false)
             }
+
+        }, (error) => {
+            setMensaje("No se puede registrar por que ha ingresado datos incorrectos.");
+            setMostrarModalMensaje(true)
+            setTimeout(function(){ setMostrarModalMensaje(false) }, 7000);
+            // console.log(error.response.data);
+            
             
             
         });
